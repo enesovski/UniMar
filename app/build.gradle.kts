@@ -1,5 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
+
+    //Added by Enes to setup google firebase
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -40,4 +43,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    //Added by Enes to setup google firebase
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+
+    /*
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation("com.google.firebase:firebase-analytics")
+     */
 }

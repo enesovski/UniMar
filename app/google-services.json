@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "789396579446",
+    "project_id": "unimar-f8cbe",
+    "storage_bucket": "unimar-f8cbe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789396579446:android:a5b281fef3bd369a8d6b57",
+        "android_client_info": {
+          "package_name": "com.x_force.unimar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkIEoKH3oJnSwtfyix6JeFmeoKkr2I1x4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
