@@ -46,12 +46,10 @@ dependencies {
 
     //Added by Enes to setup google firebase
 
-    implementation (libs.firebase.auth) // Or latest version
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-
-    /*
-    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
     implementation("com.google.firebase:firebase-analytics")
-     */
+
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+
 }
