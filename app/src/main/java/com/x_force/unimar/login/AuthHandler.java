@@ -35,4 +35,12 @@ public class AuthHandler {
                     }
                 });
     }
+
+    public String getCurrentUserUid() {
+        return mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : null;
+    }
+
+    public void logoutUser() {
+        mAuth.signOut();
+    }
 }
