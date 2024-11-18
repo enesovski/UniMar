@@ -19,20 +19,18 @@ public class LoginActivity extends AppCompatActivity implements IAuthCallback {
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-
-        setContentView(R.layout.activity_login);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         authHandler = new AuthHandler();
 
-        // Initialize UI components
+        setContentView(R.layout.activity_login);
+
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         Button loginButton = findViewById(R.id.loginButton);
         Button registerButton = findViewById(R.id.registerButton);
 
-        // Set up button listeners
         loginButton.setOnClickListener(view -> handleLogin());
         registerButton.setOnClickListener(view -> handleRegistration());
 
