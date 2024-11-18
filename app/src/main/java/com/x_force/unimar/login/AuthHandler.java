@@ -1,6 +1,11 @@
 package com.x_force.unimar.login;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AuthHandler {
     private final FirebaseAuth mAuth;
@@ -10,6 +15,7 @@ public class AuthHandler {
     }
 
     public void loginUser(String email, String password, IAuthCallback callback) {
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -29,6 +35,19 @@ public class AuthHandler {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        FirebaseUser fuser = mAuth.getCurrentUser();
+                        fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                callback.onFailure("Mail is sent.");
+                            }
+                    }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                callback.onFailure("Mail cannot sent.");
+                            }
+                        });
+
                         callback.onSuccess("Registration successful!");
                     } else {
                         callback.onFailure("Registration failed.");
@@ -37,7 +56,7 @@ public class AuthHandler {
     }
 
     public String getCurrentUserUid() {
-        return mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : null;
+        return (mAuth.getCurrentUser() != null) ? mAuth.getCurrentUser().getUid() : null;
     }
 
     public void logoutUser() {

@@ -17,7 +17,7 @@ public class ActivityManager {
 
     }
 
-    public static ActivityManager Instance() {
+    public static ActivityManager getInstance() {
         if (instance == null) {
             instance = new ActivityManager();
         }
