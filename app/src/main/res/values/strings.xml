@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">UniMar</string>
+    <string name="filter">Filter</string>
+    <string name="sort">Sort</string>
 </resources>
