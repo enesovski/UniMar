@@ -36,28 +36,23 @@ android {
 
 dependencies {
 
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
     //Added by Enes to setup google firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+
+    /*
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-analytics")
-
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
-
-    //Added by Yavuz to use recyclerView
-    implementation(libs.firebase.ui.firestore) // Check for the latest version
-    implementation(libs.play.services.auth)
-    implementation(libs.recyclerview)
-
-
-// Check for the latest version
-
+     */
 }
