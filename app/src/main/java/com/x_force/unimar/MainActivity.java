@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        Product tutorListing = new Product("mat102","burabrurabrua",40);
+        Product.filterList(2,4);
     }
 
     public static FirebaseFirestore getDB(){
