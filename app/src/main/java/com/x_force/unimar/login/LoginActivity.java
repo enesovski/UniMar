@@ -5,80 +5,83 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.x_force.unimar.R;
-import com.x_force.unimar.home.HomeActivity;
+import com.x_force.unimar.chat.ChatActivity;
 
 public class LoginActivity extends AppCompatActivity implements IAuthCallback {
+
     private EditText emailEditText, passwordEditText;
     private AuthHandler authHandler;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
         authHandler = new AuthHandler();
 
+        setContentView(R.layout.activity_login);
+
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
-
         Button loginButton = findViewById(R.id.loginButton);
         Button registerButton = findViewById(R.id.registerButton);
-        TextView forgotPasswordText = findViewById(R.id.forgotPasswordText);
 
         loginButton.setOnClickListener(view -> handleLogin());
-        registerButton.setOnClickListener(view -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
-        });
+        registerButton.setOnClickListener(view -> handleRegistration());
 
-        forgotPasswordText.setOnClickListener(view -> {
-            String email = emailEditText.getText().toString().trim();
-            if (TextUtils.isEmpty(email)) {
-                Toast.makeText(LoginActivity.this, "Please enter your email.", Toast.LENGTH_SHORT).show();
-            } else {
-                authHandler.resetPassword(email, new IAuthCallback() {
-                    @Override
-                    public void onSuccess(String message) {
-                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(String message) {
-                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
     }
 
     private void handleLogin() {
+        User user = getUserInput();
+        if (validateInput(user)) {
+            authHandler.loginUser(user.getEmail(), user.getPassword(), this);
+            Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void handleRegistration() {
+        User user = getUserInput();
+        if (validateInput(user)) {
+            authHandler.registerUser(user.getEmail(), user.getPassword(), this);
+        }
+    }
+
+    private User getUserInput() {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
+        return new User(email, password);
+    }
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Email and password are required.", Toast.LENGTH_SHORT).show();
-            return;
+    private boolean validateInput(User user) {
+        boolean isValid = true;
+
+        if (TextUtils.isEmpty(user.getEmail())) {
+            emailEditText.setError("Email is required.");
+            isValid = false;
         }
-
-        authHandler.loginUser(email, password, this);
+        if (TextUtils.isEmpty(user.getPassword())) {
+            passwordEditText.setError("Password is required.");
+            isValid = false;
+        }
+        return isValid;
     }
 
     @Override
     public void onSuccess(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        finish(); // Prevents navigating back to login or register screens
+        // Buraya kayıt olmanın bir sonraki aşamaları
     }
 
     @Override
     public void onFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
 }
