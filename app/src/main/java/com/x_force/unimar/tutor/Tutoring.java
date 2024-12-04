@@ -51,13 +51,38 @@ public class Tutoring implements IListing{
         });
     }
 
+    public static void sortList(char c){ // eğer c 'A' karakteri ise artan fiyata göre sıralıyor. D--> azalan. İkisi de değilse sortlanmamış databaseyi yazdırıyor
+        c = Character.toUpperCase(c);
+        Query query;
+        if(c == 'A'){
+            query = db.collection("tutorListing").orderBy("cost", Query.Direction.ASCENDING);
+        }
+        else if(c == 'D'){
+            query = db.collection("tutorListing").orderBy("cost", Query.Direction.DESCENDING);
+        }
+        else {
+            query = db.collection("tutorListing");
+        }
+
+        query.get().addOnCompleteListener(done ->{
+            if(done.isSuccessful()){
+                for(QueryDocumentSnapshot document : done.getResult()){
+                    //Product product = document.toObject(Product.class);
+                    Log.d("Firestore", document.getId() + " => " + document.getData());
+                }
+            }else{
+                Log.w("Firestore", "Error getting documents: ", done.getException());
+            }
+        });
+    }
+
     public String getDocId() {
         return docId;
     }
 
     public void setDocId(String docId) {
         this.docId = docId;
-        //db.collection("tutorListing").document(this.getDocId()).update("docId",docId);
+        db.collection("tutorListing").document(this.getDocId()).update("docId",docId);
     }
 
     public String getDesc() {
@@ -66,7 +91,7 @@ public class Tutoring implements IListing{
 
     public void setDesc(String desc) {
         this.desc = desc;
-        //db.collection("tutorListing").document(this.getDocId()).update("desc",desc);
+        db.collection("tutorListing").document(this.getDocId()).update("desc",desc);
     }
 
     public String getName() {
@@ -75,7 +100,7 @@ public class Tutoring implements IListing{
 
     public void setName(String name) {
         this.name = name;
-        //db.collection("tutorListing").document(this.getDocId()).update("name",name);
+        db.collection("tutorListing").document(this.getDocId()).update("name",name);
     }
 
     public int getCost() {
@@ -84,7 +109,7 @@ public class Tutoring implements IListing{
 
     public void setCost(int cost) {
         this.cost = cost;
-        //db.collection("tutorListing").document(this.getDocId()).update("cost",cost);
+        db.collection("tutorListing").document(this.getDocId()).update("cost",cost);
     }
 
 

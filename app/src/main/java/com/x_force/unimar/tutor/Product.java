@@ -14,20 +14,23 @@ public class Product implements IListing{
     private String desc;
     private int cost;
     private String docId;
+    private String category;
 
-    public Product(String name, String desc, int cost) { // user + category de olması lazım
+    public Product(String name, String desc, String category, int cost) { // user + category de olması lazım
         this.setName(name);
         this.setDesc(desc);
         this.setCost(cost);
+        this.setCategory(category);
         this.addToList();
     }
 
     @Override
     public void addToList() {
         db.collection("productListing").add(this).addOnSuccessListener(documentReference -> {
-            this.docId = documentReference.getId();     //calısmıyo    // üstteki add methodu yeni bi document referance döndürüyo bu otomatik document Idsi yaratıyo
-            documentReference.update("name", this.getName(), "desc", this.getDesc(),
-                    "cost", this.getCost(), "docId", this.getDocId());
+            this.setDocId(documentReference.getId());
+//            this.docId = documentReference.getId();     //calısmıyo    // üstteki add methodu yeni bi document referance döndürüyo bu otomatik document Idsi yaratıyo
+//            documentReference.update("name", this.getName(), "desc", this.getDesc(),
+//                    "cost", this.getCost(), "docId", this.getDocId());
             Log.d("Firestore", "Document added with Id: " + this.getDocId()); // sysout
         }).addOnFailureListener(e -> {
             Log.w("Firestore", "Error adding document!", e); //sysout
@@ -68,12 +71,31 @@ public class Product implements IListing{
         });
     }
 
+    public static void filterList(double min, double max){
+        Query query = db.collection("productListing")
+                .whereGreaterThanOrEqualTo("cost",min);
+
+        query = query.whereLessThanOrEqualTo("cost", max);
+
+        query.get().addOnCompleteListener(done ->{
+            if(done.isSuccessful()){
+                for(QueryDocumentSnapshot document : done.getResult()){
+                    //Product product = document.toObject(Product.class);
+                    Log.d("Firestore", document.getId() + " => " + document.getData());
+                }
+            }else{
+                Log.w("Firestore", "Error getting documents: ", done.getException());
+            }
+        });
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+        //db.collection("productListing").document(this.getDocId()).update("name",name);
     }
 
     public String getDesc() {
@@ -82,6 +104,7 @@ public class Product implements IListing{
 
     public void setDesc(String desc) {
         this.desc = desc;
+        //db.collection("productListing").document(this.getDocId()).update("desc",desc);
     }
 
     public int getCost() {
@@ -90,6 +113,7 @@ public class Product implements IListing{
 
     public void setCost(int cost) {
         this.cost = cost;
+        //db.collection("productListing").document(this.getDocId()).update("cost",cost);
     }
 
     public String getDocId() {
@@ -98,5 +122,15 @@ public class Product implements IListing{
 
     public void setDocId(String docId) {
         this.docId = docId;
+        //db.collection("productListing").document(this.getDocId()).update("docId",docId);
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+        //db.collection("productListing").document(this.getDocId()).update("category",category);
     }
 }
