@@ -1,7 +1,7 @@
 package com.x_force.unimar.login;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.x_force.unimar.R;
+import com.x_force.unimar.chat.ChatActivity;
 
 public class LoginActivity extends AppCompatActivity implements IAuthCallback {
 
@@ -40,6 +41,8 @@ public class LoginActivity extends AppCompatActivity implements IAuthCallback {
         User user = getUserInput();
         if (validateInput(user)) {
             authHandler.loginUser(user.getEmail(), user.getPassword(), this);
+            Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
+            startActivity(intent);
         }
     }
 
