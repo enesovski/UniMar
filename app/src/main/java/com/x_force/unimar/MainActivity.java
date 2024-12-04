@@ -9,8 +9,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.x_force.unimar.tutor.ProductListing;
-import com.x_force.unimar.tutor.TutorListing;
+import com.x_force.unimar.tutor.Product;
+import com.x_force.unimar.tutor.Tutoring;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        ProductListing tutorListing = new ProductListing("tulumpeyniri","tuzlu",150);
+        Product tutorListing = new Product("mat102","burabrurabrua",40);
     }
 
     public static FirebaseFirestore getDB(){
