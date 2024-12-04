@@ -50,20 +50,6 @@ public class ChatActivity extends AppCompatActivity {
         }
 
 
-        newDocumentRef.set(userData)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Firestore", "Document successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Firestore", "Error writing document", e);
-                    }
-                });
-
 
     }
 }
