@@ -4,23 +4,21 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.Timestamp;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Message {
     private String content;
     private String senderId;
-    private LocalDateTime timestamp;
+    private final Timestamp timestamp;
 
-    public Message(String content, String senderId) {
+    public Message(String content, String senderId, Timestamp timestamp) {
         this.content = content;
         this.senderId = senderId;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            this.timestamp = LocalDateTime.now();
-        }
+        this.timestamp = timestamp;
     }
-
-
 
     public String getContent() {
         return  content;
@@ -30,7 +28,7 @@ public class Message {
         return senderId;
     }
 
-    public LocalDateTime getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 

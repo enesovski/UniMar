@@ -51,4 +51,12 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
 
+    //Added by Yavuz to use recyclerView
+    implementation(libs.firebase.ui.firestore) // Check for the latest version
+    implementation(libs.play.services.auth)
+    implementation(libs.recyclerview)
+
+
+// Check for the latest version
+
 }

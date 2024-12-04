@@ -40,9 +40,7 @@ public class ChatHandler {
 
 
     //Creates message with given parameters
-    public static Message createMessage(String content, String senderId, Date timestamp){
-        return new Message(content,senderId);
-    }
+
 
 
     //Sends message to the firebase

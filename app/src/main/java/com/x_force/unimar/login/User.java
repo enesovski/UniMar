@@ -1,14 +1,17 @@
 package com.x_force.unimar.login;
 
 public class User {
-    private final String email;
-    private final String password;
+    private  String email;
+    private  String password;
+
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
+    public User(){
 
+    }
     public String getEmail() {
         return email;
     }
