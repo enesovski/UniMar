@@ -75,26 +75,29 @@ public class SearchUserActivity extends AppCompatActivity {
 
     @SuppressLint("NotifyDataSetChanged")
     private void handleSearch(String searchTerm) {
-            //Creates a query which has users that includes search input
-            Query query = db.collection("users").whereGreaterThanOrEqualTo("email", "yavuz");
 
-            //checks the query and prints the results
-            query.get().addOnSuccessListener(querySnapshot -> {
-                for (DocumentSnapshot document : querySnapshot) {
-                    Log.d("FirestoreQuery", "Document: " + document.getData());
-                }
-            }).addOnFailureListener(e -> {
-                Log.d("FirestoreQuery", "Error getting documents: ", e);
-            });
+        searchTerm = searchTerm.trim();
+
+        //Creates a query which has users that includes search input
+        Query query = db.collection("users").whereGreaterThanOrEqualTo("email", searchTerm).whereLessThan("email", searchTerm + "\uf8ff");
+
+        //checks the query and prints the results
+        query.get().addOnSuccessListener(querySnapshot -> {
+            for (DocumentSnapshot document : querySnapshot) {
+                Log.d("FirestoreQuery", "Document: " + document.getData());
+            }
+        }).addOnFailureListener(e -> {
+            Log.d("FirestoreQuery", "Error getting documents: ", e);
+        });
 
 
-            //Sets the option of query and adapter
-            FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>().setQuery(query, User.class).build();
+        //Sets the option of query and adapter
+        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>().setQuery(query, User.class).build();
 
-            adapter = new UserRecyclerAdapter(options,getApplicationContext());
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(adapter);
-            adapter.startListening();
+        adapter = new UserRecyclerAdapter(options,getApplicationContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
 
     }
 

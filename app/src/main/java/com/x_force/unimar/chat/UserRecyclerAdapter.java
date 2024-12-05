@@ -30,7 +30,7 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecy
     @Override
     protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
         if(model.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
-            holder.emailText.setText(model.getEmail() + " (ME) ");
+            holder.emailText.setText(model.getEmail() + " (Me) ");
         }
         else {
             holder.emailText.setText(model.getEmail());
