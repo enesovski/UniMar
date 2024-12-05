@@ -1,14 +1,10 @@
 package com.x_force.unimar.chat;
 
 import android.annotation.SuppressLint;
-import android.app.DownloadManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +19,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.x_force.unimar.R;
+import com.x_force.unimar.chat.adapters.UserRecyclerAdapter;
 import com.x_force.unimar.login.User;
 
 import java.util.List;
