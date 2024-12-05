@@ -24,6 +24,8 @@ import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
 
+    public static String otherUserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +44,7 @@ public class ChatActivity extends AppCompatActivity {
         // With a specified ID
         DocumentReference newDocumentRef = usersCollection.document();
 
-        Map<String, Object> userData = new HashMap<>();
-        userData.put("senderId", "Yavuz");
-        userData.put("content", "TEST");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            userData.put("timestamp", LocalDateTime.now());
-        }
+
 
 
 

@@ -1,4 +1,4 @@
-package com.x_force.unimar.chat;
+package com.x_force.unimar.chat.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,10 +15,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.x_force.unimar.R;
+import com.x_force.unimar.chat.ChatActivity;
 import com.x_force.unimar.login.User;
 
 public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecyclerAdapter.UserViewHolder> {
     private Context context;
+
 
     public UserRecyclerAdapter(@NonNull FirestoreRecyclerOptions<User> options, Context context) {
         super(options);
@@ -40,6 +42,7 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecy
            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
            context.startActivity(intent);
         });
+        ChatActivity.otherUserId = model.getUserId();
     }
 
     //Creates viewHolder object
