@@ -28,19 +28,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ChatActivity extends AppCompatActivity {
 
     public static String otherUserId;
 
-    public User spoken_user;
+    public User spokenUser;
 
-    public String chatroomıd;
+    public String chatRoomId;
 
-    public ChatRoom new_chatroom;
+    public ChatRoom newChatRoom;
     FirebaseFirestore db;
-    Button send_message_button,back_button,profile_button;
-    EditText message_edit_text;
+    Button sendMessageButton,backButton,profileButton;
+    EditText messageEditText;
 
 
 
@@ -54,57 +55,57 @@ public class ChatActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        spoken_user=new User(getIntent().getStringExtra("email"),getIntent().getStringExtra("ıd"));
-        db = FirebaseFirestore.getInstance();
-        create_chatroomıd(FirebaseAuth.getInstance().getUid(),spoken_user.getUserId());
-        send_message_button=findViewById(R.id.sendButton);
-        back_button=findViewById(R.id.backButton);
-        profile_button=findViewById(R.id.profileButton);
+        spokenUser=new User(getIntent().getStringExtra("ıd"), getIntent().getStringExtra("email"));
+        createChatRoomId(spokenUser.getUserId(), Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
+        sendMessageButton=findViewById(R.id.sendButton);
+        backButton=findViewById(R.id.backButton);
+        profileButton=findViewById(R.id.profileButton);
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
 
+        db = FirebaseFirestore.getInstance();
 
         CollectionReference usersCollection = db.collection("chat");
 
         // With a specified ID
         DocumentReference newDocumentRef = usersCollection.document();
 
-//        creating_chat_room();
+        creatingChatRoom();
 
     }
 
-    protected void create_chatroomıd(String ıd1,String ıd2){
-        if(ıd1.hashCode()<ıd2.hashCode()){
-            this.chatroomıd= ıd1+"_"+ıd2;
+    protected void createChatRoomId(String id1,String id2){
+        if(id1.hashCode()<id2.hashCode()){
+            this.chatRoomId= id1+"_"+id2;
         }else{
-            this.chatroomıd=ıd2+"_"+ıd1;
+            this.chatRoomId=id2+"_"+id1;
         }
     }
-    protected  DocumentReference getChatroomReference(String chatroomıd){
-        return FirebaseFirestore.getInstance().collection("chatrooms").document(chatroomıd);
+    protected  DocumentReference getChatroomReference(String chatRoomId){
+        return FirebaseFirestore.getInstance().collection("chatrooms").document(chatRoomId);
     }
-    protected void creating_chat_room(){
-        getChatroomReference(chatroomıd).get().addOnCompleteListener(task -> {
+    protected void creatingChatRoom(){
+        getChatroomReference(chatRoomId).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                System.out.println("ne oluyorrr");
-                new_chatroom=task.getResult().toObject(ChatRoom.class);
-                if(new_chatroom==null){
-                    ArrayList<String> chatroomids=new ArrayList<>();
-                    chatroomids.add(FirebaseAuth.getInstance().getUid());
-                    chatroomids.add(spoken_user.getUserId());
-                    new_chatroom=new ChatRoom(
-                            chatroomıd,
+                newChatRoom=task.getResult().toObject(ChatRoom.class);
+                if(newChatRoom==null){
+                    ArrayList<String> chatRoomIds=new ArrayList<>();
+                    chatRoomIds.add(FirebaseAuth.getInstance().getUid());
+                    chatRoomIds.add(spokenUser.getUserId());
+                    newChatRoom=new ChatRoom(
+                            chatRoomId,
                             "",
-                            chatroomids,
+                            chatRoomIds,
                             Timestamp.now()
 
                     );
-                    getChatroomReference(chatroomıd).set(new_chatroom);
+                    getChatroomReference(chatRoomId).set(newChatRoom);
                 }
 
             }
