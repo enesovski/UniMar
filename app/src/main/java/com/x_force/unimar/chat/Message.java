@@ -12,13 +12,18 @@ import java.util.Date;
 public class Message {
     private String content;
     private String senderId;
-    private final Timestamp timestamp;
+    private  Timestamp timestamp;
+
+    public Message(){
+
+    }
 
     public Message(String content, String senderId, Timestamp timestamp) {
         this.content = content;
         this.senderId = senderId;
         this.timestamp = timestamp;
     }
+
 
     public String getContent() {
         return  content;

@@ -1,5 +1,6 @@
 package com.x_force.unimar.chat;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,9 +25,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Query;
 import com.x_force.unimar.R;
+import com.x_force.unimar.chat.adapters.ChatViewAdapter;
+import com.x_force.unimar.chat.adapters.UserRecyclerAdapter;
 import com.x_force.unimar.login.User;
 
 import java.time.LocalDateTime;
@@ -45,6 +53,9 @@ public class ChatActivity extends AppCompatActivity {
     Button sendMessageButton,backButton,profileButton;
     EditText messageEditText;
 
+    ChatViewAdapter adapter;
+    RecyclerView recyclerView;
+
 
 
     @Override
@@ -63,6 +74,7 @@ public class ChatActivity extends AppCompatActivity {
         sendMessageButton=findViewById(R.id.sendButton);
         backButton=findViewById(R.id.backButton);
         profileButton=findViewById(R.id.profileButton);
+        recyclerView=findViewById(R.id.recyclerView);
 
         sendMessageButton.setOnClickListener((v)->{
             String messageText=messageEditText.getText().toString().trim();
@@ -98,6 +110,9 @@ public class ChatActivity extends AppCompatActivity {
         DocumentReference newDocumentRef = usersCollection.document();
 
         creatingChatRoom();
+        ChatAdapterQuery();
+
+
 
     }
 
@@ -131,5 +146,39 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    private void ChatAdapterQuery() {
+
+        //Creates a query which has users that includes search input
+        Query query = db.collection("chatrooms").document(chatRoomId).collection("chats").orderBy("timestamp",Query.Direction.DESCENDING);
+
+        //checks the query and prints the results
+        query.get().addOnSuccessListener(querySnapshot -> {
+            for (DocumentSnapshot document : querySnapshot) {
+                Log.d("FirestoreQuery", "Document: " + document.getData());
+            }
+        }).addOnFailureListener(e -> {
+            Log.d("FirestoreQuery", "Error getting documents: ", e);
+        });
+
+
+        //Sets the option of query and adapter
+        FirestoreRecyclerOptions<Message> options = new FirestoreRecyclerOptions.Builder<Message>().setQuery(query, Message.class).build();
+
+        adapter = new ChatViewAdapter(options,getApplicationContext());
+        LinearLayoutManager layout_order=new LinearLayoutManager(this);
+        layout_order.setReverseLayout(true);
+        recyclerView.setLayoutManager(layout_order);
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted( positionStart,itemCount);
+                recyclerView.smoothScrollToPosition(0);
+            }
+        });
+
     }
 }
