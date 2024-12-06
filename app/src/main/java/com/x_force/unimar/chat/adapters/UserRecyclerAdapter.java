@@ -39,6 +39,8 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecy
         }
         holder.itemView.setOnClickListener(v -> {
            Intent intent = new Intent(context, ChatActivity.class);
+           intent.putExtra("email",model.getEmail());
+           intent.putExtra("ıd",model.getUserId());
            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
            context.startActivity(intent);
         });
