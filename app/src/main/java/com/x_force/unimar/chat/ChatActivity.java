@@ -127,7 +127,37 @@ public class ChatActivity extends AppCompatActivity {
         return FirebaseFirestore.getInstance().collection("chatrooms").document(chatRoomId);
     }
     protected void creatingChatRoom(){
-        getChatroomReference(chatRoomId).get().addOnCompleteListener(task -> {
+        Query query = db.collection("chatrooms").whereEqualTo("roomId",chatRoomId);
+        query.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        ArrayList<String> chatRoomIds=new ArrayList<>();
+                        chatRoomIds.add(FirebaseAuth.getInstance().getUid());
+                        chatRoomIds.add(spokenUser.getUserId());
+                        newChatRoom=new ChatRoom(
+                                chatRoomId,
+                                "",
+                                chatRoomIds,
+                                Timestamp.now()
+
+                        );
+                        // At least one document contains the given ID
+                        Log.d("kahya", "ID exists in a document field!");
+                    } else {
+                        ArrayList<String> chatRoomIds=new ArrayList<>();
+                        chatRoomIds.add(FirebaseAuth.getInstance().getUid());
+                        chatRoomIds.add(spokenUser.getUserId());
+                        newChatRoom=new ChatRoom(
+                                chatRoomId,
+                                "",
+                                chatRoomIds,
+                                Timestamp.now()
+
+                        );
+                        getChatroomReference(chatRoomId).set(newChatRoom);
+                        Log.d("kahya", "ID does not exist.");
+                    }
+                });
+        /*getChatroomReference(chatRoomId).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 newChatRoom=task.getResult().toObject(ChatRoom.class);
                 if(newChatRoom==null){
@@ -145,7 +175,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
     }
     @SuppressLint("NotifyDataSetChanged")
     private void ChatAdapterQuery() {
