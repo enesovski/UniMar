@@ -14,8 +14,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -55,12 +57,31 @@ public class ChatActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        messageEditText=findViewById(R.id.messageEditText);
         spokenUser=new User(getIntent().getStringExtra("ıd"), getIntent().getStringExtra("email"));
         createChatRoomId(spokenUser.getUserId(), Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
         sendMessageButton=findViewById(R.id.sendButton);
         backButton=findViewById(R.id.backButton);
         profileButton=findViewById(R.id.profileButton);
 
+        sendMessageButton.setOnClickListener((v)->{
+            String messageText=messageEditText.getText().toString().trim();
+            if(!messageText.isEmpty()){
+                newChatRoom.setLastMessageSendTime(Timestamp.now());
+                newChatRoom.setLastSenderId(FirebaseAuth.getInstance().getUid());
+                getChatroomReference(chatRoomId).set(newChatRoom);
+                Message  chatMessage=new Message(messageText,FirebaseAuth.getInstance().getUid(),Timestamp.now());
+                getChatroomReference(chatRoomId).collection("chats").add(chatMessage).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if(task.isSuccessful()){
+                            messageEditText.setText("");
+                        }
+                    }
+                });
+
+            }
+        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
