@@ -6,39 +6,40 @@ import java.util.ArrayList;
 
 public class ChatRoom {
 
-    Timestamp lastmessagesendtime;
-    String roomid,lastsenderid;
+    Timestamp lastMessageSendTime;
+    String roomId,lastSenderId;
+
     ArrayList<String> userIds;
 
-    public ChatRoom(String roomid, String lastsenderid, ArrayList<String> userIds, Timestamp lastmessagesendtime) {
-        this.roomid = roomid;
-        this.lastsenderid = lastsenderid;
+    public ChatRoom(String roomId, String lastSenderId, ArrayList<String> userIds, Timestamp lastMessageSendTime) {
+        this.roomId = roomId;
+        this.lastSenderId = lastSenderId;
         this.userIds = userIds;
-        this.lastmessagesendtime = lastmessagesendtime;
+        this.lastMessageSendTime = lastMessageSendTime;
     }
 
-    public Timestamp getLastmessagesendtime() {
-        return lastmessagesendtime;
+    public Timestamp getLastMessageSendTime() {
+        return lastMessageSendTime;
     }
 
-    public void setLastmessagesendtime(Timestamp lastmessagesendtime) {
-        this.lastmessagesendtime = lastmessagesendtime;
+    public void setLastMessageSendTime(Timestamp lastMessageSendTime) {
+        this.lastMessageSendTime = lastMessageSendTime;
     }
 
-    public String getRoomid() {
-        return roomid;
+    public String getRoomId() {
+        return roomId;
     }
 
-    public void setRoomid(String roomid) {
-        this.roomid = roomid;
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
     }
 
-    public String getLastsenderid() {
-        return lastsenderid;
+    public String getLastSenderId() {
+        return lastSenderId;
     }
 
-    public void setLastsenderid(String lastsenderid) {
-        this.lastsenderid = lastsenderid;
+    public void setLastSenderId(String lastSenderId) {
+        this.lastSenderId = lastSenderId;
     }
 
     public ArrayList<String> getUserIds() {
