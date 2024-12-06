@@ -54,12 +54,12 @@ public class ChatActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        spoken_user=new User(getIntent().getStringExtra("email"),getIntent().getStringExtra("ıd"));
+        db = FirebaseFirestore.getInstance();
         create_chatroomıd(FirebaseAuth.getInstance().getUid(),spoken_user.getUserId());
         send_message_button=findViewById(R.id.sendButton);
         back_button=findViewById(R.id.backButton);
         profile_button=findViewById(R.id.profileButton);
-        spoken_user=new User(getIntent().getStringExtra("email"),getIntent().getStringExtra("ıd"));
 
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,14 +68,13 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        db = FirebaseFirestore.getInstance();
 
         CollectionReference usersCollection = db.collection("chat");
 
         // With a specified ID
         DocumentReference newDocumentRef = usersCollection.document();
 
-        creating_chat_room();
+//        creating_chat_room();
 
     }
 
@@ -92,6 +91,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void creating_chat_room(){
         getChatroomReference(chatroomıd).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
+                System.out.println("ne oluyorrr");
                 new_chatroom=task.getResult().toObject(ChatRoom.class);
                 if(new_chatroom==null){
                     ArrayList<String> chatroomids=new ArrayList<>();
