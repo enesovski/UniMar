@@ -3,6 +3,7 @@ package com.x_force.unimar.chat.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,12 @@ public class ChatViewAdapter extends FirestoreRecyclerAdapter<Message, ChatViewA
     @SuppressLint("SetTextI18n")
     @Override
     protected void onBindViewHolder(@NonNull MessageHolder holder, int position, @NonNull Message model) {
+        System.out.println(model.getContent());
         if(model.getSenderId().equals(FirebaseAuth.getInstance().getUid())){
             holder.sender_layout.setVisibility(View.GONE);
             holder.reciever_layout.setVisibility(View.VISIBLE);
             holder.reciever_text.setText(model.getContent());
+            System.out.println(holder.reciever_text.getText());
 
         }else{
             holder.reciever_layout.setVisibility(View.GONE);

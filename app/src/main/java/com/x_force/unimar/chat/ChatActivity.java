@@ -153,14 +153,6 @@ public class ChatActivity extends AppCompatActivity {
         //Creates a query which has users that includes search input
         Query query = db.collection("chatrooms").document(chatRoomId).collection("chats").orderBy("timestamp",Query.Direction.DESCENDING);
 
-        //checks the query and prints the results
-        query.get().addOnSuccessListener(querySnapshot -> {
-            for (DocumentSnapshot document : querySnapshot) {
-                Log.d("FirestoreQuery", "Document: " + document.getData());
-            }
-        }).addOnFailureListener(e -> {
-            Log.d("FirestoreQuery", "Error getting documents: ", e);
-        });
 
 
         //Sets the option of query and adapter
@@ -181,4 +173,5 @@ public class ChatActivity extends AppCompatActivity {
         });
 
     }
+
 }
