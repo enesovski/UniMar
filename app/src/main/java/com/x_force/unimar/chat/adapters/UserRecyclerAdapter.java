@@ -18,6 +18,8 @@ import com.x_force.unimar.R;
 import com.x_force.unimar.chat.ChatActivity;
 import com.x_force.unimar.login.User;
 
+import java.util.Objects;
+
 public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecyclerAdapter.UserViewHolder> {
     private Context context;
 
@@ -31,7 +33,7 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecy
     @SuppressLint("SetTextI18n")
     @Override
     protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
-        if(model.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
+        if(model.getEmail().equals(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail())){
             holder.emailText.setText(model.getEmail() + " (Me) ");
         }
         else {

@@ -14,16 +14,17 @@
         android:id="@+id/sender_layout">
 
         <TextView
-            android:id="@+id/recieverText"
+            android:id="@+id/senderText"
             android:layout_width="wrap_content"
             android:textSize="20sp"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:text=""
-
             >
 
         </TextView>
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -37,12 +38,13 @@
         android:backgroundTint="@color/reciever_color">
 
         <TextView
-            android:id="@+id/senderText"
+            android:id="@+id/recieverText"
             android:layout_width="wrap_content"
             android:textSize="20sp"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:text=""
+
             >
 
         </TextView>
