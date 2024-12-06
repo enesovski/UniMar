@@ -9,8 +9,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.x_force.unimar.tutor.Product;
-import com.x_force.unimar.tutor.Tutoring;
+import com.x_force.unimar.Item.Product;
+import com.x_force.unimar.Item.Tutoring;
 
 public class MainActivity extends AppCompatActivity {
 
