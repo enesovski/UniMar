@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="70dp"
+        android:background="@drawable/round_structure"
+        android:padding="10dp"
+        android:backgroundTint="@color/sender_color"
+        android:id="@+id/sender_layout">
+
+        <TextView
+            android:id="@+id/recieverText"
+            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text=""
+
+            >
+
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/reciever_layout"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:background="@drawable/round_structure"
+        android:padding="10dp"
+        android:backgroundTint="@color/reciever_color">
+
+        <TextView
+            android:id="@+id/senderText"
+            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text=""
+            >
+
+        </TextView>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
