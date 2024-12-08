@@ -11,6 +11,7 @@ public class ChatRoom {
 
     ArrayList<String> userIds;
 
+    public ChatRoom() {};
     public ChatRoom(String roomId, String lastSenderId, ArrayList<String> userIds, Timestamp lastMessageSendTime) {
         this.roomId = roomId;
         this.lastSenderId = lastSenderId;
