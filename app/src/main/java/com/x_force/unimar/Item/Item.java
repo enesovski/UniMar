@@ -18,7 +18,7 @@ public class Item {
 
     public void setDocId(String docId) {
         this.docId = docId;
-        db.collection("tutorListing").document(this.getDocId()).update("docId",docId);
+        //db.collection("tutorListing").document(this.getDocId()).update("docId",docId);
     }
 
     public String getDesc() {
@@ -27,7 +27,7 @@ public class Item {
 
     public void setDesc(String desc) {
         this.desc = desc;
-        db.collection("tutorListing").document(this.getDocId()).update("desc",desc);
+        //db.collection("tutorListing").document(this.getDocId()).update("desc",desc);
     }
 
     public String getName() {
@@ -36,7 +36,7 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
-        db.collection("tutorListing").document(this.getDocId()).update("name",name);
+        //db.collection("tutorListing").document(this.getDocId()).update("name",name);
     }
 
     public int getCost() {
@@ -45,7 +45,7 @@ public class Item {
 
     public void setCost(int cost) {
         this.cost = cost;
-        db.collection("tutorListing").document(this.getDocId()).update("cost",cost);
+        //db.collection("tutorListing").document(this.getDocId()).update("cost",cost);
     }
 
     public String getCategory() {

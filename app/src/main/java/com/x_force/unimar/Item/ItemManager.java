@@ -6,6 +6,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 public class ItemManager {
     static FirebaseFirestore db;
 
@@ -78,5 +82,25 @@ public class ItemManager {
             });
         }
     }
+    public static List<Item> filterList(double min, double max){
+        List<Item> items = Collections.emptyList();
+        Query query = db.collection("productListing")
+                .whereGreaterThanOrEqualTo("cost",min);
 
+        query = query.whereLessThanOrEqualTo("cost", max);
+
+        query.get().addOnCompleteListener(done ->{
+            if(done.isSuccessful()){
+                for(QueryDocumentSnapshot document : done.getResult()){
+                    Product product = document.toObject(Product.class);
+                    items.add(product);
+                    Log.d("Firestore", document.getId() + " => " + document.getData());
+                }
+            }else{
+                Log.w("Firestore", "Error getting documents: ", done.getException());
+            }
+        });
+
+        return items;
+    }
 }

@@ -1,5 +1,6 @@
 package com.x_force.unimar;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -14,7 +15,7 @@ import com.x_force.unimar.Item.Tutoring;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static FirebaseFirestore db;
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +28,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        db = FirebaseFirestore.getInstance();
-
-        Product.filterList(2,4);
+        Intent intent = new Intent(MainActivity.this, ListingActivity.class);
+        startActivity(intent);
     }
 
     public static FirebaseFirestore getDB(){
