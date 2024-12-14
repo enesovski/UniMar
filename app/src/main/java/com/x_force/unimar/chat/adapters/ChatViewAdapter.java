@@ -38,13 +38,20 @@ public class ChatViewAdapter extends FirestoreRecyclerAdapter<Message, ChatViewA
         if(model.getSenderId().equals(FirebaseAuth.getInstance().getUid())){
             holder.sender_layout.setVisibility(View.GONE);
             holder.reciever_layout.setVisibility(View.VISIBLE);
+
+            String receiverTime =("  "+model.getTimestamp().toDate().getHours()+":"+model.getTimestamp().toDate().getMinutes());
             holder.reciever_text.setText(model.getContent());
+            holder.recieverTime.setText(receiverTime);
             System.out.println(holder.reciever_text.getText());
 
         }else{
             holder.reciever_layout.setVisibility(View.GONE);
             holder.sender_layout.setVisibility(View.VISIBLE);
+            String senderTime =("  "+model.getTimestamp().toDate().getHours()+":"+model.getTimestamp().toDate().getMinutes());
             holder.sender_text.setText(model.getContent());
+            holder.senderTime.setText(senderTime);
+
+
         }
 
     }
@@ -61,14 +68,16 @@ public class ChatViewAdapter extends FirestoreRecyclerAdapter<Message, ChatViewA
     class MessageHolder extends RecyclerView.ViewHolder{
 
         LinearLayout sender_layout,reciever_layout;
-        TextView sender_text,reciever_text;
+        TextView sender_text,reciever_text,senderTime,recieverTime;
 
         public MessageHolder(@NonNull View itemView) {
             super(itemView);
             reciever_layout=itemView.findViewById(R.id.reciever_layout);
             sender_layout=itemView.findViewById(R.id.sender_layout);
             sender_text=itemView.findViewById(R.id.senderText);
+            senderTime =itemView.findViewById(R.id.senderTime);
             reciever_text=itemView.findViewById(R.id.recieverText);
+            recieverTime =itemView.findViewById(R.id.receiverTime);
 
 
 
