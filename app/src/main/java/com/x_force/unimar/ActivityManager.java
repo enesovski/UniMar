@@ -1,6 +1,7 @@
 package com.x_force.unimar;
 
 import android.content.Intent;
+import android.util.Log;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -26,5 +27,12 @@ public class ActivityManager {
     }
     //#endregion
 
+    public void Switch(AppCompatActivity from, Class to)
+    {
+        Log.i("activity manager","switch");
+
+        Intent intent = new Intent(from, to);
+        from.startActivity(intent);
+    }
 
 }
