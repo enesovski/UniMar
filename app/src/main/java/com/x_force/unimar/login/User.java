@@ -1,20 +1,30 @@
 package com.x_force.unimar.login;
 
+import com.x_force.unimar.profile.Profile;
+
 public class User {
-    private final String email;
-    private final String password;
+
+    private String userId;
+    public Profile profile;
 
     public User(String email, String password) {
-        this.email = email;
-        this.password = password;
+
+        profile = new Profile(userId);
     }
 
     public String getEmail() {
-        return email;
+        return profile.getEmail();
     }
 
     public String getPassword() {
-        return password;
+        return profile.getPassword();
+    }
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 }

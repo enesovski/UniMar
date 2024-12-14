@@ -36,17 +36,21 @@ public class AuthHandler {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser fuser = mAuth.getCurrentUser();
-                        fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                callback.onFailure("Mail is sent.");
-                            }
-                    }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                callback.onFailure("Mail cannot sent.");
-                            }
-                        });
+
+                        if(fuser != null)
+                        {
+                            fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    callback.onFailure("Mail is sent.");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    callback.onFailure("Mail cannot sent.");
+                                }
+                            });
+                        }
 
                         callback.onSuccess("Registration successful!");
                     } else {
