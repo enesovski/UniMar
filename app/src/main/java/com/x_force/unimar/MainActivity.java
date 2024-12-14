@@ -10,8 +10,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.x_force.unimar.Item.Product;
-import com.x_force.unimar.Item.Tutoring;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Intent intent = new Intent(MainActivity.this, ListingActivity.class);
+        Intent intent = new Intent(MainActivity.this, ProductListingActivity.class);
         startActivity(intent);
     }
 
