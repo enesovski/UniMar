@@ -11,7 +11,9 @@ public class Item {
     private String docId;
     private String category;
 
+    public Item(){
 
+    }
     public String getDocId() {
         return docId;
     }
