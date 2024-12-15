@@ -115,26 +115,126 @@ public class ItemManager {
         return items;
     }
 
-    public static List<Item> filterProductList(double min, double max) {
-        List<Item> items = Collections.emptyList();
-        productQuery = productQuery.whereGreaterThanOrEqualTo("cost", min);
+    public static List<Item> filterList( char listType, double min, double max){
 
-        productQuery = productQuery.whereLessThanOrEqualTo("cost", max);
+        listType = Character.toUpperCase(listType);
+        List<Item> filteredList = new ArrayList<Item>();
 
-        productQuery.get().addOnCompleteListener(done -> {
-            if (done.isSuccessful()) {
-                for (QueryDocumentSnapshot document : done.getResult()) {
-                    Product product = document.toObject(Product.class);
-                    items.add(product);
-                    Log.d("Firestore", document.getId() + " => " + document.getData());
+        if( listType == 'P' ){
+            productQuery = productQuery.whereGreaterThanOrEqualTo("cost",min);
+            productQuery = productQuery.whereLessThanOrEqualTo("cost", max);
+
+            productQuery.get().addOnCompleteListener(done -> {
+                if( done.isSuccessful() ) {
+                    for (QueryDocumentSnapshot document : done.getResult()) {
+
+                        Product product = document.toObject(Product.class);
+                        filteredList.add(product);
+                    }
                 }
-            } else {
-                Log.w("Firestore", "Error getting documents: ", done.getException());
-            }
-        });
+            });
+        }
 
-        return items;
+        else if( listType == 'T' ){
+            tutoringQuery = tutoringQuery.whereGreaterThanOrEqualTo("cost",min);
+            tutoringQuery = tutoringQuery.whereLessThanOrEqualTo("cost", max);
+
+            tutoringQuery.get().addOnCompleteListener(done -> {
+                if( done.isSuccessful() ) {
+                    for (QueryDocumentSnapshot document : done.getResult()) {
+
+                        Tutoring tutoring = document.toObject(Tutoring.class);
+                        filteredList.add(tutoring);
+                    }
+                }
+            });
+
+        }
+
+        return filteredList;
+
     }
+
+    public static List<Item> filterList(char listType, String searchCategory ){
+
+        listType = Character.toUpperCase(listType);
+        searchCategory = searchCategory.toLowerCase();  //bütün itemların kategorisi Item classında set edilirken otomatik lowercase oluyor, case karışıklığı engellemek için
+        List<Item> searchedList = new ArrayList<Item>();
+
+        if( listType == 'P' ){
+            productQuery = productQuery.whereArrayContains("name", searchCategory);
+
+            productQuery.get().addOnCompleteListener(done -> {
+                if( done.isSuccessful() ) {
+                    for (QueryDocumentSnapshot document : done.getResult()) {
+
+                        Product product = document.toObject(Product.class);
+                        searchedList.add(product);
+                    }
+                }
+            });
+        }
+
+        else if( listType == 'T' ){
+            tutoringQuery = tutoringQuery.whereArrayContains("name", searchCategory);
+
+            tutoringQuery.get().addOnCompleteListener(done -> {
+                if( done.isSuccessful() ) {
+                    for (QueryDocumentSnapshot document : done.getResult()) {
+
+                        Tutoring tutoring = document.toObject(Tutoring.class);
+                        searchedList.add(tutoring);
+                    }
+                }
+            });
+
+        }
+
+        return searchedList;
+
+    }
+
+    public static void filterList(){} //Satıcının user ID'sine göre ürün/tutoring filtreleyecek ama user class'ı yapılmamış
+
+    public static List<Item> searchInTheList(char listType, String itemName ){
+
+        listType = Character.toUpperCase(listType);
+        itemName = itemName.toLowerCase();  //bütün itemların ismi Item classında set edilirken otomatik lowercase oluyor, case karışıklığı engellemek için
+        List<Item> searchedList = new ArrayList<Item>();
+
+        if( listType == 'P' ) {
+            productQuery = productQuery.whereEqualTo("name", itemName);
+
+            productQuery.get().addOnCompleteListener(done -> {
+                if( done.isSuccessful() ) {
+                    for (QueryDocumentSnapshot document : done.getResult()) {
+
+                        Product product = document.toObject(Product.class);
+                        searchedList.add(product);
+                    }
+                }
+            });
+        }
+
+        else if( listType == 'T' ) {
+            tutoringQuery = tutoringQuery.whereEqualTo("name", itemName);
+
+            tutoringQuery.get().addOnCompleteListener(done -> {
+                if( done.isSuccessful() ) {
+                    for (QueryDocumentSnapshot document : done.getResult()) {
+
+                        Tutoring tutoring = document.toObject(Tutoring.class);
+                        searchedList.add(tutoring);
+                    }
+                }
+            });
+        }
+
+        return searchedList;
+
+    }
+
+
 
     public static Query getProductQuery() {
         return productQuery;
