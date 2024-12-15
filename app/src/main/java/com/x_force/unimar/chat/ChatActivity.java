@@ -81,6 +81,7 @@ public class ChatActivity extends AppCompatActivity {
             if(!messageText.isEmpty()){
                 newChatRoom.setLastMessageSendTime(Timestamp.now());
                 newChatRoom.setLastSenderId(FirebaseAuth.getInstance().getUid());
+                newChatRoom.setLastMessage(messageText);
                 getChatroomReference(chatRoomId).set(newChatRoom);
                 Message  chatMessage=new Message(messageText,FirebaseAuth.getInstance().getUid(),Timestamp.now());
                 getChatroomReference(chatRoomId).collection("chats").add(chatMessage).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {

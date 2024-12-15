@@ -14,6 +14,8 @@ public class Message {
     private String senderId;
     private  Timestamp timestamp;
 
+
+
     public Message(){
 
     }
