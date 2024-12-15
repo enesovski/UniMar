@@ -15,7 +15,7 @@
             android:id="@+id/emailText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000"
+            android:background="#D3D3D3"
             android:textColor="#0EBDD4"
             android:textSize="18sp"
             android:textStyle="bold" />

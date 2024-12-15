@@ -22,19 +22,23 @@ import com.google.firebase.firestore.Query;
 import com.x_force.unimar.R;
 import com.x_force.unimar.chat.adapters.UserRecyclerAdapter;
 import com.x_force.unimar.login.User;
+import com.x_force.unimar.chat.ChatFragment;
 
 import java.util.List;
 
 public class SearchUserActivity extends AppCompatActivity {
 
+    ChatFragment chatFragment=new ChatFragment();
+
     EditText searchInput;
+
+    int count=0;
     Button searchButton;
     RecyclerView recyclerView;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     UserRecyclerAdapter adapter;
 
-    List<User> userList;
 
 
     @SuppressLint("MissingInflatedId")
@@ -57,8 +61,12 @@ public class SearchUserActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.searchButton);
         recyclerView = findViewById(R.id.recyclerView);
 
+        if(count==0){
+            chatFragment.handleSearch();
+        }
 
         searchButton.setOnClickListener(v ->{
+            count++;
             String searchTerm = searchInput.getText().toString();
             if(searchTerm.isEmpty() || searchTerm.length()<3){
                 searchInput.setError("Invalid Username");
@@ -71,6 +79,7 @@ public class SearchUserActivity extends AppCompatActivity {
 
     @SuppressLint("NotifyDataSetChanged")
     private void handleSearch(String searchTerm) {
+
 
         searchTerm = searchTerm.trim();
 

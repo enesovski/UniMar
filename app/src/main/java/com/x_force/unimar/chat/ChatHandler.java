@@ -8,6 +8,7 @@ import java.util.Date;
 
 public class ChatHandler {
     private Message message;
+
     private final FirebaseFirestore db;
     private RecyclerView recyclerView;
 
