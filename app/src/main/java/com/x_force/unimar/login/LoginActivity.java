@@ -8,18 +8,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.x_force.unimar.MainActivity;
 import com.x_force.unimar.R;
 import com.x_force.unimar.chat.SearchUserActivity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoginActivity extends AppCompatActivity implements IAuthCallback {
@@ -50,18 +56,19 @@ public class LoginActivity extends AppCompatActivity implements IAuthCallback {
         User user = getUserInput();
         if (validateInput(user)) {
             authHandler.loginUser(user.getEmail(), user.getPassword(), this);
-            user.setUserId(FirebaseAuth.getInstance().getUid());
+            user.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
             checkExistenceOfDocument(user,isExists -> {
                 if(!isExists.get()){
                     Map<String, Object> data = new HashMap<>();
-                    data.put("userId", user.getUserId());
+                    data.put("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
                     data.put("email", user.getEmail());
                     data.put("password", user.getPassword());
-                    db.collection("users").add(data);
+                    db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(data);
                 }
             });
             Intent intent = new Intent(LoginActivity.this, SearchUserActivity.class);
             startActivity(intent);
+
         }
     }
 
@@ -133,4 +140,6 @@ public class LoginActivity extends AppCompatActivity implements IAuthCallback {
     public interface Callback<T> {
         void onComplete(T result);
     }
+
+
 }

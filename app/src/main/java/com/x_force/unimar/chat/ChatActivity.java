@@ -1,6 +1,7 @@
 package com.x_force.unimar.chat;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,7 +71,8 @@ public class ChatActivity extends AppCompatActivity {
         });
         messageEditText=findViewById(R.id.messageEditText);
         spokenUser=new User(getIntent().getStringExtra("ıd"), getIntent().getStringExtra("email"));
-        createChatRoomId(spokenUser.getUserId(), Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
+        String currentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        createChatRoomId(spokenUser.getUserId(),currentId );
         sendMessageButton=findViewById(R.id.sendButton);
         backButton=findViewById(R.id.backButton);
         profileButton=findViewById(R.id.profileButton);
@@ -99,7 +101,9 @@ public class ChatActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent intent = new Intent(ChatActivity.this, SearchUserActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 
