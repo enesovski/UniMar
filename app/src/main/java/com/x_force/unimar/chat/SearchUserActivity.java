@@ -15,11 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 import com.x_force.unimar.R;
+import com.x_force.unimar.chat.adapters.RecentChat;
 import com.x_force.unimar.chat.adapters.UserRecyclerAdapter;
 import com.x_force.unimar.login.User;
 import com.x_force.unimar.chat.ChatFragment;
@@ -37,7 +39,7 @@ public class SearchUserActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    UserRecyclerAdapter adapter;
+    RecyclerView.Adapter adapter;
 
 
 
@@ -62,11 +64,11 @@ public class SearchUserActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
         if(count==0){
-            chatFragment.handleSearch();
+            handleSearch2();
         }
-
         searchButton.setOnClickListener(v ->{
             count++;
+
             String searchTerm = searchInput.getText().toString();
             if(searchTerm.isEmpty() || searchTerm.length()<3){
                 searchInput.setError("Invalid Username");
@@ -74,6 +76,10 @@ public class SearchUserActivity extends AppCompatActivity {
             }
             handleSearch(searchTerm);
         });
+
+
+
+
     }
 
 
@@ -102,7 +108,33 @@ public class SearchUserActivity extends AppCompatActivity {
         adapter = new UserRecyclerAdapter(options,getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        adapter.startListening();
+        ((UserRecyclerAdapter)adapter).startListening();
+
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    public void handleSearch2() {
+
+
+        //Creates a query which has users that includes search input
+        Query query = db.collection("chatrooms").whereArrayContains("userIds", FirebaseAuth.getInstance().getUid() ).orderBy("lastMessageSendTime",Query.Direction.DESCENDING);
+
+        //checks the query and prints the results
+        query.get().addOnSuccessListener(querySnapshot -> {
+            for (DocumentSnapshot document : querySnapshot) {
+                Log.d("FirestoreQuery", "Document: " + document.getData());
+            }
+        }).addOnFailureListener(e -> {
+            Log.d("FirestoreQuery", "Error getting documents: ", e);
+        });
+
+
+        //Sets the option of query and adapter
+        FirestoreRecyclerOptions<ChatRoom> options = new FirestoreRecyclerOptions.Builder<ChatRoom>().setQuery(query, ChatRoom.class).build();
+
+         adapter = new RecentChat(options,getApplicationContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(adapter);
+        ((RecentChat)adapter).startListening();
 
     }
 
@@ -110,7 +142,11 @@ public class SearchUserActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(adapter != null){
-            adapter.startListening();
+            if(count==0){
+                ((RecentChat)adapter).startListening();
+            }else{
+                ((UserRecyclerAdapter)adapter).startListening();
+            }
         }
     }
 
@@ -118,7 +154,11 @@ public class SearchUserActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if(adapter != null){
-            adapter.stopListening();
+            if(count==0){
+                ((RecentChat)adapter).stopListening();
+            }else{
+                ((UserRecyclerAdapter)adapter).stopListening();
+            }
         }
     }
 
@@ -126,7 +166,12 @@ public class SearchUserActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(adapter != null){
-            adapter.startListening();
+            if(count==0){
+                ((RecentChat)adapter).startListening();
+            }else{
+                ((UserRecyclerAdapter)adapter).startListening();
+            }
+
         }
     }
 }

@@ -35,7 +35,6 @@ public class ChatFragment extends Fragment {
     public View oncreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view= inflater.inflate(R.layout.activity_search_user,container,false);
         recentChatrecyclerView =view.findViewById(R.id.recyclerView);
-        System.out.println(recentChatrecyclerView==null);
         return view;
     }
     @SuppressLint("NotifyDataSetChanged")
