@@ -40,13 +40,14 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
     @Override
     protected void onBindViewHolder(@NonNull ChatRoomViewHolder holder, int position, @NonNull ChatRoom model) {
 
-        if(model.getUserIds().get(0).equals(FirebaseAuth.getInstance())){
-            FirebaseFirestore.getInstance().collection("users").document(model.getUserIds().get(1)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        if(model.getUserIds().get(1).equals(FirebaseAuth.getInstance().getUid())){
+            FirebaseFirestore.getInstance().collection("users").document(model.getUserIds().get(0)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if(task.isSuccessful()){
                         boolean MessageSendByMe=model.getLastSenderId().equals(FirebaseAuth.getInstance().getUid());
                         User user=task.getResult().toObject(User.class);
+                        System.out.println(user==null);
                         if(MessageSendByMe){
                             holder.emailText.setText("You:"+user.getEmail());
                         }else{
@@ -66,7 +67,36 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
             });
 
 
+
+        } else if(model.getUserIds().get(0).equals(FirebaseAuth.getInstance().getUid())){
+            FirebaseFirestore.getInstance().collection("users").document(model.getUserIds().get(1)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        boolean MessageSendByMe = model.getLastSenderId().equals(FirebaseAuth.getInstance().getUid());
+                        User user1 = task.getResult().toObject(User.class);
+                        if (user1 != null){
+                            if (MessageSendByMe) {
+                                holder.emailText.setText("You:" + user1.getEmail());
+                            } else {
+                                holder.emailText.setText(user1.getEmail());
+                            }
+                        }
+
+                        holder.messageTime.setText(model.getLastMessage());
+                        holder.messageTime.setText(new SimpleDateFormat("HH:MM").format(model.getLastMessageSendTime().toDate()));
+                        holder.itemView.setOnClickListener(v -> {
+                            Intent intent = new Intent(context, ChatActivity.class);
+                            intent.putExtra("email", user1.getEmail());
+                            intent.putExtra("ıd", user1.getUserId());
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        });
+                    }
+                }
+            });
         }
+
 
     }
 
