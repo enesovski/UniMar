@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,7 +43,9 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         TextView sortButton = convertView.findViewById(R.id.sort_button);
         TextView filterButton = convertView.findViewById(R.id.filter_button);
+        SearchView searchBar = convertView.findViewById(R.id.product_searchbar);
 
+        searchBar.setVisibility(View.GONE);
         sortButton.setVisibility(View.GONE);
         filterButton.setVisibility(View.GONE);
 

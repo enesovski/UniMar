@@ -17,10 +17,12 @@ import com.x_force.unimar.Item.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 public class ProductListingActivity extends AppCompatActivity {
     static FirebaseFirestore db;
     ListView itemList;
+    List<Item> items;
     static ItemAdapter adapter;
 
 
@@ -48,9 +50,12 @@ public class ProductListingActivity extends AppCompatActivity {
     public void showList(){
 
         itemList = findViewById(R.id.product_list);
-        //items = ItemManager.sortProductList('m');
+
+        items = ItemManager.sortProductList('m');
 
         adapter = new ItemAdapter(this,items);
+
+        ItemManager.adapter = adapter;
 
         itemList.setAdapter(adapter);
     }
