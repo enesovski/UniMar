@@ -38,17 +38,11 @@ public class AuthHandler {
                         if (fuser != null) {
                             String userId = fuser.getUid();
 
-                            // Save profile to Firestore
                             ProfileHandler.createUserProfile(userId, email, name, profileImage,
                                     university, department, new ProfileHandler.ProfileResultCallback() {
                                         @Override
                                         public void onSuccess(Map<String, Object> profileData) {
                                             callback.onSuccess("Registration successful!");
-                                        }
-
-                                        @Override
-                                        public void onSuccess() {
-                                            // Optional override
                                         }
 
                                         @Override

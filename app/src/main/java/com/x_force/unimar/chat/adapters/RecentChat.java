@@ -29,14 +29,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.ChatRoomViewHolder> {
     private Context context;
-
-
     public RecentChat(@NonNull FirestoreRecyclerOptions<ChatRoom> options, Context context) {
         super(options);
         this.context = context;
     }
 
-    //Sets the texts' values which came from database
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
     protected void onBindViewHolder(@NonNull ChatRoomViewHolder holder, int position, @NonNull ChatRoom model) {
@@ -112,15 +109,12 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
 
     }
 
-    //Creates viewHolder object
     @NonNull
     @Override
     public ChatRoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recent_chat_row, parent, false);
         return new ChatRoomViewHolder(view);
     }
-
-    //Holds ChatRoomRow to add recyclerView
     class ChatRoomViewHolder extends RecyclerView.ViewHolder{
         TextView emailText;
         TextView messageText;

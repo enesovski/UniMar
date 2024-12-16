@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class ProfileHandler {
     private static final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
     public static void createUserProfile(String uid, String email, String name,
                                          String profileImage, String university,
                                          String department, ProfileResultCallback callback) {
@@ -30,7 +29,6 @@ public class ProfileHandler {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // Pass profile data to the callback
                         callback.onSuccess(documentSnapshot.getData());
                     } else {
                         callback.onFailure("Profile not found.");
@@ -41,7 +39,6 @@ public class ProfileHandler {
 
     public interface ProfileResultCallback {
         void onSuccess(Map<String, Object> profileData);
-        void onSuccess();
         void onFailure(String errorMessage);
     }
 }

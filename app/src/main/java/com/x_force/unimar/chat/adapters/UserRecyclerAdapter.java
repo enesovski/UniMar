@@ -33,7 +33,6 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecy
         if (model.getName() != null) {
             holder.name.setText(model.getName());
         }
-
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChatActivity.class);
             intent.putExtra("name", model.getName());
@@ -49,7 +48,6 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecy
         View view = LayoutInflater.from(context).inflate(R.layout.search_user, parent, false);
         return new UserViewHolder(view);
     }
-
     class UserViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         public UserViewHolder(@NonNull View itemView) {

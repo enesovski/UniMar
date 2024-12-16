@@ -18,7 +18,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
 import com.x_force.unimar.R;
 import com.x_force.unimar.chat.adapters.ChatViewAdapter;
@@ -26,13 +25,11 @@ import java.util.Date;
 
 public class ChatActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_view);
 
-        // Retrieve data from Intent
         String userId = getIntent().getStringExtra("userId");
         String name = getIntent().getStringExtra("name");
 
@@ -70,12 +67,10 @@ public class ChatActivity extends AppCompatActivity {
                 .setQuery(query, Message.class)
                 .build();
 
-        // Attach adapter to RecyclerView
         ChatViewAdapter adapter = new ChatViewAdapter(options, this);
         recyclerView.setAdapter(adapter);
         adapter.startListening();
 
-        // Send button setup
         ImageButton sendButton = findViewById(R.id.sendButton);
         EditText messageEditText = findViewById(R.id.messageEditText);
 
@@ -86,8 +81,6 @@ public class ChatActivity extends AppCompatActivity {
                 messageEditText.setText(""); // Clear the input field
             }
         });
-
-        // Listen for new messages and display notifications
         listenForNewMessages(chatRoomId, userId, db);
     }
 
@@ -131,7 +124,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         }
 
-        // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "chat_notifications")
                 .setSmallIcon(R.drawable.ic_message)
                 .setContentTitle("New message")
@@ -144,8 +136,4 @@ public class ChatActivity extends AppCompatActivity {
     private String createChatRoomId(String id1, String id2) {
         return id1.compareTo(id2) < 0 ? id1 + "_" + id2 : id2 + "_" + id1;
     }
-    protected  DocumentReference getChatroomReference(String chatRoomId){
-        return FirebaseFirestore.getInstance().collection("chatrooms").document(chatRoomId);
-    }
-
 }
