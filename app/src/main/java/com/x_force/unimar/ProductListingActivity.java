@@ -1,5 +1,6 @@
 package com.x_force.unimar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import com.x_force.unimar.Item.Item;
 import com.x_force.unimar.Item.ItemAdapter;
 import com.x_force.unimar.Item.ItemManager;
 import com.x_force.unimar.Item.Product;
+import com.x_force.unimar.Views.ProductView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,14 @@ public class ProductListingActivity extends AppCompatActivity {
         adapter = new ItemAdapter(this,items);
 
         ItemManager.adapter = adapter;
+
+        /*itemList.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ProductView.class);
+            intent.putExtra("category","math");
+            intent.putExtra("name","yavuz");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplication().startActivity(intent);
+        });*/
 
         itemList.setAdapter(adapter);
     }

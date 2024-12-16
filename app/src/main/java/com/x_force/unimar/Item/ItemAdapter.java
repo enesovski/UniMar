@@ -1,16 +1,19 @@
 package com.x_force.unimar.Item;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.x_force.unimar.R;
+import com.x_force.unimar.Views.ProductView;
 
 import java.util.List;
 
@@ -50,6 +53,20 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         searchBar.setVisibility(View.GONE);
         sortButton.setVisibility(View.GONE);
         filterButton.setVisibility(View.GONE);
+
+        convertView.setOnClickListener(v -> {
+            String categories = "";
+            for (int i = 0; i < item.getCategory().size(); i++) {
+                categories += item.getCategory().get(i) + ",";
+            }
+            categories = categories.substring(0, categories.length() - 1);
+            Intent intent = new Intent(getContext(), ProductView.class);
+            intent.putExtra("Name", item.getName());
+            intent.putExtra("Category", categories);
+            intent.putExtra("Description", item.getDesc());
+            intent.putExtra("Cost", item.getCost()+"");
+            getContext().startActivity(intent);
+        });
 
         return convertView;
     }
