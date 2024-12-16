@@ -59,10 +59,11 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
                     boolean MessageSendByMe=model.getLastSenderId().equals(FirebaseAuth.getInstance().getUid());
                     User user = task.getResult().toObject(User.class);
                     if(user!=null){
-                        if(!MessageSendByMe){
-                            holder.emailText.setText("You:"+ user.getEmail());
+                        holder.emailText.setText(user.getEmail().substring(0,5));
+                        if(MessageSendByMe){
+                            holder.last_message_sender.setText("You:"+ model.getLastMessage());
                         }else{
-                            holder.emailText.setText(user.getEmail());
+                            holder.last_message_sender.setText(user.getEmail().substring(0,5)+":"+model.getLastMessage());
                         }
                         holder.messageTime.setText(model.getLastMessage());
                         holder.messageTime.setText(new SimpleDateFormat("HH:mm").format(model.getLastMessageSendTime().toDate()));
@@ -85,10 +86,11 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
                         boolean MessageSendByMe = model.getLastSenderId().equals(FirebaseAuth.getInstance().getUid());
                         User user = task.getResult().toObject(User.class);
                         if (user != null){
-                            if (!MessageSendByMe) {
-                                holder.emailText.setText("You:" + user.getEmail());
-                            } else {
-                                holder.emailText.setText(user.getEmail());
+                            holder.emailText.setText(user.getEmail().substring(0,5));
+                            if(MessageSendByMe){
+                                holder.last_message_sender.setText("You:"+ model.getLastMessage());
+                            }else{
+                                holder.last_message_sender.setText(user.getEmail().substring(0,5)+":"+model.getLastMessage());
                             }
                             holder.messageTime.setText(model.getLastMessage());
                             holder.messageTime.setText(new SimpleDateFormat("HH:MM").format(model.getLastMessageSendTime().toDate()));
@@ -123,9 +125,11 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
         TextView emailText;
         TextView messageText;
         TextView messageTime;
+        TextView last_message_sender;
 
         public ChatRoomViewHolder(@NonNull View itemView) {
             super(itemView);
+            last_message_sender=itemView.findViewById(R.id.last_message_sender);
             emailText = itemView.findViewById(R.id.emailText);
             messageText=itemView.findViewById(R.id.lastMessageText);
             messageTime= itemView.findViewById(R.id.lastMessageTime);
