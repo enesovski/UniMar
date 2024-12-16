@@ -30,27 +30,6 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            System.out.println("Fetching FCM registration token failed");
-                            return;
-                        }
-
-                        // Get new FCM registration token
-                        String token = task.getResult();
-
-                        // Log and toast
-
-                        System.out.println( token);
-                        Toast.makeText(MainActivity.this,"registiration token is:"+ token, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-
 
     }
 

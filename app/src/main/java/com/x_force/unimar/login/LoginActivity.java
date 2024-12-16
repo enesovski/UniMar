@@ -67,6 +67,24 @@ public class LoginActivity extends AppCompatActivity implements IAuthCallback {
                 }
             });
             Intent intent = new Intent(LoginActivity.this, SearchUserActivity.class);
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(new OnCompleteListener<String>() {
+                        @Override
+                        public void onComplete(@NonNull Task<String> task) {
+                            if (!task.isSuccessful()) {
+                                System.out.println("Fetching FCM registration token failed");
+                                return;
+                            }
+
+                            // Get new FCM registration token
+                            String token = task.getResult();
+
+                            // Log and toast
+
+                            System.out.println( token);
+                            Toast.makeText(LoginActivity.this,"registiration token is:"+ token, Toast.LENGTH_SHORT).show();
+                        }
+                    });
             startActivity(intent);
 
         }
@@ -140,6 +158,5 @@ public class LoginActivity extends AppCompatActivity implements IAuthCallback {
     public interface Callback<T> {
         void onComplete(T result);
     }
-
 
 }
