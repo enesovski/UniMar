@@ -3,14 +3,12 @@ package com.x_force.unimar.chat.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -18,11 +16,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.x_force.unimar.R;
 import com.x_force.unimar.chat.ChatActivity;
@@ -30,7 +25,7 @@ import com.x_force.unimar.chat.ChatRoom;
 import com.x_force.unimar.login.User;
 
 import java.text.SimpleDateFormat;
-import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.ChatRoomViewHolder> {
     private Context context;
@@ -45,9 +40,20 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
     protected void onBindViewHolder(@NonNull ChatRoomViewHolder holder, int position, @NonNull ChatRoom model) {
-        if(model.getUserIds().get(1).equals(FirebaseAuth.getInstance().getUid())){
-
-
+        AtomicBoolean isExists = new AtomicBoolean(true);
+        String chatRoomId;
+        if(model.getUserIds().get(0).hashCode()<model.getUserIds().get(1).hashCode()){
+            chatRoomId= model.getUserIds().get(0)+"_"+model.getUserIds().get(1);
+        }else{
+            chatRoomId= model.getUserIds().get(1)+"_"+model.getUserIds().get(0);
+        }
+        Query query = FirebaseFirestore.getInstance().collection("chatrooms").whereEqualTo("roomId",chatRoomId);
+        query.get().addOnCompleteListener(task -> {
+          if (task.getResult().isEmpty()){
+              isExists.set(false);
+          }
+        });
+        if(model.getUserIds().get(1).equals(FirebaseAuth.getInstance().getUid()) && isExists.get()){
             FirebaseFirestore.getInstance().collection("users").document(model.getUserIds().get(0)).get().addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
                     boolean MessageSendByMe=model.getLastSenderId().equals(FirebaseAuth.getInstance().getUid());
@@ -71,7 +77,7 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
 
                 }
             });
-        } else if(model.getUserIds().get(0).equals(FirebaseAuth.getInstance().getUid())){
+        }else if(model.getUserIds().get(0).equals(FirebaseAuth.getInstance().getUid()) && isExists.get()){
             FirebaseFirestore.getInstance().collection("users").document(model.getUserIds().get(1)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
