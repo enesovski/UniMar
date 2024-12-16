@@ -3,6 +3,7 @@ package com.x_force.unimar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridView;
@@ -16,6 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.slider.RangeSlider;
+import com.google.android.material.slider.Slider;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.x_force.unimar.Item.Item;
@@ -78,6 +80,7 @@ public class ProductListingActivity extends AppCompatActivity {
     }
 
     public void setButtonInteractions(){
+
         Button GeneralSortButton = findViewById(R.id.sort_button);
         Button SortAscendingButton = findViewById(R.id.button_sort_ascending);
         Button SortDescendingButton = findViewById(R.id.button_sort_descending);
@@ -107,6 +110,7 @@ public class ProductListingActivity extends AppCompatActivity {
         });
 
         FilterButton.setOnClickListener(v -> {
+
             setContentView(R.layout.activity_product_filtering);
 
             CheckBox csCheckbox = findViewById(R.id.csCategoryCheckBox);
@@ -123,22 +127,25 @@ public class ProductListingActivity extends AppCompatActivity {
             CheckBox priceCheckbox = findViewById(R.id.ProductPriceFilterButton);
             CheckBox ratingCheckbox = findViewById(R.id.ProductUserRatingFilterButton);
             CheckBox categoryCheckBox = findViewById(R.id.categoryCheckbox);
-            RangeSlider priceSlider = findViewById(R.id.ProductPriceFilterSlider);
-            RangeSlider ratingSlider = findViewById(R.id.ProductUserRatingFilterSlider);
+            Slider priceSlider = findViewById(R.id.ProductPriceFilterSlider);
+            Slider ratingSlider = findViewById(R.id.ProductUserRatingFilterSlider);
             TextView filterText = findViewById(R.id.FilterText);
 
             priceCheckbox.setOnClickListener(e -> {
+                Log.d("Enes", "Price checkbox clicked");
 
-                priceSlider.setVisibility(ListView.VISIBLE);
+                priceSlider.setVisibility(View.VISIBLE);
 
-                priceSlider.setOnClickListener(a -> {
+                priceSlider.addOnChangeListener((slider, value, fromUser) -> {
 
-                    float value = priceSlider.getValues().get(0);
-                    ItemManager.filterList('P',0,value);
+                    float maxValue = priceSlider.getValue();
 
+                    Log.d("Enes", "Price Slider Value: Min="  + ", Max=" + maxValue);
+
+                    ItemManager.filterList('P', 0, maxValue);
                 });
-
             });
+
 
             categoryCheckBox.setOnClickListener(e -> {
 
