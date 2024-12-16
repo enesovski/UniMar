@@ -8,8 +8,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="2dp"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:background="@drawable/edit_text_round_corner">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -17,7 +19,6 @@
                 android:id="@+id/emailText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#D3D3D3"
                 android:textColor="#0EBDD4"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -31,12 +32,27 @@
             </TextView>
 
         </RelativeLayout>
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/lastMessageText">
-        </TextView>
+            android:textColor="#0EBDD4"
+            android:textSize="18sp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/last_message_sender">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/lastMessageText">
+            </TextView>
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
