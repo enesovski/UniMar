@@ -2,6 +2,7 @@ package com.x_force.unimar;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -22,7 +23,7 @@ import java.util.Timer;
 
 public class ProductListingActivity extends AppCompatActivity {
     static FirebaseFirestore db;
-    ListView itemList;
+    GridView itemList;
     List<Item> items;
     static ItemAdapter adapter;
 
