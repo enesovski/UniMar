@@ -1,5 +1,6 @@
 package com.x_force.unimar.home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.x_force.unimar.R;
+import com.x_force.unimar.chat.SearchUserActivity;
 import com.x_force.unimar.login.LoginActivity;
 import com.x_force.unimar.profile.ProfileActivity;
 import com.x_force.unimar.profile.ProfileHandler;
@@ -26,7 +28,9 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView profileImageView;
     private TextView welcomeTextView;
     private Button profileButton;
+    private  Button chatButton;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,11 @@ public class HomeActivity extends AppCompatActivity {
         profileImageView = findViewById(R.id.profileImageView);
         welcomeTextView = findViewById(R.id.welcomeTextView);
         profileButton = findViewById(R.id.profileButton);
+        chatButton = findViewById(R.id.chatButton);
+
+        chatButton.setOnClickListener(e -> {Intent intent = new Intent(HomeActivity.this, SearchUserActivity.class);
+        startActivity(intent);});
+
         ConstraintLayout customButton1 = findViewById(R.id.customButton1);
         ConstraintLayout customButton2 = findViewById(R.id.customButton2);
 

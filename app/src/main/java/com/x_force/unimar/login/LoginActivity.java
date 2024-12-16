@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements IAuthCallback {
     }
 
 
-    public void checkExistenceOfDocument(User user, Callback<AtomicBoolean> callback){
+    /*public void checkExistenceOfDocument(User user, Callback<AtomicBoolean> callback){
 
         AtomicBoolean isExists = new AtomicBoolean(false);
         db.collection("users")
@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity implements IAuthCallback {
                     Log.e("DENEY", "Error checking document existence", e);
                 });
         Log.d("DENEY", "User exists: method sonu " + isExists.get());
-    }
+    }*/
 
     public interface Callback<T> {
         void onComplete(T result);
