@@ -1,7 +1,6 @@
 package com.x_force.unimar.chat;
 
 import com.google.firebase.Timestamp;
-
 import java.util.ArrayList;
 
 public class ChatRoom {

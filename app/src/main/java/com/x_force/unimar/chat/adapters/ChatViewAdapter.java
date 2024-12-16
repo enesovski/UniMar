@@ -28,14 +28,11 @@ import java.util.Locale;
 
 public class ChatViewAdapter extends FirestoreRecyclerAdapter<Message, ChatViewAdapter.MessageHolder> {
     private Context context;
-
-
     public ChatViewAdapter(@NonNull FirestoreRecyclerOptions<Message> options, Context context) {
         super(options);
         this.context = context;
     }
 
-    //Sets the texts' values which came from database
     @SuppressLint("SetTextI18n")
     @Override
     protected void onBindViewHolder(@NonNull MessageHolder holder, int position, @NonNull Message model) {
@@ -65,7 +62,6 @@ public class ChatViewAdapter extends FirestoreRecyclerAdapter<Message, ChatViewA
     }
 
     class MessageHolder extends RecyclerView.ViewHolder{
-
         LinearLayout sender_layout,reciever_layout;
         TextView sender_text,reciever_text,senderTime,recieverTime;
 

@@ -6,21 +6,19 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.x_force.unimar.MainActivity;
 import com.x_force.unimar.R;
+import com.x_force.unimar.home.HomeActivity;
 
 public class Notification extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         getMessageNotification(getApplicationContext(),message.getNotification().getTitle(),message.getNotification().getBody(),intent);
 
     }

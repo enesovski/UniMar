@@ -9,7 +9,6 @@ public class Profile {
     private String password;
 
     public String name;
-
     public ProfileState profileState;
 
     public Profile(String userId, String email)

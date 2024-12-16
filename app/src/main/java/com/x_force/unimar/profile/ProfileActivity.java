@@ -2,33 +2,27 @@ package com.x_force.unimar.profile;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.x_force.unimar.R;
-
 import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
-
     private ImageView profileImageView;
     private TextView profileNameTextView;
     private TextView profileEmailTextView;
@@ -95,18 +89,12 @@ public class ProfileActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onSuccess() { }
-
-                @Override
                 public void onFailure(String errorMessage) {
                     Toast.makeText(ProfileActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                 }
             });
 
-            // Profile picture editing
             profileImageView.setOnClickListener(v -> openImagePicker());
-
-            // Toggle notifications
             notificationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 FirebaseFirestore.getInstance()
                         .collection("users")
@@ -119,12 +107,10 @@ public class ProfileActivity extends AppCompatActivity {
                         .addOnFailureListener(e -> Toast.makeText(ProfileActivity.this, "Failed to update settings", Toast.LENGTH_SHORT).show());
             });
 
-            // Edit Profile Name Listener
             editProfileButton.setOnClickListener(v -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Edit Profile");
 
-                // Input for Name
                 final EditText input = new EditText(this);
                 input.setHint("Enter new name");
                 builder.setView(input);
@@ -133,7 +119,6 @@ public class ProfileActivity extends AppCompatActivity {
                     String newName = input.getText().toString().trim();
                     if (!newName.isEmpty()) {
                         profileNameTextView.setText("Name: " + newName);
-                        // Update Firestore
                         FirebaseFirestore.getInstance()
                                 .collection("users")
                                 .document(currentUser.getUid())
@@ -147,7 +132,6 @@ public class ProfileActivity extends AppCompatActivity {
                 builder.show();
             });
         } else {
-            // Handle case where no user is logged in
             Toast.makeText(this, "No user is logged in.", Toast.LENGTH_SHORT).show();
             finish();
         }

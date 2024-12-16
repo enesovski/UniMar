@@ -5,15 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,13 +19,8 @@ import com.x_force.unimar.R;
 import com.x_force.unimar.chat.adapters.RecentChat;
 import com.x_force.unimar.chat.adapters.UserRecyclerAdapter;
 import com.x_force.unimar.login.User;
-import com.x_force.unimar.chat.ChatFragment;
-
-import java.util.List;
 
 public class SearchUserActivity extends AppCompatActivity {
-
-    ChatFragment chatFragment=new ChatFragment();
     EditText searchInput;
 
     int count=0;
@@ -39,8 +29,6 @@ public class SearchUserActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     RecyclerView.Adapter adapter;
-
-
 
     @SuppressLint("MissingInflatedId")
     @Override

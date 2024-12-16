@@ -33,7 +33,6 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecy
         if (model.getEmail() != null) {
             holder.emailText.setText(model.getEmail());
         }
-
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChatActivity.class);
             intent.putExtra("email", model.getEmail());
@@ -49,7 +48,6 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecy
         View view = LayoutInflater.from(context).inflate(R.layout.search_user, parent, false);
         return new UserViewHolder(view);
     }
-
     class UserViewHolder extends RecyclerView.ViewHolder{
         TextView emailText;
         public UserViewHolder(@NonNull View itemView) {
