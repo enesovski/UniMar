@@ -1,39 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:alpha="1"
+    android:background="@drawable/ic_login_background"
+    android:foregroundTint="@color/blue_darker">
+
+    <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="219dp"
+        android:layout_height="56dp"
+        android:fontFamily="monospace"
+        android:gravity="center_horizontal"
+        android:text="Unimar"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="174dp" />
 
     <LinearLayout
+        android:id="@+id/buttonsLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="152dp"
+        android:background="@drawable/rounded_panel"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
         <EditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_edittext"
+            android:fontFamily="casual"
             android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:padding="16dp" />
 
         <EditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_edittext"
+            android:fontFamily="casual"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:padding="16dp" />
 
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login" />
+            android:layout_marginBottom="8dp"
+            android:background="#FF0000"
+            android:backgroundTint="#760E0E"
+            android:backgroundTintMode="src_in"
+            android:fontFamily="casual"
+            android:text="Login"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register" />
+            android:background="#FFFFFF"
+            android:fontFamily="casual"
+            android:text="Register"
 
+            android:textColor="@color/black" />
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,7 @@ public class User {
 
     public User(String email, String password) {
 
-        profile = new Profile(userId);
+        profile = new Profile(userId, email);
     }
 
     public String getEmail() {
