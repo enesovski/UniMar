@@ -6,109 +6,130 @@
     android:layout_height="match_parent">
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBox_math"
         android:layout_width="175dp"
         android:layout_height="38dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="108dp"
-        android:layout_marginBottom="16dp"
-        android:text="Math"
-        app:layout_constraintBottom_toTopOf="@+id/checkBox3"
+        android:layout_marginBottom="8dp"
+        android:text="MATH"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox_phys"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <CheckBox
-        android:id="@+id/checkBox3"
-        android:layout_width="175dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:text="Phys"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
-
-    <CheckBox
-        android:id="@+id/checkBox4"
-        android:layout_width="175dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:text="Chem"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
-
-    <CheckBox
-        android:id="@+id/checkBox9"
-        android:layout_width="175dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:text="Chem"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/checkBox4"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox8" />
-
-    <CheckBox
-        android:id="@+id/checkBox7"
-        android:layout_width="175dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="16dp"
-        android:text="Math"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
-        android:id="@+id/checkBox8"
+        android:id="@+id/checkBox_eee"
+        android:layout_width="175dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="EEE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_chem" />
+
+    <CheckBox
+        android:id="@+id/checkBox_chem"
+        android:layout_width="175dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="CHEM"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_phys" />
+
+    <CheckBox
+        android:id="@+id/checkBox_phys"
+        android:layout_width="175dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="PHYS"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_math" />
+
+    <CheckBox
+        android:id="@+id/checkBox_hist"
+        android:layout_width="175dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="12dp"
+        android:text="HIST"
+        app:layout_constraintStart_toEndOf="@+id/checkBox_mbg"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_me" />
+
+    <CheckBox
+        android:id="@+id/checkBox_mbg"
+        android:layout_width="175dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="MBG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_eee" />
+
+    <CheckBox
+        android:id="@+id/checkBox_eng"
+        android:layout_width="175dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:text="ENG"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/checkBox_chem"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_phil" />
+
+    <CheckBox
+        android:id="@+id/checkBox_cs"
+        android:layout_width="175dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="16dp"
+        android:text="CS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/checkBox_math"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBox_phil"
         android:layout_width="175dp"
         android:layout_height="38dp"
         android:layout_marginStart="31dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="15dp"
-        android:text="Math"
+        android:text="PHIL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/checkBox3"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox7" />
+        app:layout_constraintStart_toEndOf="@+id/checkBox_phys"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_cs" />
 
     <CheckBox
-        android:id="@+id/checkBox5"
-        android:layout_width="175dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:text="EEE"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
-
-    <CheckBox
-        android:id="@+id/checkBox10"
+        android:id="@+id/checkBox_me"
         android:layout_width="175dp"
         android:layout_height="38dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
-        android:text="EEE"
+        android:text="ME"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/checkBox5"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox9" />
+        app:layout_constraintStart_toEndOf="@+id/checkBox_eee"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_eng" />
 
     <Button
         android:id="@+id/button_add_product"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="268dp"
+        android:layout_marginStart="141dp"
+        android:layout_marginEnd="142dp"
         android:layout_marginBottom="119dp"
         android:text="Add Product"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox5"
-        tools:layout_editor_absoluteX="141dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
