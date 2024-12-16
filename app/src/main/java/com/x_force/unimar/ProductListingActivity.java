@@ -1,6 +1,7 @@
 package com.x_force.unimar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -72,6 +73,20 @@ public class ProductListingActivity extends AppCompatActivity {
             GeneralSortButton.setVisibility(ListView.GONE);
             SortAscendingButton.setVisibility(ListView.VISIBLE);
             SortDescendingButton.setVisibility(ListView.VISIBLE);
+        });
+
+        SortAscendingButton.setOnClickListener (v -> {
+            ItemManager.sortProductList('A');
+            GeneralSortButton.setVisibility(ListView.VISIBLE);
+            SortAscendingButton.setVisibility(ListView.GONE);
+            SortDescendingButton.setVisibility(ListView.GONE);
+        });
+
+        SortDescendingButton.setOnClickListener (v -> {
+            ItemManager.sortProductList('D');
+            GeneralSortButton.setVisibility(ListView.VISIBLE);
+            SortAscendingButton.setVisibility(ListView.GONE);
+            SortDescendingButton.setVisibility(ListView.GONE);
         });
     }
     public static ItemAdapter getAdapter(){

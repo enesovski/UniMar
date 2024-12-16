@@ -37,9 +37,11 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         TextView nameTextView = convertView.findViewById(R.id.item_name);
         TextView costTextView = convertView.findViewById(R.id.item_cost);
+        TextView descTextView = convertView.findViewById(R.id.item_desc);
 
         nameTextView.setText(item.getName());
         costTextView.setText(String.valueOf(item.getCost()));
+        descTextView.setText(item.getDesc());
 
         TextView sortButton = convertView.findViewById(R.id.sort_button);
         TextView filterButton = convertView.findViewById(R.id.filter_button);

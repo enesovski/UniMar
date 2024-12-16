@@ -86,6 +86,8 @@ public class ItemManager {
             }
         });
 
+        refreshProductQuery();
+
         return items;
     }
 
