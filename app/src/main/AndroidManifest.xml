@@ -31,11 +31,10 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".chat.Notification"
-            android:exported="true">
+            android:name="com.x_force.unimar.chat.MyFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
