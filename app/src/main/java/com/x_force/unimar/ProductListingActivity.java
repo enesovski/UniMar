@@ -78,6 +78,7 @@ public class ProductListingActivity extends AppCompatActivity {
         Button GeneralSortButton = findViewById(R.id.sort_button);
         Button SortAscendingButton = findViewById(R.id.button_sort_ascending);
         Button SortDescendingButton = findViewById(R.id.button_sort_descending);
+        Button addNewbutton = findViewById(R.id.button_change_activity_add);
 
         GeneralSortButton.setOnClickListener (v -> {
             GeneralSortButton.setVisibility(ListView.GONE);
@@ -99,6 +100,11 @@ public class ProductListingActivity extends AppCompatActivity {
             SortDescendingButton.setVisibility(ListView.GONE);
         });
 
+        addNewbutton.setOnClickListener(v ->{
+            Intent intent = new Intent(this, ItemAddActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
     }
     public static ItemAdapter getAdapter(){
