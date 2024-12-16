@@ -119,12 +119,14 @@ public class ItemManager {
 
     public static List<Item> filterList( char listType, double min, double max){
 
+        Log.d("Burak", "Burak");
         listType = Character.toUpperCase(listType);
         List<Item> filteredList = new ArrayList<Item>();
 
         if( listType == 'P' ){
+            Log.d("Burak", String.valueOf(productQuery.count()));
             productQuery = productQuery.whereGreaterThanOrEqualTo("cost",min).whereLessThanOrEqualTo("cost", max);;
-            //productQuery = productQuery.whereLessThanOrEqualTo("cost", max);
+
 
             productQuery.get().addOnCompleteListener(done -> {
                 if( done.isSuccessful() ) {
@@ -153,8 +155,6 @@ public class ItemManager {
             });
 
         }
-
-
 
         return filteredList;
 
@@ -241,7 +241,7 @@ public class ItemManager {
         return searchedList;
 
     }
-    
+
     public static Query getProductQuery() {
         return productQuery;
     }
