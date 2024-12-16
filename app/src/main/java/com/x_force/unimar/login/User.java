@@ -1,5 +1,7 @@
 package com.x_force.unimar.login;
 
+import com.x_force.unimar.profile.Profile;
+
 public class User {
     private  String userId;
     private  String email;
@@ -21,7 +23,7 @@ public class User {
         this.userId = userId;
     }
     public String getEmail() {
-        return email;
+        return profile.getEmail();
     }
 
     public String getPassword() {
