@@ -2,6 +2,7 @@ package com.x_force.unimar;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,16 @@ public class ItemAddActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        setButtonInteractions();
+    }
+
+    public void setButtonInteractions(){
+        Button ChooseCategoryButton = findViewById(R.id.button_select_category);
+
+        ChooseCategoryButton.setOnClickListener(e ->{
+            setContentView(R.layout.activity_add_category);
         });
     }
 
