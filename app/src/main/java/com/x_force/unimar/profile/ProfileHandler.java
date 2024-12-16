@@ -12,19 +12,16 @@ public class ProfileHandler {
                                          String profileImage, String university,
                                          String department, ProfileResultCallback callback) {
         Map<String, Object> profileData = new HashMap<>();
-        profileData.put("userId", uid);
         profileData.put("email", email);
         profileData.put("name", name);
-        profileData.put("profileImage", profileImage);
+        profileData.put("profileImage", profileImage == null ? "" : profileImage);
         profileData.put("university", university);
         profileData.put("department", department);
-        profileData.put("maxPoints", 0);
-        profileData.put("totalPoints", 0);
 
         firestore.collection("users").document(uid)
                 .set(profileData)
-                .addOnSuccessListener(unused -> callback.onSuccess(null))
-                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+                .addOnSuccessListener(unused -> callback.onSuccess(profileData))
+                .addOnFailureListener(e -> callback.onFailure("Failed to save profile: " + e.getMessage()));
     }
 
     public static void getUserProfile(String uid, ProfileResultCallback callback) {

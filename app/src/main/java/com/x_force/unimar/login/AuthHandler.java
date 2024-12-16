@@ -35,10 +35,10 @@ public class AuthHandler {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser fuser = mAuth.getCurrentUser();
-
                         if (fuser != null) {
                             String userId = fuser.getUid();
 
+                            // Save profile to Firestore
                             ProfileHandler.createUserProfile(userId, email, name, profileImage,
                                     university, department, new ProfileHandler.ProfileResultCallback() {
                                         @Override
@@ -48,7 +48,7 @@ public class AuthHandler {
 
                                         @Override
                                         public void onSuccess() {
-
+                                            // Optional override
                                         }
 
                                         @Override
@@ -56,12 +56,25 @@ public class AuthHandler {
                                             callback.onFailure("Profile creation failed: " + errorMessage);
                                         }
                                     });
+                        } else {
+                            callback.onFailure("User creation successful but user object is null.");
                         }
                     } else {
-                        callback.onFailure("Registration failed: " + (task.getException() != null
-                                ? task.getException().getMessage()
-                                : "Unknown error"));
+                        callback.onFailure("Registration failed: " +
+                                (task.getException() != null ? task.getException().getMessage() : "Unknown error"));
                     }
                 });
     }
+
+    public void resetPassword(String email, IAuthCallback callback) {
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess("Password reset email sent!");
+                    } else {
+                        callback.onFailure("Failed to send password reset email.");
+                    }
+                });
+    }
+
 }

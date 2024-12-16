@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,19 +25,19 @@ public class HomeActivity extends AppCompatActivity {
 
     private ImageView profileImageView;
     private TextView welcomeTextView;
-    private Button profileButton, customButton1, customButton2;
+    private Button profileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Initialize UI
+        // Initialize UI components
         profileImageView = findViewById(R.id.profileImageView);
         welcomeTextView = findViewById(R.id.welcomeTextView);
         profileButton = findViewById(R.id.profileButton);
-        customButton1 = findViewById(R.id.customButton1);
-        customButton2 = findViewById(R.id.customButton2);
+        ConstraintLayout customButton1 = findViewById(R.id.customButton1);
+        ConstraintLayout customButton2 = findViewById(R.id.customButton2);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
@@ -85,6 +86,16 @@ public class HomeActivity extends AppCompatActivity {
         profileButton.setOnClickListener(view -> {
             Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
             startActivity(intent);
+        });
+
+        customButton1.setOnClickListener(view -> {
+            Toast.makeText(this, "Lecture Materials clicked!", Toast.LENGTH_SHORT).show();
+            // Add intent to navigate to the respective activity
+        });
+
+        customButton2.setOnClickListener(view -> {
+            Toast.makeText(this, "Tutoring clicked!", Toast.LENGTH_SHORT).show();
+            // Add intent to navigate to the respective activity
         });
     }
 }
