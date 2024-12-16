@@ -98,6 +98,8 @@ public class ProductListingActivity extends AppCompatActivity {
             SortAscendingButton.setVisibility(ListView.GONE);
             SortDescendingButton.setVisibility(ListView.GONE);
         });
+
+
     }
     public static ItemAdapter getAdapter(){
         return adapter;

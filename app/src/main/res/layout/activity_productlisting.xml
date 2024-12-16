@@ -32,8 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:focusable="false"
-        app:layout_constraintTop_toTopOf="@id/item_name"
-        tools:layout_editor_absoluteX="205dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/item_name" />
 
     <TextView
         android:id="@+id/item_name"
@@ -41,8 +42,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="119dp"
         android:focusable="true"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="205dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SearchView
         android:id="@+id/product_searchbar"
@@ -97,16 +99,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:focusable="false"
-        app:layout_constraintTop_toTopOf="@id/item_cost"
-        tools:layout_editor_absoluteX="205dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/item_cost" />
 
     <Button
         android:id="@+id/button_product_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
         android:text="View this product"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@id/item_name"
-        tools:layout_editor_absoluteY="144dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_desc" />
 </androidx.constraintlayout.widget.ConstraintLayout>

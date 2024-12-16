@@ -2,6 +2,7 @@ package com.x_force.unimar.Item;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import java.util.List;
 public class ItemAdapter extends ArrayAdapter<Item> {
 
     List<Item> items;
-
     public ItemAdapter(Context context, List<Item> items){
         super(context,0,items);
         this.items = items;
@@ -39,10 +39,11 @@ public class ItemAdapter extends ArrayAdapter<Item> {
                     .inflate(R.layout.activity_productlisting, parent, false);
         }
 
+        Button viewButton = convertView.findViewById(R.id.button_product_view);
         TextView nameTextView = convertView.findViewById(R.id.item_name);
         TextView costTextView = convertView.findViewById(R.id.item_cost);
         TextView descTextView = convertView.findViewById(R.id.item_desc);
-        Button viewButton = convertView.findViewById(R.id.button_product_view);
+
 
         nameTextView.setText(item.getName());
         costTextView.setText(String.valueOf(item.getCost()));
@@ -52,12 +53,14 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         TextView filterButton = convertView.findViewById(R.id.filter_button);
         SearchView searchBar = convertView.findViewById(R.id.product_searchbar);
 
+
+        viewButton.setVisibility(View.VISIBLE);
         searchBar.setVisibility(View.GONE);
         sortButton.setVisibility(View.GONE);
         filterButton.setVisibility(View.GONE);
-        viewButton.setVisibility(View.VISIBLE);
 
-        convertView.setOnClickListener(v -> {
+
+        viewButton.setOnClickListener(v -> {
             String categories = "";
             for (int i = 0; i < item.getCategory().size(); i++) {
                 categories += item.getCategory().get(i) + ",";
