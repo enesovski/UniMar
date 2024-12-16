@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">UniMar</string>
+    <string name="select_university_prompt">Select University</string>
+    <string name="select_department_prompt">Select Department</string>
+
+    <string-array name="universities_array">
+        <item>Select University</item>
+        <item>Bilkent</item>
+        <item>METU</item>
+        <item>Koc</item>
+        <item>Bogazici University</item>
+        <item>Konya Technical University</item>
+
+    </string-array>
+
+    <string-array name="departments_array">
+        <item>Select Department</item>
+        <item>Department of Computer Science</item>
+        <item>Department of Electrical Electronical Engineering</item>
+        <item>Department of Mechanical Engineering</item>
+        <item>Department of Management</item>
+        <item>Department of Ilahiyat Faculty</item>
+        <item>Department of Mathematics</item>
+        <item>Department of Physics</item>
+    </string-array>
+
 </resources>

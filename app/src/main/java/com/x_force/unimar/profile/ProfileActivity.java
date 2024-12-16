@@ -2,11 +2,18 @@ package com.x_force.unimar.profile;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,12 +27,14 @@ import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private static final int PICK_IMAGE_REQUEST = 1;
+
     private ImageView profileImageView;
     private TextView profileNameTextView;
     private TextView profileEmailTextView;
     private TextView profilePointsTextView;
     private TextView profileRatingTextView;
-
+    private Switch notificationSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +42,16 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         // Initialize UI components
-        ImageView profileImageView = findViewById(R.id.profileImageView);
-        TextView profileNameTextView = findViewById(R.id.profileNameTextView);
-        TextView profileEmailTextView = findViewById(R.id.profileEmailTextView);
-        TextView profilePointsTextView = findViewById(R.id.profilePointsTextView);
-        TextView profileRatingTextView = findViewById(R.id.profileRatingTextView);
+        profileImageView = findViewById(R.id.profileImageView);
+        profileNameTextView = findViewById(R.id.profileNameTextView);
+        profileEmailTextView = findViewById(R.id.profileEmailTextView);
+        profilePointsTextView = findViewById(R.id.profilePointsTextView);
+        profileRatingTextView = findViewById(R.id.profileRatingTextView);
+        TextView profileUniversityTextView = findViewById(R.id.profileUniversityTextView);
+        TextView profileDepartmentTextView = findViewById(R.id.profileDepartmentTextView);
         ProgressBar ratingProgressBar = findViewById(R.id.ratingProgressBar);
-        ImageButton editProfileButton = findViewById(R.id.editProfileButton);
+        Button editProfileButton = findViewById(R.id.editProfileButton);
+        notificationSwitch = findViewById(R.id.notificationSwitch);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -47,7 +59,6 @@ public class ProfileActivity extends AppCompatActivity {
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
-            // Fetch and display profile data
             ProfileHandler.getUserProfile(userId, new ProfileHandler.ProfileResultCallback() {
                 @Override
                 public void onSuccess(Map<String, Object> profileData) {
@@ -56,6 +67,15 @@ public class ProfileActivity extends AppCompatActivity {
                     String profileImage = profileData.get("profileImage") != null ? (String) profileData.get("profileImage") : null;
                     int maxPoints = profileData.get("maxPoints") != null ? ((Long) profileData.get("maxPoints")).intValue() : 0;
                     int totalPoints = profileData.get("totalPoints") != null ? ((Long) profileData.get("totalPoints")).intValue() : 0;
+
+                    String university = profileData.get("university") != null ? (String) profileData.get("university") : "N/A";
+                    String department = profileData.get("department") != null ? (String) profileData.get("department") : "N/A";
+
+                    boolean notificationsEnabled = profileData.get("notificationsEnabled") != null &&
+                            (boolean) profileData.get("notificationsEnabled");
+
+                    profileUniversityTextView.setText("University: " + university);
+                    profileDepartmentTextView.setText("Department: " + department);
 
                     profileNameTextView.setText("Name: " + name);
                     profileEmailTextView.setText("Email: " + email);
@@ -70,17 +90,33 @@ public class ProfileActivity extends AppCompatActivity {
                                 .placeholder(R.drawable.ic_placeholder)
                                 .into(profileImageView);
                     }
+
+                    notificationSwitch.setChecked(notificationsEnabled);
                 }
 
                 @Override
-                public void onSuccess() {
-
-                }
+                public void onSuccess() { }
 
                 @Override
                 public void onFailure(String errorMessage) {
                     Toast.makeText(ProfileActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                 }
+            });
+
+            // Profile picture editing
+            profileImageView.setOnClickListener(v -> openImagePicker());
+
+            // Toggle notifications
+            notificationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                FirebaseFirestore.getInstance()
+                        .collection("users")
+                        .document(userId)
+                        .update("notificationsEnabled", isChecked)
+                        .addOnSuccessListener(unused -> {
+                            String message = isChecked ? "Notifications enabled" : "Notifications disabled";
+                            Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> Toast.makeText(ProfileActivity.this, "Failed to update settings", Toast.LENGTH_SHORT).show());
             });
 
             // Edit Profile Name Listener
@@ -116,9 +152,23 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
         }
     }
-    private int calculateRating(int maxPoints, int totalPoints) {
-        if (totalPoints == 0) return 0;
-        return (int) (((double) maxPoints / totalPoints) * 100);
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
+    private int calculateRating(int maxPoints, int totalPoints) {
+        if (totalPoints == 0) return 0;
+        return (int) (((double) totalPoints / maxPoints) * 100);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+            profileImageView.setImageURI(imageUri);
+        }
+    }
 }
