@@ -6,29 +6,40 @@ public class Profile {
     private final FirebaseFirestore db;
 
     private String email;
+    private final String userId;
     private String password;
-    private String userID;
 
-    public ProfileRating rating;
     public ProfileState profileState;
 
-    public Profile(String userID)
+    public Profile(String userId, String email)
     {
         db = FirebaseFirestore.getInstance();
-        this.userID = userID;
+        this.userId = userId;
         setupData();
     }
 
     private void setupData()
     {
-        db.collection("profiles").document(userID).get();
+        db.collection("users").document(userId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Handle profile data here
+                    } else {
+                        System.out.println("Profile not found.");
+                    }
+                });
 
-        this.email = email;
-        this.password = password;
-
-        //datayı aktar
-        rating = new ProfileRating();
     }
+
+    public int maxPoints;
+    public int totalPoints;
+
+    public int getRatingPercentage()
+    {
+        double percentage = (double)maxPoints / totalPoints;
+        return (int)(percentage * 100);
+    }
+
 
     public String getEmail() {
         return email;
@@ -37,7 +48,6 @@ public class Profile {
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getPassword() {
         return password;
     }

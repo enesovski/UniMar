@@ -1,11 +1,10 @@
 package com.x_force.unimar.login;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.x_force.unimar.profile.ProfileHandler;
+
+import java.util.Map;
 
 public class AuthHandler {
     private final FirebaseAuth mAuth;
@@ -15,7 +14,6 @@ public class AuthHandler {
     }
 
     public void loginUser(String email, String password, IAuthCallback callback) {
-
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -26,7 +24,8 @@ public class AuthHandler {
                 });
     }
 
-    public void registerUser(String email, String password, IAuthCallback callback) {
+    public void registerUser(String email, String password, String name, String profileImage,
+                             String university, String department, IAuthCallback callback) {
         if (password.length() < 6) {
             callback.onFailure("Password must be at least 6 characters.");
             return;
@@ -37,33 +36,32 @@ public class AuthHandler {
                     if (task.isSuccessful()) {
                         FirebaseUser fuser = mAuth.getCurrentUser();
 
-                        if(fuser != null)
-                        {
-                            fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    callback.onFailure("Mail is sent.");
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    callback.onFailure("Mail cannot sent.");
-                                }
-                            });
-                        }
+                        if (fuser != null) {
+                            String userId = fuser.getUid();
 
-                        callback.onSuccess("Registration successful!");
+                            ProfileHandler.createUserProfile(userId, email, name, profileImage,
+                                    university, department, new ProfileHandler.ProfileResultCallback() {
+                                        @Override
+                                        public void onSuccess(Map<String, Object> profileData) {
+                                            callback.onSuccess("Registration successful!");
+                                        }
+
+                                        @Override
+                                        public void onSuccess() {
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(String errorMessage) {
+                                            callback.onFailure("Profile creation failed: " + errorMessage);
+                                        }
+                                    });
+                        }
                     } else {
-                        callback.onFailure("Registration failed.");
+                        callback.onFailure("Registration failed: " + (task.getException() != null
+                                ? task.getException().getMessage()
+                                : "Unknown error"));
                     }
                 });
-    }
-
-    public String getCurrentUserUid() {
-        return (mAuth.getCurrentUser() != null) ? mAuth.getCurrentUser().getUid() : null;
-    }
-
-    public void logoutUser() {
-        mAuth.signOut();
     }
 }

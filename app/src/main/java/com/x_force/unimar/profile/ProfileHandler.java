@@ -1,49 +1,49 @@
 package com.x_force.unimar.profile;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class ProfileHandler {
-    private final FirebaseFirestore firestore;
+    private static final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-    public ProfileHandler() {
-        this.firestore = FirebaseFirestore.getInstance();
-    }
-
-    public void createUserProfile(String uid, String email, String name, IProfileCallback callback) {
-
-        // Map dictionary gibi bir key içeriyor ve o keye ait datayı içeriyor
-        // dictionaryden farkı unique key içermesi
-        Map<String, Object> profile = new HashMap<>();
-        profile.put("email", email);
-        profile.put("name", name);
+    public static void createUserProfile(String uid, String email, String name,
+                                         String profileImage, String university,
+                                         String department, ProfileResultCallback callback) {
+        Map<String, Object> profileData = new HashMap<>();
+        profileData.put("userId", uid);
+        profileData.put("email", email);
+        profileData.put("name", name);
+        profileData.put("profileImage", profileImage);
+        profileData.put("university", university);
+        profileData.put("department", department);
+        profileData.put("maxPoints", 0);
+        profileData.put("totalPoints", 0);
 
         firestore.collection("users").document(uid)
-                .set(profile)
-                .addOnSuccessListener(unused -> callback.onSuccess("Profile created!"))
-                .addOnFailureListener(e -> callback.onFailure("Profile creation failed: " + e.getMessage()));
+                .set(profileData)
+                .addOnSuccessListener(unused -> callback.onSuccess(null))
+                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
     }
 
-    public void getUserProfile(String uid, IProfileCallback callback) {
-
-        //uid her userda var. uid ye göre profil datalarına erişilebilir
+    public static void getUserProfile(String uid, ProfileResultCallback callback) {
         firestore.collection("users").document(uid)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        callback.onProfileLoaded(documentSnapshot.getData());
+                        // Pass profile data to the callback
+                        callback.onSuccess(documentSnapshot.getData());
                     } else {
                         callback.onFailure("Profile not found.");
                     }
                 })
-                .addOnFailureListener(e -> callback.onFailure("Failed to load profile: " + e.getMessage()));
+                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
     }
 
-    public void updateUserProfile(String uid, Map<String, Object> updates, IProfileCallback callback) {
-        firestore.collection("users").document(uid)
-                .update(updates)
-                .addOnSuccessListener(unused -> callback.onSuccess("Profile updated!"))
-                .addOnFailureListener(e -> callback.onFailure("Profile update failed: " + e.getMessage()));
+    public interface ProfileResultCallback {
+        void onSuccess(Map<String, Object> profileData);
+        void onSuccess();
+        void onFailure(String errorMessage);
     }
 }
