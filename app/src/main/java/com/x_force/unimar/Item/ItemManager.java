@@ -86,7 +86,7 @@ public class ItemManager {
             }
         });
 
-        //refreshProductQuery();
+        refreshProductQuery();
 
         return items;
     }
@@ -122,6 +122,8 @@ public class ItemManager {
         Log.d("Burak", "Burak");
         listType = Character.toUpperCase(listType);
         List<Item> filteredList = new ArrayList<Item>();
+
+        refreshProductQuery();
 
         if( listType == 'P' ){
             Log.d("Burak", String.valueOf(productQuery.count()));
