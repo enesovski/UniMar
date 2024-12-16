@@ -26,5 +26,8 @@
     <color name="aqua_darker">#008080</color>
     <color name="blue_darker">#000080</color>
     <color name="light_gray">#D3D3D3</color>
+    <color name="chat_background">#F8F9F9</color>
+    <color name="dark_gray">#5D6D7E</color>
+
 
 </resources>

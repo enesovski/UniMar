@@ -1,70 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="8dp">
 
+    <!-- Sender Message -->
     <LinearLayout
         android:id="@+id/sender_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="70dp"
-        android:background="@drawable/round_structure"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_panel"
         android:backgroundTint="@color/sender_color"
-        android:padding="10dp">
+        android:padding="12dp"
+        android:elevation="4dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/senderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="20sp">
-
-        </TextView>
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
 
         <TextView
             android:id="@+id/senderTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="12sp" />
-
-
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-light" />
     </LinearLayout>
 
+    <!-- Receiver Message -->
     <LinearLayout
         android:id="@+id/reciever_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="60dp"
-        android:background="@drawable/round_structure"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_panel"
         android:backgroundTint="@color/reciever_color"
-        android:padding="10dp">
+        android:padding="12dp"
+        android:elevation="4dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/recieverText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="20sp"
-
-            >
-
-        </TextView>
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
 
         <TextView
             android:id="@+id/receiverTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="12sp" />
-
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-light" />
     </LinearLayout>
-
-
 </RelativeLayout>

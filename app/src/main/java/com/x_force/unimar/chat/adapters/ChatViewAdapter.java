@@ -16,10 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.x_force.unimar.R;
 import com.x_force.unimar.chat.ChatActivity;
 import com.x_force.unimar.chat.Message;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ChatViewAdapter extends FirestoreRecyclerAdapter<Message, ChatViewAdapter.MessageHolder> {
     private Context context;
@@ -34,29 +39,24 @@ public class ChatViewAdapter extends FirestoreRecyclerAdapter<Message, ChatViewA
     @SuppressLint("SetTextI18n")
     @Override
     protected void onBindViewHolder(@NonNull MessageHolder holder, int position, @NonNull Message model) {
-        System.out.println(model.getContent());
-        if(model.getSenderId().equals(FirebaseAuth.getInstance().getUid())){
+        if (model.getSenderId().equals(FirebaseAuth.getInstance().getUid())) {
             holder.sender_layout.setVisibility(View.GONE);
             holder.reciever_layout.setVisibility(View.VISIBLE);
-
-            String receiverTime =("  "+model.getTimestamp().toDate().getHours()+":"+model.getTimestamp().toDate().getMinutes());
             holder.reciever_text.setText(model.getContent());
-            holder.recieverTime.setText(receiverTime);
-            System.out.println(holder.reciever_text.getText());
-
-        }else{
+            holder.recieverTime.setText(formatTimestamp(model.getTimestamp()));
+        } else {
             holder.reciever_layout.setVisibility(View.GONE);
             holder.sender_layout.setVisibility(View.VISIBLE);
-            String senderTime =("  "+model.getTimestamp().toDate().getHours()+":"+model.getTimestamp().toDate().getMinutes());
             holder.sender_text.setText(model.getContent());
-            holder.senderTime.setText(senderTime);
-
-
+            holder.senderTime.setText(formatTimestamp(model.getTimestamp()));
         }
-
     }
 
-    //Creates viewHolder object
+    private String formatTimestamp(Timestamp timestamp) {
+        Date date = timestamp.toDate();
+        return new SimpleDateFormat("HH:mm", Locale.getDefault()).format(date);
+    }
+
     @NonNull
     @Override
     public MessageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,7 +64,6 @@ public class ChatViewAdapter extends FirestoreRecyclerAdapter<Message, ChatViewA
         return new MessageHolder(view);
     }
 
-    //Holds MessageRow to add recyclerView
     class MessageHolder extends RecyclerView.ViewHolder{
 
         LinearLayout sender_layout,reciever_layout;
@@ -78,9 +77,6 @@ public class ChatViewAdapter extends FirestoreRecyclerAdapter<Message, ChatViewA
             senderTime =itemView.findViewById(R.id.senderTime);
             reciever_text=itemView.findViewById(R.id.recieverText);
             recieverTime =itemView.findViewById(R.id.receiverTime);
-
-
-
 
         }
     }

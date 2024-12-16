@@ -4,10 +4,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class Profile {
 
     private final FirebaseFirestore db;
-
     private String email;
     private final String userId;
     private String password;
+
+    public String name;
 
     public ProfileState profileState;
 

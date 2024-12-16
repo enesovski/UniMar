@@ -31,7 +31,6 @@ import java.util.List;
 public class SearchUserActivity extends AppCompatActivity {
 
     ChatFragment chatFragment=new ChatFragment();
-
     EditText searchInput;
 
     int count=0;
@@ -49,11 +48,6 @@ public class SearchUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search_user);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true) // Enable offline persistence (optional)
                 .build();
@@ -77,48 +71,26 @@ public class SearchUserActivity extends AppCompatActivity {
             handleSearch(searchTerm);
         });
 
-
-
-
     }
-
-
     @SuppressLint("NotifyDataSetChanged")
     private void handleSearch(String searchTerm) {
+        Query query = db.collection("users")
+                .whereGreaterThanOrEqualTo("email", searchTerm)
+                .whereLessThan("email", searchTerm + "\uf8ff");
 
+        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class)
+                .build();
 
-        searchTerm = searchTerm.trim();
-
-        //Creates a query which has users that includes search input
-        Query query = db.collection("users").whereGreaterThanOrEqualTo("name", searchTerm).whereLessThan("name", searchTerm + "\uf8ff");
-
-        //checks the query and prints the results
-        query.get().addOnSuccessListener(querySnapshot -> {
-            for (DocumentSnapshot document : querySnapshot) {
-                Log.d("FirestoreQuery", "Document: " + document.getData());
-            }
-        }).addOnFailureListener(e -> {
-            Log.d("FirestoreQuery", "Error getting documents: ", e);
-        });
-
-
-        //Sets the option of query and adapter
-        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>().setQuery(query, User.class).build();
-
-        adapter = new UserRecyclerAdapter(options,getApplicationContext());
+        adapter = new UserRecyclerAdapter(options, getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        ((UserRecyclerAdapter)adapter).startListening();
-
+        ((UserRecyclerAdapter) adapter).startListening();
     }
     @SuppressLint("NotifyDataSetChanged")
     public void handleSearch2() {
 
-
-        //Creates a query which has users that includes search input
         Query query = db.collection("chatrooms").whereArrayContains("userIds", FirebaseAuth.getInstance().getUid() ).orderBy("lastMessageSendTime",Query.Direction.DESCENDING);
-
-        //checks the query and prints the results
         query.get().addOnSuccessListener(querySnapshot -> {
             for (DocumentSnapshot document : querySnapshot) {
                 Log.d("FirestoreQuery", "Document: " + document.getData());
@@ -127,8 +99,6 @@ public class SearchUserActivity extends AppCompatActivity {
             Log.d("FirestoreQuery", "Error getting documents: ", e);
         });
 
-
-        //Sets the option of query and adapter
         FirestoreRecyclerOptions<ChatRoom> options = new FirestoreRecyclerOptions.Builder<ChatRoom>().setQuery(query, ChatRoom.class).build();
 
          adapter = new RecentChat(options,getApplicationContext());
