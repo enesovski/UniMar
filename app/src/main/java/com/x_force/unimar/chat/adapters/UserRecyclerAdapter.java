@@ -30,13 +30,13 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecy
 
     @Override
     protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
-        if (model.getEmail() != null) {
-            holder.emailText.setText(model.getEmail());
+        if (model.getName() != null) {
+            holder.name.setText(model.getName());
         }
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChatActivity.class);
-            intent.putExtra("email", model.getEmail());
+            intent.putExtra("name", model.getName());
             intent.putExtra("userId", model.getUserId()); // Ensure 'userId' exists
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
@@ -51,10 +51,10 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<User, UserRecy
     }
 
     class UserViewHolder extends RecyclerView.ViewHolder{
-        TextView emailText;
+        TextView name;
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            emailText = itemView.findViewById(R.id.emailText);
+            name = itemView.findViewById(R.id.name);
         }
     }
 }

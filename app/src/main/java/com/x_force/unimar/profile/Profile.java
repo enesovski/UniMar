@@ -3,14 +3,27 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Profile {
 
-    private final FirebaseFirestore db;
+    private  FirebaseFirestore db;
     private String email;
-    private final String userId;
+    private String userId;
     private String password;
 
     public String name;
 
     public ProfileState profileState;
+
+    public Profile(){
+
+    }
+
+    public Profile(String userId,String email,String name){
+        db = FirebaseFirestore.getInstance();
+        this.userId = userId;
+        this.email=email;
+        this.name=name;
+        setupData();
+
+    }
 
     public Profile(String userId, String email)
     {
@@ -41,6 +54,9 @@ public class Profile {
         return (int)(percentage * 100);
     }
 
+    public String getName() {
+        return name;
+    }
 
     public String getEmail() {
         return email;

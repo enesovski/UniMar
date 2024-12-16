@@ -12,6 +12,7 @@ public class ProfileHandler {
                                          String profileImage, String university,
                                          String department, ProfileResultCallback callback) {
         Map<String, Object> profileData = new HashMap<>();
+        profileData.put("userId",uid);
         profileData.put("email", email);
         profileData.put("name", name);
         profileData.put("profileImage", profileImage == null ? "" : profileImage);

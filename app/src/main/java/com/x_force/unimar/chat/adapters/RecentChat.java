@@ -130,7 +130,7 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
         public ChatRoomViewHolder(@NonNull View itemView) {
             super(itemView);
             last_message_sender=itemView.findViewById(R.id.last_message_sender);
-            emailText = itemView.findViewById(R.id.emailText);
+            emailText = itemView.findViewById(R.id.name);
             messageText=itemView.findViewById(R.id.lastMessageText);
             messageTime= itemView.findViewById(R.id.lastMessageTime);
 

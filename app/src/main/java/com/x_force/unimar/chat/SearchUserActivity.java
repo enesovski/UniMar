@@ -75,8 +75,8 @@ public class SearchUserActivity extends AppCompatActivity {
     @SuppressLint("NotifyDataSetChanged")
     private void handleSearch(String searchTerm) {
         Query query = db.collection("users")
-                .whereGreaterThanOrEqualTo("email", searchTerm)
-                .whereLessThan("email", searchTerm + "\uf8ff");
+                .whereGreaterThanOrEqualTo("name", searchTerm)
+                .whereLessThan("name", searchTerm + "\uf8ff");
 
         FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
                 .setQuery(query, User.class)
@@ -101,7 +101,7 @@ public class SearchUserActivity extends AppCompatActivity {
 
         FirestoreRecyclerOptions<ChatRoom> options = new FirestoreRecyclerOptions.Builder<ChatRoom>().setQuery(query, ChatRoom.class).build();
 
-         adapter = new RecentChat(options,getApplicationContext());
+        adapter = new RecentChat(options,getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(adapter);
         ((RecentChat)adapter).startListening();
