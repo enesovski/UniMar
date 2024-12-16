@@ -88,7 +88,6 @@ public class ProductListingActivity extends AppCompatActivity {
 
         //filterbutton instance'ları
 
-
         GeneralSortButton.setOnClickListener (v -> {
             GeneralSortButton.setVisibility(ListView.GONE);
             SortAscendingButton.setVisibility(ListView.VISIBLE);
