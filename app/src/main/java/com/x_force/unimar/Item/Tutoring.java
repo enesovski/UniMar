@@ -8,8 +8,11 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.x_force.unimar.MainActivity;
+
+import java.util.ArrayList;
+
 public class Tutoring extends Item{
-    public Tutoring(String name, String desc, String category, int cost) { //user + category de olması lazım
+    public Tutoring(String name, String desc, ArrayList<String> category, int cost) { //user + category de olması lazım
         this.setName(name);
         this.setDesc(desc);
         this.setCost(cost);

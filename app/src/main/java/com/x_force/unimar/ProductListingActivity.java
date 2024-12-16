@@ -1,6 +1,7 @@
 package com.x_force.unimar;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -44,6 +45,7 @@ public class ProductListingActivity extends AppCompatActivity {
 //        items.add(new Product("OLDU LAN", "HARİKA", "LAYLAYLAY", 200));
 
         showList();
+        setButtonInteractions();
     }
 
     //itemlist öğesini ne biçimde dolduracağımızı belirleyen ItemAdapteri initialize ediyoruz
@@ -58,6 +60,18 @@ public class ProductListingActivity extends AppCompatActivity {
         ItemManager.adapter = adapter;
 
         itemList.setAdapter(adapter);
+    }
+
+    public void setButtonInteractions(){
+        Button GeneralSortButton = findViewById(R.id.sort_button);
+        Button SortAscendingButton = findViewById(R.id.button_sort_ascending);
+        Button SortDescendingButton = findViewById(R.id.button_sort_descending);
+
+        GeneralSortButton.setOnClickListener (v -> {
+            GeneralSortButton.setVisibility(ListView.GONE);
+            SortAscendingButton.setVisibility(ListView.VISIBLE);
+            SortDescendingButton.setVisibility(ListView.VISIBLE);
+        });
     }
     public static ItemAdapter getAdapter(){
         return adapter;

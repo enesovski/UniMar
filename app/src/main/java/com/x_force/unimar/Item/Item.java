@@ -3,13 +3,15 @@ package com.x_force.unimar.Item;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.x_force.unimar.MainActivity;
 
+import java.util.ArrayList;
+
 public class Item {
     private static FirebaseFirestore db = MainActivity.getDB();
     private String name;
     private String desc;
     private int cost;
     private String docId;
-    private String category;
+    private ArrayList<String> category;
 
     public Item(){
 
@@ -50,11 +52,11 @@ public class Item {
         //db.collection("tutorListing").document(this.getDocId()).update("cost",cost);
     }
 
-    public String getCategory() {
+    public ArrayList<String> getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ArrayList<String> category) {
         this.category = category;
         //db.collection("productListing").document(this.getDocId()).update("category",category);
     }
