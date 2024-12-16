@@ -233,9 +233,7 @@ public class ItemManager {
         return searchedList;
 
     }
-
-
-
+    
     public static Query getProductQuery() {
         return productQuery;
     }
