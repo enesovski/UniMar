@@ -1,5 +1,6 @@
 package com.x_force.unimar;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -220,10 +221,13 @@ public class ProductListingActivity extends AppCompatActivity {
             //});
 
             Button doneButton = findViewById(R.id.FilterDoneButton);
-
             doneButton.setOnClickListener(e -> {
+                FilterButton.setVisibility(ListView.GONE);
                 setContentView(R.layout.activity_productlisting);
+                @SuppressLint("CutPasteId") Button filter = findViewById(R.id.filter_button);
+                filter.setVisibility(ListView.VISIBLE);
                 showList();
+                setButtonInteractions();
             });
         });
 
