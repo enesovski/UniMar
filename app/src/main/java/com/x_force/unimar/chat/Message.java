@@ -12,6 +12,7 @@ import java.util.Date;
 public class Message {
     private String content;
     private String senderId;
+    private String receiverId;
     private  Timestamp timestamp;
 
 
@@ -20,10 +21,11 @@ public class Message {
 
     }
 
-    public Message(String content, String senderId, Timestamp timestamp) {
+    public Message(String senderId, String receiverId, String content,  Timestamp timestamp) {
         this.content = content;
         this.senderId = senderId;
         this.timestamp = timestamp;
+        this.receiverId = receiverId;
     }
 
 
@@ -42,11 +44,6 @@ public class Message {
     public void setContent(String content){
         this.content = content;
     }
-
-    public void setSenderId(String senderId){
-        this.senderId = senderId;
-    }
-
 
     @NonNull
     public String toString() {
