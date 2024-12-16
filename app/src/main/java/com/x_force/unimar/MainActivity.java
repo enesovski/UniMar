@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Intent intent = new Intent(MainActivity.this, ItemAddActivity.class);
+        Intent intent = new Intent(MainActivity.this, ProductListingActivity.class);
         startActivity(intent);
     }
 
