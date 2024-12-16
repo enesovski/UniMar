@@ -90,7 +90,7 @@ public class SearchUserActivity extends AppCompatActivity {
         searchTerm = searchTerm.trim();
 
         //Creates a query which has users that includes search input
-        Query query = db.collection("users").whereGreaterThanOrEqualTo("email", searchTerm).whereLessThan("email", searchTerm + "\uf8ff");
+        Query query = db.collection("users").whereGreaterThanOrEqualTo("name", searchTerm).whereLessThan("name", searchTerm + "\uf8ff");
 
         //checks the query and prints the results
         query.get().addOnSuccessListener(querySnapshot -> {

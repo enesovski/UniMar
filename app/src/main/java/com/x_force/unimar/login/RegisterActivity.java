@@ -1,9 +1,13 @@
 package com.x_force.unimar.login;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,12 +22,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.x_force.unimar.R;
 import com.x_force.unimar.home.HomeActivity;
 
-import java.util.UUID;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -35,7 +41,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Button selectProfileImageButton;
 
     private Uri profileImageUri; // To store the selected image URI
-    private StorageReference storageReference;
 
     private AuthHandler authHandler;
 
@@ -45,7 +50,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         authHandler = new AuthHandler();
-        storageReference = FirebaseStorage.getInstance().getReference();
 
         // Initialize UI components
         universitySpinner = findViewById(R.id.universitySpinner);
@@ -114,33 +118,47 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Upload profile image to Firebase Storage
-        String imageName = "profile_images/" + UUID.randomUUID().toString();
-        StorageReference imageRef = storageReference.child(imageName);
+        try {
+            // Convert the selected image to Base64
+            String base64Image = convertImageToBase64(profileImageUri);
 
-        imageRef.putFile(profileImageUri)
-                .addOnSuccessListener(taskSnapshot -> imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    String profileImageUrl = uri.toString();
-                    registerUser(email, password, name, profileImageUrl, university, department);
-                }))
-                .addOnFailureListener(e -> {
-                    Toast.makeText(RegisterActivity.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+            // Register the user
+            registerUser(email, password, name, base64Image, university, department);
+        } catch (Exception e) {
+            Log.e(TAG, "Error converting image to Base64: " + e.getMessage());
+            Toast.makeText(this, "Error processing image.", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void registerUser(String email, String password, String name, String profileImageUrl, String university, String department) {
-        authHandler.registerUser(email, password, name, profileImageUrl, university, department, new IAuthCallback() {
-            @Override
-            public void onSuccess(String message) {
-                Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
-                navigateToHome();
-            }
+    private String convertImageToBase64(Uri imageUri) throws Exception {
+        InputStream inputStream = getContentResolver().openInputStream(imageUri);
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
-            @Override
-            public void onFailure(String message) {
-                Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
-            }
+        // Compress and convert to Base64
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream); // Compress to 50%
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
+    }
+
+    private void registerUser(String email, String password, String name, String base64Image, String university, String department) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+
+        authHandler.registerUser(email, password, name, base64Image, university, department, new IAuthCallback() {
+                @Override
+                public void onSuccess(String message) {
+                    Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+                    navigateToHome();
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+                }
         });
+
     }
 
     private void navigateToHome() {

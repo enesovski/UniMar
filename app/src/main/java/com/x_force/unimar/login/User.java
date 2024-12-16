@@ -1,38 +1,51 @@
 package com.x_force.unimar.login;
 
 import com.x_force.unimar.profile.Profile;
+import com.x_force.unimar.profile.ProfileHandler;
+
+import java.util.Map;
 
 public class User {
-    private  String userId;
-    private  String email;
-    private  String password;
 
-    public User(){}
-    public User(String userId, String email, String password) {
-        this.userId = userId;
-        this.email = email;
-        this.password = password;
+    private String userId;
+    public Profile profile;
+
+    public User(String email, String password) {
+        profile = new Profile(userId, email);
+    }
+    public User(){
+        ProfileHandler.getUserProfile(userId, new ProfileHandler.ProfileResultCallback() {
+            @Override
+            public void onSuccess(Map<String, Object> profileData) {
+                
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+            }
+        });
     }
 
 
-    public User(String userId,String email){
-        this(userId,email,"");
-    }
-    public User(String userId){
-
-        this.userId = userId;
-    }
     public String getEmail() {
         return profile.getEmail();
     }
 
     public String getPassword() {
-        return password;
+        return profile.getPassword();
+    }
+    public String getUserId() {
+        return userId;
     }
 
-    public String getUserId() { return userId; }
-
-    public void setUserId(String uid) {
-        this.userId = uid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
+
 }
