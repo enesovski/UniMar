@@ -10,11 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.x_force.unimar.R;
@@ -29,8 +26,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private ImageView profileImageView;
     private TextView welcomeTextView;
-    private Button profileButton;
-    private  Button chatButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -38,17 +33,16 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Initialize UI components
         profileImageView = findViewById(R.id.profileImageView);
         welcomeTextView = findViewById(R.id.welcomeTextView);
-        profileButton = findViewById(R.id.profileButton);
-        chatButton = findViewById(R.id.chatButton);
+        Button profileButton = findViewById(R.id.profileButton);
+        Button chatButton = findViewById(R.id.chatButton);
 
         chatButton.setOnClickListener(e -> {Intent intent = new Intent(HomeActivity.this, SearchUserActivity.class);
         startActivity(intent);});
 
-        ConstraintLayout customButton1 = findViewById(R.id.customButton1);
-        ConstraintLayout customButton2 = findViewById(R.id.customButton2);
+        ConstraintLayout productButton = findViewById(R.id.customButton1);
+        ConstraintLayout tutoringButton = findViewById(R.id.customButton2);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
@@ -57,10 +51,8 @@ public class HomeActivity extends AppCompatActivity {
             finish();
             return;
         }
-
         String userId = currentUser.getUid();
 
-        // Fetch user profile
         ProfileHandler.getUserProfile(userId, new ProfileHandler.ProfileResultCallback() {
             @Override
             public void onSuccess(Map<String, Object> profileData) {
@@ -75,14 +67,10 @@ public class HomeActivity extends AppCompatActivity {
                 welcomeTextView.setText("Welcome, " + name);
 
                 if (profileImage != null && !profileImage.isEmpty()) {
-                    // Decode the Base64 string to a Bitmap
                     byte[] decodedBytes = android.util.Base64.decode(profileImage, android.util.Base64.DEFAULT);
                     Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-
-                    // Set the Bitmap to the ImageView
                     profileImageView.setImageBitmap(decodedBitmap);
                 } else {
-                    // Use a placeholder if no image is available
                     profileImageView.setImageResource(R.drawable.ic_placeholder);
                 }
             }
@@ -93,10 +81,6 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e("HomeActivity", "Profile Fetch Failure: " + errorMessage);
             }
 
-            @Override
-            public void onSuccess() {
-                // Optional override
-            }
         });
 
         profileButton.setOnClickListener(view -> {
@@ -104,14 +88,13 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        customButton1.setOnClickListener(view -> {
+        //BURAYA TUTORING VE PRODUCT SAYFALARI INTENTI
+        productButton.setOnClickListener(view -> {
             Toast.makeText(this, "Lecture Materials clicked!", Toast.LENGTH_SHORT).show();
-            // Add intent to navigate to the respective activity
         });
 
-        customButton2.setOnClickListener(view -> {
+        tutoringButton.setOnClickListener(view -> {
             Toast.makeText(this, "Tutoring clicked!", Toast.LENGTH_SHORT).show();
-            // Add intent to navigate to the respective activity
         });
     }
 }

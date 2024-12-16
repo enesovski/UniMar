@@ -1,13 +1,7 @@
 package com.x_force.unimar.chat;
 
-import android.os.Build;
-
 import androidx.annotation.NonNull;
-
 import com.google.firebase.Timestamp;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Message {
     private String content;
@@ -15,19 +9,15 @@ public class Message {
     private String receiverId;
     private  Timestamp timestamp;
 
-
-
     public Message(){
 
     }
-
     public Message(String senderId, String receiverId, String content,  Timestamp timestamp) {
         this.content = content;
         this.senderId = senderId;
         this.timestamp = timestamp;
         this.receiverId = receiverId;
     }
-
 
     public String getContent() {
         return  content;
