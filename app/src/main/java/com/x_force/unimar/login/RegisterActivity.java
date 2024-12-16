@@ -113,21 +113,31 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        if (profileImageUri == null) {
+        /*if (profileImageUri == null) {
             Toast.makeText(this, "Please upload a profile picture.", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
+        String base64Image="";
+        if(profileImageUri!=null){
+            try {
 
-        try {
-            // Convert the selected image to Base64
-            String base64Image = convertImageToBase64(profileImageUri);
+                // Convert the selected image to Base64
+                 base64Image = convertImageToBase64(profileImageUri);
 
-            // Register the user
+                // Register the user
+                registerUser(email, password, name, base64Image, university, department);
+            } catch (Exception e) {
+                Log.e(TAG, "Error converting image to Base64: " + e.getMessage());
+                Toast.makeText(this, "Error processing image.", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        }else{
             registerUser(email, password, name, base64Image, university, department);
-        } catch (Exception e) {
-            Log.e(TAG, "Error converting image to Base64: " + e.getMessage());
-            Toast.makeText(this, "Error processing image.", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
     private String convertImageToBase64(Uri imageUri) throws Exception {
