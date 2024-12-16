@@ -31,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        android:focusable="false"
         app:layout_constraintTop_toTopOf="@id/item_name"
         tools:layout_editor_absoluteX="205dp" />
 
@@ -39,6 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="119dp"
+        android:focusable="true"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="205dp" />
 
@@ -83,6 +85,7 @@
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="3dp"
         android:clickable="true"
+        android:focusable="true"
         android:numColumns="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,6 +96,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        android:focusable="false"
         app:layout_constraintTop_toTopOf="@id/item_cost"
         tools:layout_editor_absoluteX="205dp" />
+
+    <Button
+        android:id="@+id/button_product_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="View this product"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/item_name"
+        tools:layout_editor_absoluteY="144dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

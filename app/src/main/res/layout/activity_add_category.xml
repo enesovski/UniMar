@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <RadioGroup
-        android:layout_width="301dp"
-        android:layout_height="580dp"
+        android:layout_width="306dp"
+        android:layout_height="491dp"
         android:layout_marginStart="52dp"
         android:layout_marginTop="72dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,6 +17,7 @@
             android:id="@+id/radioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checked="false"
             android:text="RadioButton" />
 
         <RadioButton

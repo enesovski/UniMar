@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         TextView nameTextView = convertView.findViewById(R.id.item_name);
         TextView costTextView = convertView.findViewById(R.id.item_cost);
         TextView descTextView = convertView.findViewById(R.id.item_desc);
+        Button viewButton = convertView.findViewById(R.id.button_product_view);
 
         nameTextView.setText(item.getName());
         costTextView.setText(String.valueOf(item.getCost()));
@@ -53,6 +55,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         searchBar.setVisibility(View.GONE);
         sortButton.setVisibility(View.GONE);
         filterButton.setVisibility(View.GONE);
+        viewButton.setVisibility(View.VISIBLE);
 
         convertView.setOnClickListener(v -> {
             String categories = "";
