@@ -59,9 +59,13 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
                     if(user!=null){
                         holder.emailText.setText(user.getEmail().substring(0,5));
                         if(MessageSendByMe){
-                            holder.last_message_sender.setText("You:"+ model.getLastMessage());
+                            if(model.getLastMessage()!=null){
+                                holder.last_message_sender.setText("You:"+ model.getLastMessage());
+                            }
                         }else{
-                            holder.last_message_sender.setText(user.getName()+":"+model.getLastMessage());
+                            if(model.getLastMessage()!=null){
+                                holder.last_message_sender.setText(user.getName()+":"+model.getLastMessage());
+                            }
                         }
                         holder.messageTime.setText(model.getLastMessage());
                         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -89,9 +93,13 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
                         if (user != null){
                             holder.emailText.setText(user.getEmail().substring(0,5));
                             if(MessageSendByMe){
-                                holder.last_message_sender.setText("You:"+ model.getLastMessage());
+                                if(model.getLastMessage()!=null){
+                                    holder.last_message_sender.setText("You:"+ model.getLastMessage());
+                                }
                             }else{
-                                holder.last_message_sender.setText(user.getName()+":"+model.getLastMessage());
+                                if(model.getLastMessage()!=null){
+                                    holder.last_message_sender.setText(user.getName()+":"+model.getLastMessage());
+                                }
                             }
                           //  holder.messageTime.setText(model.getLastMessage());
                             holder.messageTime.setText(new SimpleDateFormat("HH:MM").format(model.getLastMessageSendTime().toDate()));
