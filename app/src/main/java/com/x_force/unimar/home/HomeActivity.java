@@ -1,6 +1,8 @@
 package com.x_force.unimar.home;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -77,14 +79,13 @@ public class HomeActivity extends AppCompatActivity {
                     welcomeTextView.setText("Welcome, " + name);
 
                     if (!profileImage.isEmpty()) {
-                        // Load profile image using Glide
-                        Glide.with(HomeActivity.this)
-                                .load(profileImage)
-                                .placeholder(R.drawable.ic_placeholder) // Placeholder image
-                                .error(R.drawable.ic_placeholder)      // Error image
-                                .into(profileImageView);
-                    } else {
-                        // If no profile image is found, show a placeholder
+                        // Decode the Base64 string to a Bitmap
+                        byte[] decodedBytes = android.util.Base64.decode(profileImage, android.util.Base64.DEFAULT);
+                        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                        // Set the Bitmap to the ImageView
+                        profileImageView.setImageBitmap(decodedBitmap);
+                    }
+                    else{
                         profileImageView.setImageResource(R.drawable.ic_placeholder);
                     }
                 }
