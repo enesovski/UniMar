@@ -119,12 +119,16 @@ public class ItemManager {
 
     public static List<Item> filterList( char listType, double min, double max){
 
+        Log.d("Burak", "Burak");
         listType = Character.toUpperCase(listType);
         List<Item> filteredList = new ArrayList<Item>();
 
+        refreshProductQuery();
+
         if( listType == 'P' ){
-            productQuery = productQuery.whereGreaterThanOrEqualTo("cost",min);
-            productQuery = productQuery.whereLessThanOrEqualTo("cost", max);
+            Log.d("Burak", String.valueOf(productQuery.count()));
+            productQuery = productQuery.whereGreaterThanOrEqualTo("cost",min).whereLessThanOrEqualTo("cost", max);;
+
 
             productQuery.get().addOnCompleteListener(done -> {
                 if( done.isSuccessful() ) {
@@ -133,6 +137,7 @@ public class ItemManager {
                         Product product = document.toObject(Product.class);
                         filteredList.add(product);
                     }
+                    callback.onProductListLoaded(filteredList);
                 }
             });
         }
@@ -157,43 +162,46 @@ public class ItemManager {
 
     }
 
-    public static List<Item> filterList(char listType, String searchCategory ){
+    public static List<Item> filterList(char listType, ArrayList<String> searchCategory ){
 
         listType = Character.toUpperCase(listType);
-        searchCategory = searchCategory.toLowerCase();  //bütün itemların kategorisi Item classında set edilirken otomatik lowercase oluyor, case karışıklığı engellemek için
         List<Item> searchedList = new ArrayList<Item>();
+        String searchString = "";
 
-        if( listType == 'P' ){
-            productQuery = productQuery.whereArrayContains("name", searchCategory);
+        for( int i = 0 ; i < searchCategory.size() ; i++ ){
+            searchString = searchCategory.get(i).toLowerCase();
 
-            productQuery.get().addOnCompleteListener(done -> {
-                if( done.isSuccessful() ) {
-                    for (QueryDocumentSnapshot document : done.getResult()) {
+            if( listType == 'P' ){
+                productQuery = productQuery.whereArrayContains("category", searchString);
 
-                        Product product = document.toObject(Product.class);
-                        searchedList.add(product);
+                productQuery.get().addOnCompleteListener(done -> {
+                    if( done.isSuccessful() ) {
+                        for (QueryDocumentSnapshot document : done.getResult()) {
+
+                            Product product = document.toObject(Product.class);
+                            searchedList.add(product);
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
-        else if( listType == 'T' ){
-            tutoringQuery = tutoringQuery.whereArrayContains("name", searchCategory);
+            else if( listType == 'T' ){
+                tutoringQuery = tutoringQuery.whereArrayContains("category", searchString);
 
-            tutoringQuery.get().addOnCompleteListener(done -> {
-                if( done.isSuccessful() ) {
-                    for (QueryDocumentSnapshot document : done.getResult()) {
+                tutoringQuery.get().addOnCompleteListener(done -> {
+                    if( done.isSuccessful() ) {
+                        for (QueryDocumentSnapshot document : done.getResult()) {
 
-                        Tutoring tutoring = document.toObject(Tutoring.class);
-                        searchedList.add(tutoring);
+                            Tutoring tutoring = document.toObject(Tutoring.class);
+                            searchedList.add(tutoring);
+                        }
                     }
-                }
-            });
+                });
 
+            }
         }
 
         return searchedList;
-
     }
 
     public static void filterList(){} //Satıcının user ID'sine göre ürün/tutoring filtreleyecek ama user class'ı yapılmamış
@@ -235,7 +243,7 @@ public class ItemManager {
         return searchedList;
 
     }
-    
+
     public static Query getProductQuery() {
         return productQuery;
     }
