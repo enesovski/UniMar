@@ -1,4 +1,5 @@
 package com.x_force.unimar.chat;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -82,6 +83,9 @@ public class ChatActivity extends AppCompatActivity {
         adapter.startListening();
 
         ImageButton sendButton = findViewById(R.id.sendButton);
+
+
+
         EditText messageEditText = findViewById(R.id.messageEditText);
 
         sendButton.setOnClickListener(v -> {
