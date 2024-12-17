@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.x_force.unimar.R;
 import com.x_force.unimar.home.HomeActivity;
 
@@ -70,10 +72,17 @@ public class LoginActivity extends AppCompatActivity implements IAuthCallback {
 
     @Override
     public void onSuccess(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        finish();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null && user.isEmailVerified()) {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(this, "Please verify your email before logging in.", Toast.LENGTH_LONG).show();
+            FirebaseAuth.getInstance().signOut(); // Prevent login
+        }
     }
     @Override
     public void onFailure(String message) {
