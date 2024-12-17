@@ -1,7 +1,9 @@
 package com.x_force.unimar.Views;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.x_force.unimar.Item.ItemAdapter;
 import com.x_force.unimar.Item.Product;
 import com.x_force.unimar.R;
+import com.x_force.unimar.chat.ChatActivity;
 
 public class ProductView extends AppCompatActivity {
     TextView productName;
@@ -37,6 +40,9 @@ public class ProductView extends AppCompatActivity {
             return insets;
         });
 
+        String UserId=getIntent().getStringExtra("UserId");
+        String UserName=getIntent().getStringExtra("UserName");
+
         productName = findViewById(R.id.productNameText);
         cost = findViewById(R.id.costText);
         category = findViewById(R.id.categoryText);
@@ -44,6 +50,15 @@ public class ProductView extends AppCompatActivity {
         seller = findViewById(R.id.sellerNameText);
         sellerRating = findViewById(R.id.ratingTextView);
         sendMessage = findViewById(R.id.startChatButton);
+        sendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(ProductView.this, ChatActivity.class);
+                intent.putExtra("name",UserName);
+                intent.putExtra("userId",UserId);
+                startActivity(intent);
+            }
+        });
         productImage = findViewById(R.id.productImageView);
 
         productName.setText(getIntent().getStringExtra("Name"));

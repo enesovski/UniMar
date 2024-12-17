@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -51,7 +54,8 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
               isExists.set(false);
           }
         });
-        if(model.getUserIds().get(1).equals(FirebaseAuth.getInstance().getUid()) && isExists.get()){
+          if(model.getUserIds().get(1).equals(FirebaseAuth.getInstance().getUid()) && isExists.get()){
+            holder.setUserId(model.getUserIds().get(0));
             FirebaseFirestore.getInstance().collection("users").document(model.getUserIds().get(0)).get().addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
                     boolean MessageSendByMe=model.getLastSenderId().equals(FirebaseAuth.getInstance().getUid());
@@ -84,7 +88,8 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
                 }
             });
         }else if(model.getUserIds().get(0).equals(FirebaseAuth.getInstance().getUid()) && isExists.get()){
-            FirebaseFirestore.getInstance().collection("users").document(model.getUserIds().get(1)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                holder.setUserId(model.getUserIds().get(1));
+                FirebaseFirestore.getInstance().collection("users").document(model.getUserIds().get(1)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -133,12 +138,49 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
         TextView messageTime;
         TextView last_message_sender;
 
+        RatingBar ratingBar;
+
+        String otherUserId;
+
+
+        public void setUserId(String userId){
+            this.otherUserId=userId;
+        }
+
+        Button evalButton;
         public ChatRoomViewHolder(@NonNull View itemView) {
             super(itemView);
             last_message_sender=itemView.findViewById(R.id.last_message_sender);
             emailText = itemView.findViewById(R.id.name);
             messageText=itemView.findViewById(R.id.lastMessageText);
             messageTime= itemView.findViewById(R.id.lastMessageTime);
+            ratingBar=itemView.findViewById(R.id.ratingBar);
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                    System.out.println("rating:"+rating);
+                    DocumentReference userRef=FirebaseFirestore.getInstance().collection("users").document(otherUserId);
+                    FirebaseFirestore.getInstance().collection("users").document(otherUserId).get().addOnCompleteListener(task->{
+                        if(task.isSuccessful()){
+                            DocumentSnapshot document= task.getResult();
+                            if(document.exists()){
+                                User user=document.toObject(User.class);
+                                user.increment_rating(rating);
+                                user.incrementTotalRating();
+                                userRef.update("rating",rating);
+                                userRef.update("totalRating",user.getTotalRating());
+
+
+                            }
+
+                        }
+                    });
+
+                }
+            });
+
+
+
 
         }
     }
