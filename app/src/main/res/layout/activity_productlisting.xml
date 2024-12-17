@@ -38,7 +38,6 @@
         app:backgroundTint="@null"
         android:background="@drawable/filtersort_button"
         app:backgroundTintMode="src_over"
-        android:drawableStart="@drawable/ic_filter"
         android:text="Filter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
