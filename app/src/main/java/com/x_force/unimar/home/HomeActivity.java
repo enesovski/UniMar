@@ -28,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView welcomeTextView;
     private ImageView profileImageView;
     private Button profileButton, chatButton;
+    public static String name;
 
     private ConstraintLayout productButton, tutoringButton;
 
@@ -73,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Map<String, Object> profileData) {
                     // Extract user profile details with fallback values
-                    String name = profileData.getOrDefault("name", "User").toString();
+                    name = profileData.getOrDefault("name", "User").toString();
                     String profileImage = profileData.getOrDefault("profileImage", "").toString();
 
                     // Update UI components

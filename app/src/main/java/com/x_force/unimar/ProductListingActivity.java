@@ -22,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.slider.RangeSlider;
 import com.google.android.material.slider.Slider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.x_force.unimar.Item.Item;
@@ -37,6 +38,7 @@ import java.util.Timer;
 
 public class ProductListingActivity extends AppCompatActivity {
     static FirebaseFirestore db;
+    static FirebaseAuth auth;
     GridView itemList;
     protected List<Item> items;
     public static ItemAdapter adapter;
@@ -47,7 +49,8 @@ public class ProductListingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_productlisting);
-        db = FirebaseFirestore.getInstance();;
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main2), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -339,6 +342,10 @@ public class ProductListingActivity extends AppCompatActivity {
 
     public static FirebaseFirestore getDb(){
         return db;
+    }
+
+    public static FirebaseAuth getAuth(){
+        return auth;
     }
 
 }
