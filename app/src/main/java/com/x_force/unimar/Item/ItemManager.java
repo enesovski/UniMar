@@ -24,7 +24,6 @@ public class ItemManager {
     static Query productQuery = db.collection("productListing");
     static Query tutoringQuery = db.collection("tutorListing");
     public static ItemAdapter adapter;
-
     static ProductListCallback callback = new ProductListCallback() {
         public void onProductListLoaded(List<Item> items) {
             adapter.items = items;
@@ -101,6 +100,37 @@ public class ItemManager {
                 for (QueryDocumentSnapshot document : done.getResult()) {
                     Product product = document.toObject(Product.class);
                     items.add(product);
+                    Log.d("Firestore", document.getId() + " => " + document.getData());
+                }
+                Log.d("Sort", items.size() + " ");
+                callback.onProductListLoaded(items);
+            } else {
+                Log.w("Firestore", "Error getting documents: ", done.getException());
+            }
+        });
+
+        productQuery = intialQuery;
+
+        return items;
+    }
+
+    public static List<Item> sortDeleteProductList(char c) { // eğer c 'A' karakteri ise artan fiyata göre sıralıyor. D--> azalan. İkisi de değilse sortlanmamış databaseyi yazdırıyor
+        Query intialQuery = productQuery;
+        ArrayList<Item> items = new ArrayList<>();
+        c = Character.toUpperCase(c);
+        if (c == 'A') {
+            productQuery = productQuery.orderBy("cost", Query.Direction.ASCENDING);
+        } else if (c == 'D') {
+            productQuery = productQuery.orderBy("cost", Query.Direction.DESCENDING);
+        }
+
+        productQuery.get().addOnCompleteListener(done -> {
+            if (done.isSuccessful()) {
+                for (QueryDocumentSnapshot document : done.getResult()) {
+                    Product product = document.toObject(Product.class);
+                    if(product.getUserId() != null && product.getUserId().equals(auth.getUid())){
+                        items.add(product);
+                    }
                     Log.d("Firestore", document.getId() + " => " + document.getData());
                 }
                 Log.d("Sort", items.size() + " ");

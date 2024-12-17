@@ -1,5 +1,6 @@
 package com.x_force.unimar;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,24 +22,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.x_force.unimar.Item.Item;
 import com.x_force.unimar.Item.ItemAdapter;
+import com.x_force.unimar.Item.ItemDeleteAdapter;
 import com.x_force.unimar.Item.ItemManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductListingActivity extends AppCompatActivity {
+public class ProductDeletingActivity extends AppCompatActivity {
     static FirebaseFirestore db;
     static FirebaseAuth auth;
     GridView itemList;
     protected List<Item> items;
     public static ItemAdapter adapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_productlisting);
+        setContentView(R.layout.activity_product_delete);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main2), (v, insets) -> {
@@ -51,13 +52,11 @@ public class ProductListingActivity extends AppCompatActivity {
         setButtonInteractions();
     }
 
-    //itemlist öğesini ne biçimde dolduracağımızı belirleyen ItemAdapteri initialize ediyoruz
-    //SETCONTENTVIEW activity_productlisting.xml de olması lazım yoksa nullpointerexception!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void showList(){
 
         itemList = findViewById(R.id.tutoring_list);
 
-        this.items = ItemManager.sortProductList('m');
+        this.items = ItemManager.sortDeleteProductList('m');
 
         adapter = new ItemAdapter(this,items);
 
@@ -119,7 +118,6 @@ public class ProductListingActivity extends AppCompatActivity {
 //            }
 //        });
     }
-
     public void setButtonInteractions(){
 
         Button GeneralSortButton = findViewById(R.id.sort_button);
@@ -322,22 +320,9 @@ public class ProductListingActivity extends AppCompatActivity {
             finish();
         });
 
-        removeButton.setOnClickListener(v ->{
-            Intent intent = new Intent(this, ProductDeletingActivity.class);
-            startActivity(intent);
-        });
+//        removeButton.setOnClickListener(v ->{
+//            Intent intent = new Intent(this,)
+//        });
 
     }
-    public static ItemAdapter getAdapter(){
-        return adapter;
-    }
-
-    public static FirebaseFirestore getDb(){
-        return db;
-    }
-
-    public static FirebaseAuth getAuth(){
-        return auth;
-    }
-
 }
