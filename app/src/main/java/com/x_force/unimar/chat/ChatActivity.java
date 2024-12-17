@@ -50,6 +50,13 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
+        ImageButton backButton=findViewById(R.id.backButton);
+        backButton.setOnClickListener(v->{
+            Intent intent=new Intent(this,SearchUserActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         TextView chatTitle = findViewById(R.id.chatTitle);
         chatTitle.setText("Chat with " + name);
 
@@ -83,10 +90,9 @@ public class ChatActivity extends AppCompatActivity {
         adapter.startListening();
 
         ImageButton sendButton = findViewById(R.id.sendButton);
-
-
-
         EditText messageEditText = findViewById(R.id.messageEditText);
+
+
 
         sendButton.setOnClickListener(v -> {
             String messageContent = messageEditText.getText().toString().trim();
