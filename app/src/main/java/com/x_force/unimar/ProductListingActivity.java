@@ -157,7 +157,7 @@ public class ProductListingActivity extends AppCompatActivity {
             CheckBox categoryCheckBox = findViewById(R.id.categoryCheckbox);
             Slider priceSlider = findViewById(R.id.ProductPriceFilterSlider);
             Slider ratingSlider = findViewById(R.id.ProductUserRatingFilterSlider);
-            TextView filterText = findViewById(R.id.FilterText);
+            //TextView filterText = findViewById(R.id.FilterText);
             Button cancelFilteringButton = findViewById(R.id.cancelFilteringButton);
 
             priceCheckbox.setOnClickListener(e -> {
