@@ -1,22 +1,19 @@
 package com.x_force.unimar.home;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.x_force.unimar.R;
 import com.x_force.unimar.chat.SearchUserActivity;
-import com.x_force.unimar.login.LoginActivity;
 import com.x_force.unimar.profile.ProfileActivity;
 import com.x_force.unimar.profile.ProfileHandler;
 
@@ -24,77 +21,79 @@ import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ImageView profileImageView;
     private TextView welcomeTextView;
+    private ImageView profileImageView;
+    private Button profileButton, chatButton;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        profileImageView = findViewById(R.id.profileImageView);
+        // Initialize UI components
         welcomeTextView = findViewById(R.id.welcomeTextView);
-        Button profileButton = findViewById(R.id.profileButton);
-        Button chatButton = findViewById(R.id.chatButton);
+        profileImageView = findViewById(R.id.profileImageView);
+        profileButton = findViewById(R.id.profileButton);
+        chatButton = findViewById(R.id.chatButton);
 
-        chatButton.setOnClickListener(e -> {Intent intent = new Intent(HomeActivity.this, SearchUserActivity.class);
-        startActivity(intent);});
+        // Fetch and display profile information
+        fetchAndDisplayProfileData();
 
-        ConstraintLayout productButton = findViewById(R.id.customButton1);
-        ConstraintLayout tutoringButton = findViewById(R.id.customButton2);
+        // Set button click listeners
+        profileButton.setOnClickListener(v -> openProfileActivity());
+        chatButton.setOnClickListener(v -> openChatActivity());
+    }
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) {
+    private void fetchAndDisplayProfileData() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+
+            ProfileHandler.getUserProfile(userId, new ProfileHandler.ProfileResultCallback() {
+                @Override
+                public void onSuccess(Map<String, Object> profileData) {
+                    // Extract user profile details with fallback values
+                    String name = profileData.getOrDefault("name", "User").toString();
+                    String profileImage = profileData.getOrDefault("profileImage", "").toString();
+
+                    // Update UI components
+                    welcomeTextView.setText("Welcome, " + name);
+
+                    if (!profileImage.isEmpty()) {
+                        // Load profile image using Glide
+                        Glide.with(HomeActivity.this)
+                                .load(profileImage)
+                                .placeholder(R.drawable.ic_placeholder) // Placeholder image
+                                .error(R.drawable.ic_placeholder)      // Error image
+                                .into(profileImageView);
+                    } else {
+                        // If no profile image is found, show a placeholder
+                        profileImageView.setImageResource(R.drawable.ic_placeholder);
+                    }
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    // Display error message if profile fetch fails
+                    Toast.makeText(HomeActivity.this, "Failed to load profile: " + errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // If no user is logged in
             Toast.makeText(this, "No user is logged in.", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-            return;
+            finish(); // Close the activity
         }
-        String userId = currentUser.getUid();
+    }
 
-        ProfileHandler.getUserProfile(userId, new ProfileHandler.ProfileResultCallback() {
-            @Override
-            public void onSuccess(Map<String, Object> profileData) {
-                if (profileData == null) {
-                    Toast.makeText(HomeActivity.this, "Profile data is missing.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+    private void openProfileActivity() {
+        Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+        startActivity(intent);
+    }
 
-                String name = profileData.get("name") != null ? (String) profileData.get("name") : "User";
-                String profileImage = profileData.get("profileImage") != null ? (String) profileData.get("profileImage") : null;
-
-                welcomeTextView.setText("Welcome, " + name);
-
-                if (profileImage != null && !profileImage.isEmpty()) {
-                    byte[] decodedBytes = android.util.Base64.decode(profileImage, android.util.Base64.DEFAULT);
-                    Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-                    profileImageView.setImageBitmap(decodedBitmap);
-                } else {
-                    profileImageView.setImageResource(R.drawable.ic_placeholder);
-                }
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-                Toast.makeText(HomeActivity.this, "Error fetching profile: " + errorMessage, Toast.LENGTH_SHORT).show();
-                Log.e("HomeActivity", "Profile Fetch Failure: " + errorMessage);
-            }
-
-        });
-
-        profileButton.setOnClickListener(view -> {
-            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
-            startActivity(intent);
-        });
-
-        //BURAYA TUTORING VE PRODUCT SAYFALARI INTENTI
-        productButton.setOnClickListener(view -> {
-            Toast.makeText(this, "Lecture Materials clicked!", Toast.LENGTH_SHORT).show();
-        });
-
-        tutoringButton.setOnClickListener(view -> {
-            Toast.makeText(this, "Tutoring clicked!", Toast.LENGTH_SHORT).show();
-        });
+    private void openChatActivity() {
+        Intent intent = new Intent(HomeActivity.this, SearchUserActivity.class);
+        startActivity(intent);
     }
 }
