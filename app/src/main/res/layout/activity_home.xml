@@ -63,7 +63,7 @@
         android:insetBottom="0dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:text="Profile"
+        android:text="Profıle"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
