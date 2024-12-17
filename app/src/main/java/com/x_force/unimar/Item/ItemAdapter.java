@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+
 import com.x_force.unimar.R;
 import com.x_force.unimar.Views.ProductView;
 import java.util.List;
@@ -37,6 +39,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         TextView costTextView = convertView.findViewById(R.id.item_cost);
         TextView descTextView = convertView.findViewById(R.id.item_desc);
         View gradientBar = convertView.findViewById(R.id.gradientBar);
+        CardView card = convertView.findViewById(R.id.card);
 
         nameTextView.setText(item.getName());
         costTextView.setText(String.valueOf(item.getCost()));
@@ -52,6 +55,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         sortButton.setVisibility(View.GONE);
         filterButton.setVisibility(View.GONE);
         gradientBar.setVisibility(View.GONE);
+        card.setVisibility(View.VISIBLE);
 
         viewButton.setOnClickListener(v -> {
             String categories = "";

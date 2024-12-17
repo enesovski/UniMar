@@ -271,7 +271,6 @@ public class ItemManager {
     public static Query getTutorQuery() {
         return tutoringQuery;
     }
-
     public static void refreshTutorQuery() {
         tutoringQuery = db.collection("tutorListing");
     }
