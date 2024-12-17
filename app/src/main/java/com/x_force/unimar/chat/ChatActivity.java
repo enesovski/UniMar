@@ -31,16 +31,16 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_view);
 
         String userId = getIntent().getStringExtra("userId");
-        String email = getIntent().getStringExtra("email");
+        String name = getIntent().getStringExtra("name");
 
-        if (userId == null || email == null) {
+        if (userId == null || name == null) {
             Toast.makeText(this, "Invalid user data. Returning to home.", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
         TextView chatTitle = findViewById(R.id.chatTitle);
-        chatTitle.setText("Chat with " + email);
+        chatTitle.setText("Chat with " + name);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
