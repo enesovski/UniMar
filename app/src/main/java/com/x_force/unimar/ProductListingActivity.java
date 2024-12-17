@@ -38,7 +38,7 @@ import java.util.Timer;
 public class ProductListingActivity extends AppCompatActivity {
     static FirebaseFirestore db;
     GridView itemList;
-    List<Item> items;
+    protected List<Item> items;
     public static ItemAdapter adapter;
 
 
@@ -106,10 +106,10 @@ public class ProductListingActivity extends AppCompatActivity {
         setButtonInteractions();
     }
 
-    public void showFilteredList(ArrayList<String> categories){
+    public void showFilteredList(ArrayList<Item> items) {
         itemList = findViewById(R.id.product_list);
 
-        this.items = ItemManager.filterList('P',categories);
+        this.items = items;
 
         adapter = new ItemAdapter(this, items);
 
@@ -117,7 +117,18 @@ public class ProductListingActivity extends AppCompatActivity {
 
         itemList.setAdapter(adapter);
 
-        setButtonInteractions();
+//        ItemManager.filterList('P', categories, new ItemManager.CategoryCallBack() {
+//            @Override
+//            public void onCallback(List<Item> resultList) {
+//                items = resultList;
+//
+//                adapter = new ItemAdapter(ProductListingActivity.this, items);
+//                ItemManager.adapter = adapter;
+//                itemList.setAdapter(adapter);
+//
+//                Log.d("FilteredItems", "Filtered list size: " + items.size());
+//            }
+//        });
     }
 
     public void setButtonInteractions(){
@@ -278,8 +289,14 @@ public class ProductListingActivity extends AppCompatActivity {
                         Log.d("kopek","boyut: "+categories.size());
                     }
 
-                    Log.d("kedi","boyut: "+categories.size());
-                    ItemManager.filterList('P',categories);
+                    ItemManager.filterList('P', categories, new ItemManager.CategoryCallBack() {
+                        @Override
+                        public void onCallback(List<Item> resultList) {
+                            Log.d("kedi","boyut: "+resultList.size());
+                            items = resultList;
+                            showFilteredList((ArrayList<Item>) items);
+                        }
+                    });
 
                 }
 
