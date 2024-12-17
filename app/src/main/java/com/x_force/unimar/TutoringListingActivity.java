@@ -295,7 +295,7 @@ public class TutoringListingActivity extends AppCompatActivity {
         });
 
         addNewbutton.setOnClickListener(v ->{
-            Intent intent = new Intent(this, ItemAddActivity.class);
+            Intent intent = new Intent(this, TutorAddActivity.class);
             startActivity(intent);
             finish();
         });

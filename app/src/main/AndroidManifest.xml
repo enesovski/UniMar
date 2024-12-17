@@ -68,6 +68,12 @@
 
         <activity android:name=".TutoringListingActivity"
             android:exported="true" />
+        <activity
+            android:name=".TutorAddActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".TutorCategorySelectionActivity"
+            android:exported="true"/>
 
     </application>
 
