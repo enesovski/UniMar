@@ -7,6 +7,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.x_force.unimar.ProductListingActivity;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +19,8 @@ public class ItemManager {
     static Query productQuery = db.collection("productListing");
     static Query tutoringQuery = db.collection("tutorListing");
     public static ItemAdapter adapter;
+
+    static List<Item> copyList = new ArrayList<>();
     static ProductListCallback callback = new ProductListCallback() {
         public void onProductListLoaded(List<Item> items) {
             adapter.items = items;
@@ -154,9 +158,12 @@ public class ItemManager {
             });
 
         }
-
         return filteredList;
+    }
 
+
+    private static void createCopy(List<Item> list) {
+        copyList = list;
     }
 
     public static List<Item> filterList(char listType, ArrayList<String> searchCategory ){
@@ -166,21 +173,28 @@ public class ItemManager {
         String searchString = "";
 
         for( int i = 0 ; i < searchCategory.size() ; i++ ){
+
             searchString = searchCategory.get(i).toLowerCase();
+            Log.d("aranan kategori","kategori: " + searchString);
 
             if( listType == 'P' ){
-                productQuery = productQuery.whereArrayContains("category", searchString);
+                productQuery = AllProductquery.whereArrayContains("category", searchString);
 
                 productQuery.get().addOnCompleteListener(done -> {
                     if( done.isSuccessful() ) {
+                        Log.d("bocek","deneme");
                         for (QueryDocumentSnapshot document : done.getResult()) {
 
                             Product product = document.toObject(Product.class);
+                            Log.d("urun adı"," " + product.getName());
                             searchedList.add(product);
+
                         }
                     }
                 });
+
             }
+
 
             else if( listType == 'T' ){
                 tutoringQuery = tutoringQuery.whereArrayContains("category", searchString);
@@ -198,7 +212,9 @@ public class ItemManager {
             }
         }
 
+        Log.d("yeni boyut", "" + searchedList.size());
         return searchedList;
+
     }
 
     public static List<Item> searchInTheList(char listType, String itemName ){
