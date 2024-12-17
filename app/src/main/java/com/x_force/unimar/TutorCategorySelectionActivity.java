@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.x_force.unimar.Item.Product;
+import com.x_force.unimar.Item.Tutoring;
 import com.x_force.unimar.home.HomeActivity;
 
 import java.util.ArrayList;
@@ -87,11 +88,11 @@ public class TutorCategorySelectionActivity extends AppCompatActivity {
                 String name = getIntent().getStringExtra("name");
                 String desc = getIntent().getStringExtra("desc");
                 String cost = getIntent().getStringExtra("cost");
-                String image = getIntent().getStringExtra("image");
+                //String image = getIntent().getStringExtra("image");
                 int intCost = Integer.parseInt(cost);
-                Product temp = new Product(name, desc, HomeActivity.name , category, intCost,image);
-                Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, ProductListingActivity.class);
+                Tutoring temp = new Tutoring(name, desc, HomeActivity.name , category, intCost);
+                Toast.makeText(this, "Tutoring added", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, TutoringListingActivity.class);
                 startActivity(intent);
                 finish();
             }

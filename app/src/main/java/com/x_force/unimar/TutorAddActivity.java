@@ -26,7 +26,7 @@ public class TutorAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_add_product);
+        setContentView(R.layout.activity_add_tutoring);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main3), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -66,7 +66,7 @@ public class TutorAddActivity extends AppCompatActivity {
                     && newItemDescText.getText().length() != 0
                     && newItemCostText.getText().length() != 0){
 
-                Intent intent = new Intent(this, ProductCategorySelectionActivity.class);
+                Intent intent = new Intent(this, TutorCategorySelectionActivity.class);
                 intent.putExtra("name",newItemNameText.getText().toString());
                 intent.putExtra("desc",newItemDescText.getText().toString());
                 intent.putExtra("cost",newItemCostText.getText().toString());
