@@ -59,7 +59,7 @@ dependencies {
 
     implementation ("com.google.firebase:firebase-storage:21.0.1")
     //Added by Yavuz to use recyclerView
-    implementation(libs.firebase.ui.firestore) // Check for the latest version
+    implementation(libs.firebase.ui.firestore)
     implementation(libs.play.services.auth)
     implementation(libs.recyclerview)
     implementation(libs.cardview)
