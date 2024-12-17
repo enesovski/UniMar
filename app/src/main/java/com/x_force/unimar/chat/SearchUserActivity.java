@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,6 +46,22 @@ public class SearchUserActivity extends AppCompatActivity {
         searchInput = findViewById(R.id.searchEditText);
         searchButton = findViewById(R.id.searchButton);
         recyclerView = findViewById(R.id.recyclerView);
+
+
+        RatingBar ratingBar = findViewById(R.id.ratingBar);
+
+        if(ratingBar!=null){
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                    System.out.println("rating:"+rating);
+
+                }
+            });
+
+        }
+
+
 
         if(count==0){
             handleSearch2();

@@ -87,6 +87,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             intent.putExtra("Category", categories);
             intent.putExtra("Description", item.getDesc());
             intent.putExtra("Cost", item.getCost()+"");
+            intent.putExtra("UserId",item.getUserId());
+            intent.putExtra("UserName",item.getUserName());
             if(item instanceof Product){
                 intent.putExtra("Image", ((Product) item).getImage());
             }
