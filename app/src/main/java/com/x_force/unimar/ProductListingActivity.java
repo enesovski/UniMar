@@ -1,14 +1,17 @@
 package com.x_force.unimar;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +28,7 @@ import com.x_force.unimar.Item.Item;
 import com.x_force.unimar.Item.ItemAdapter;
 import com.x_force.unimar.Item.ItemManager;
 import com.x_force.unimar.Item.Product;
+import com.x_force.unimar.Item.ProductListCallback;
 import com.x_force.unimar.Views.ProductView;
 
 import java.util.ArrayList;
@@ -35,7 +39,7 @@ public class ProductListingActivity extends AppCompatActivity {
     static FirebaseFirestore db;
     GridView itemList;
     List<Item> items;
-    static ItemAdapter adapter;
+    public static ItemAdapter adapter;
 
 
     @Override
@@ -59,25 +63,47 @@ public class ProductListingActivity extends AppCompatActivity {
     }
 
     //itemlist öğesini ne biçimde dolduracağımızı belirleyen ItemAdapteri initialize ediyoruz
+    //SETCONTENTVIEW activity_productlisting.xml de olması lazım yoksa nullpointerexception!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void showList(){
 
         itemList = findViewById(R.id.product_list);
 
-        items = ItemManager.sortProductList('m');
+        this.items = ItemManager.sortProductList('m');
 
         adapter = new ItemAdapter(this,items);
 
         ItemManager.adapter = adapter;
 
-        /*itemList.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ProductView.class);
-            intent.putExtra("category","math");
-            intent.putExtra("name","yavuz");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getApplication().startActivity(intent);
-        });*/
+        itemList.setAdapter(adapter);
+    }
+
+    //SETCONTENTVIEW activity_productlisting.xml de olması lazım yoksa nullpointerexception!!!!!!!!!!!!!!!!!!!!!!!!!
+    public void showSearchList(String s) {
+
+        itemList = findViewById(R.id.product_list);
+
+        this.items = ItemManager.searchInTheList('P', s);
+
+        adapter = new ItemAdapter(this, items);
+
+        ItemManager.adapter = adapter;
 
         itemList.setAdapter(adapter);
+    }
+
+    //SETCONTENTVIEW activity_productlisting.xml de olması lazım yoksa nullpointerexception!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public void showFilteredList(float max){
+        itemList = findViewById(R.id.product_list);
+
+        this.items = ItemManager.filterList('P', 0, max);
+
+        adapter = new ItemAdapter(this, items);
+
+        ItemManager.adapter = adapter;
+
+        itemList.setAdapter(adapter);
+
+        setButtonInteractions();
     }
 
     public void setButtonInteractions(){
@@ -86,8 +112,10 @@ public class ProductListingActivity extends AppCompatActivity {
         Button SortAscendingButton = findViewById(R.id.button_sort_ascending);
         Button SortDescendingButton = findViewById(R.id.button_sort_descending);
         Button FilterButton = findViewById(R.id.filter_button);
+        SearchView productSearchBar = findViewById(R.id.product_searchbar);
 
         //filterbutton instance'ları
+        Button addNewbutton = findViewById(R.id.button_change_activity_add);
 
         GeneralSortButton.setOnClickListener (v -> {
             GeneralSortButton.setVisibility(ListView.GONE);
@@ -130,20 +158,21 @@ public class ProductListingActivity extends AppCompatActivity {
             Slider priceSlider = findViewById(R.id.ProductPriceFilterSlider);
             Slider ratingSlider = findViewById(R.id.ProductUserRatingFilterSlider);
             TextView filterText = findViewById(R.id.FilterText);
+            Button cancelFilteringButton = findViewById(R.id.cancelFilteringButton);
 
             priceCheckbox.setOnClickListener(e -> {
                 Log.d("Enes", "Price checkbox clicked");
 
                 priceSlider.setVisibility(View.VISIBLE);
 
-                priceSlider.addOnChangeListener((slider, value, fromUser) -> {
-
-                    float maxValue = priceSlider.getValue();
-
-                    Log.d("Enes", "Price Slider Value: Min="  + ", Max=" + maxValue);
-
-                    ItemManager.filterList('P', 0, maxValue);
-                });
+//                priceSlider.addOnChangeListener((slider, value, fromUser) -> {
+//
+//                    float maxValue = priceSlider.getValue();
+//
+//                    Log.d("Enes", "Price Slider Value: Min="  + ", Max=" + maxValue);
+//
+//                    ItemManager.filterList('P', 0, maxValue);
+//                });
             });
 
 
@@ -211,24 +240,56 @@ public class ProductListingActivity extends AppCompatActivity {
 
             });
 
-
             //ratingCheckbox.setOnClickListener(e -> {
-                //ratingSlider.setVisibility(ListView.VISIBLE);
-                //ratingSlider.setOnClickListener(a -> {
-                    //float value = ratingSlider.getValues().get(0);
-                    //ItemManager.filterList('P',0,value);
-                //});
+            //ratingSlider.setVisibility(ListView.VISIBLE);
+            //ratingSlider.setOnClickListener(a -> {
+            //float value = ratingSlider.getValues().get(0);
+            //ItemManager.filterList('P',0,value);
+            //});
             //});
 
             Button doneButton = findViewById(R.id.FilterDoneButton);
             doneButton.setOnClickListener(e -> {
-                FilterButton.setVisibility(ListView.GONE);
+                FilterButton.setVisibility(View.GONE);
+                float max = 0;
+
+                if(priceCheckbox.isChecked()){
+                    max = priceSlider.getValue();
+                    Log.d("max", priceSlider.getValue() + "");
+                }
+
                 setContentView(R.layout.activity_productlisting);
-                @SuppressLint("CutPasteId") Button filter = findViewById(R.id.filter_button);
-                filter.setVisibility(ListView.VISIBLE);
+                showFilteredList(max);
+            });
+
+            cancelFilteringButton.setOnClickListener(e -> {
+                ItemManager.refreshProductQuery();
+                setContentView(R.layout.activity_productlisting);
                 showList();
                 setButtonInteractions();
             });
+
+
+        });
+
+        productSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                showSearchList(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                showSearchList(newText);
+                return true;
+            }
+        });
+
+        addNewbutton.setOnClickListener(v ->{
+            Intent intent = new Intent(this, ItemAddActivity.class);
+            startActivity(intent);
+            finish();
         });
 
     }
