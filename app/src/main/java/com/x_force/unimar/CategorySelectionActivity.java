@@ -2,6 +2,7 @@ package com.x_force.unimar;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -87,8 +88,9 @@ public class CategorySelectionActivity extends AppCompatActivity {
                 String name = getIntent().getStringExtra("name");
                 String desc = getIntent().getStringExtra("desc");
                 String cost = getIntent().getStringExtra("cost");
+                String image = getIntent().getStringExtra("image");
                 int intCost = Integer.parseInt(cost);
-                Product temp = new Product(name, desc, category, intCost);
+                Product temp = new Product(name, desc, category, intCost,image);
                 Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, ProductListingActivity.class);
                 startActivity(intent);

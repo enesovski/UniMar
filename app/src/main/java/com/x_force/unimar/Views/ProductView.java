@@ -1,7 +1,9 @@
 package com.x_force.unimar.Views;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -10,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.x_force.unimar.Item.ItemAdapter;
+import com.x_force.unimar.Item.Product;
 import com.x_force.unimar.R;
 
 public class ProductView extends AppCompatActivity {
@@ -20,6 +24,7 @@ public class ProductView extends AppCompatActivity {
     TextView seller;
     TextView sellerRating;
     Button sendMessage;
+    ImageView productImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +44,20 @@ public class ProductView extends AppCompatActivity {
         seller = findViewById(R.id.sellerNameText);
         sellerRating = findViewById(R.id.ratingTextView);
         sendMessage = findViewById(R.id.startChatButton);
+        productImage = findViewById(R.id.productImageView);
 
         productName.setText(getIntent().getStringExtra("Name"));
         cost.setText(getIntent().getStringExtra("Cost"));
         category.setText(getIntent().getStringExtra("Category"));
         description.setText(getIntent().getStringExtra("Description"));
+        String bitmapString = getIntent().getStringExtra("Image");
 
+        if(bitmapString != null){
+            Bitmap imageBitmap= ItemAdapter.decodeBase64toBitmap(bitmapString);
+            productImage.setImageBitmap(imageBitmap);
+        }else{
+            productImage.setImageResource(R.drawable.ic_product_placeholder);
+        }
 
     }
 }
