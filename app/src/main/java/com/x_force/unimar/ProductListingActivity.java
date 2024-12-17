@@ -106,6 +106,20 @@ public class ProductListingActivity extends AppCompatActivity {
         setButtonInteractions();
     }
 
+    public void showFilteredList(ArrayList<String> categories){
+        itemList = findViewById(R.id.product_list);
+
+        this.items = ItemManager.filterList('P',categories);
+
+        adapter = new ItemAdapter(this, items);
+
+        ItemManager.adapter = adapter;
+
+        itemList.setAdapter(adapter);
+
+        setButtonInteractions();
+    }
+
     public void setButtonInteractions(){
 
         Button GeneralSortButton = findViewById(R.id.sort_button);
@@ -178,8 +192,6 @@ public class ProductListingActivity extends AppCompatActivity {
 
             categoryCheckBox.setOnClickListener(e -> {
 
-                ArrayList<String> categories = new ArrayList<>();
-
                 csCheckbox.setVisibility(ListView.VISIBLE);
                 eeeCheckbox.setVisibility(ListView.VISIBLE);
                 engCheckbox.setVisibility(ListView.VISIBLE);
@@ -192,52 +204,6 @@ public class ProductListingActivity extends AppCompatActivity {
                 meCheckbox.setVisibility(ListView.VISIBLE);
                 ieCheckbox.setVisibility(ListView.VISIBLE);
 
-                if(csCheckbox.isChecked()){
-                    categories.add("CS");
-                }
-
-                if(eeeCheckbox.isChecked()){
-                    categories.add("EEE");
-                }
-
-                if(engCheckbox.isChecked()){
-                    categories.add("ENG");
-                }
-
-                if(histCheckbox.isChecked()){
-                    categories.add("HIST");
-                }
-
-                if(philCheckbox.isChecked()){
-                    categories.add("PHIL");
-                }
-
-                if(mbgCheckbox.isChecked()){
-                    categories.add("MBG");
-                }
-
-                if(chemCheckbox.isChecked()){
-                    categories.add("CHEM");
-                }
-
-                if(physCheckbox.isChecked()){
-                    categories.add("PHYS");
-                }
-
-                if(mathCheckbox.isChecked()){
-                    categories.add("MATH");
-                }
-
-                if(meCheckbox.isChecked()){
-                    categories.add("ME");
-                }
-
-                if(ieCheckbox.isChecked()){
-                    categories.add("IE");
-                }
-
-                ItemManager.filterList('P',categories);
-
             });
 
             //ratingCheckbox.setOnClickListener(e -> {
@@ -249,17 +215,74 @@ public class ProductListingActivity extends AppCompatActivity {
             //});
 
             Button doneButton = findViewById(R.id.FilterDoneButton);
+
             doneButton.setOnClickListener(e -> {
+
                 FilterButton.setVisibility(View.GONE);
+                setContentView(R.layout.activity_productlisting);
                 float max = 0;
 
                 if(priceCheckbox.isChecked()){
                     max = priceSlider.getValue();
                     Log.d("max", priceSlider.getValue() + "");
+                    showFilteredList(max);
                 }
 
-                setContentView(R.layout.activity_productlisting);
-                showFilteredList(max);
+                else if( categoryCheckBox.isChecked() ) {
+
+                    ArrayList<String> categories = new ArrayList<>();
+
+                    if( csCheckbox.isChecked() ) {
+                        categories.add("cs");
+                        Log.d("deneme","cs kutusundan sonra categori boyutu" + categories.size());
+                    }
+
+                    if( eeeCheckbox.isChecked() ) {
+                        categories.add("eee");
+                    }
+
+                    if( engCheckbox.isChecked() ) {
+                        categories.add("eng");
+                    }
+
+                    if( histCheckbox.isChecked() ) {
+                        categories.add("hist");
+                    }
+
+                    if( philCheckbox.isChecked() ) {
+                        categories.add("phil");
+                    }
+
+                    if( mbgCheckbox.isChecked() ) {
+                        categories.add("mbg");
+                    }
+
+                    if( chemCheckbox.isChecked() ) {
+                        categories.add("chem");
+                    }
+
+                    if( physCheckbox.isChecked() ) {
+                        categories.add("phys");
+                    }
+
+                    if( mathCheckbox.isChecked() ) {
+                        categories.add("math");
+                    }
+
+                    if( meCheckbox.isChecked() ) {
+                        categories.add("me");
+                    }
+
+                    if( ieCheckbox.isChecked() ) {
+                        categories.add("ie");
+                        Log.d("kopek","boyut: "+categories.size());
+                    }
+
+                    Log.d("kedi","boyut: "+categories.size());
+                    ItemManager.filterList('P',categories);
+
+                }
+
             });
 
             cancelFilteringButton.setOnClickListener(e -> {
