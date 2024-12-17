@@ -24,11 +24,11 @@ public class ItemManager {
     static FirebaseAuth auth = ProductListingActivity.getAuth();
     static FirebaseFirestore db = ProductListingActivity.getDb();
     final static Query AllProductquery = db.collection("productListing");
+    final static Query AllTutoringquery = db.collection("tutorListing");
     static Query productQuery = db.collection("productListing");
     static Query tutoringQuery = db.collection("tutorListing");
     public static ItemAdapter adapter;
 
-    static List<Item> copyList = new ArrayList<>();
     static ProductListCallback callback = new ProductListCallback() {
         public void onProductListLoaded(List<Item> items) {
             adapter.items = items;
@@ -40,6 +40,7 @@ public class ItemManager {
 
         }
     };
+
 
     public static void addToList(Item item) {
          item.setUserId(Objects.requireNonNull(auth.getCurrentUser()).getUid());
@@ -108,27 +109,30 @@ public class ItemManager {
     }
 
     public static List<Item> sortTutorList(char c) {
-        List<Item> items = Collections.emptyList();
+        Query intialQuery = tutoringQuery;
+        ArrayList<Item> items = new ArrayList<>();
         c = Character.toUpperCase(c);
-        Query query;
         if (c == 'A') {
-            query = db.collection("tutorListing").orderBy("cost", Query.Direction.ASCENDING);
+            tutoringQuery = tutoringQuery.orderBy("cost", Query.Direction.ASCENDING);
         } else if (c == 'D') {
-            query = db.collection("tutorListing").orderBy("cost", Query.Direction.DESCENDING);
-        } else {
-            query = db.collection("tutorListing");
+            tutoringQuery = tutoringQuery.orderBy("cost", Query.Direction.DESCENDING);
         }
-        query.get().addOnCompleteListener(done -> {
+
+        tutoringQuery.get().addOnCompleteListener(done -> {
             if (done.isSuccessful()) {
                 for (QueryDocumentSnapshot document : done.getResult()) {
-                    Product product = document.toObject(Product.class);
-                    items.add(product);
+                    Tutoring tutoring = document.toObject(Tutoring.class);
+                    items.add(tutoring);
                     Log.d("Firestore", document.getId() + " => " + document.getData());
                 }
+                Log.d("Sort", items.size() + " ");
+                //callback.onProductListLoaded(items);  TUTORING CALLBACK'I YAZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
             } else {
                 Log.w("Firestore", "Error getting documents: ", done.getException());
             }
         });
+
+        tutoringQuery = intialQuery;
 
         return items;
     }
@@ -155,7 +159,7 @@ public class ItemManager {
         }
 
         else if( listType == 'T' ){
-            tutoringQuery = AllProductquery.whereGreaterThanOrEqualTo("cost",min).whereLessThanOrEqualTo("cost", max);
+            tutoringQuery = AllTutoringquery.whereGreaterThanOrEqualTo("cost",min).whereLessThanOrEqualTo("cost", max);
 
             tutoringQuery.get().addOnCompleteListener(done -> {
                 if( done.isSuccessful() ) {
@@ -163,8 +167,11 @@ public class ItemManager {
 
                         Tutoring tutoring = document.toObject(Tutoring.class);
                         filteredList.add(tutoring);
+                        //callback YAZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
                     }
                 }
+            }).addOnFailureListener(done ->{
+                Log.w("Firestore", "Error getting documents: ", done.getCause());
             });
         }
         return filteredList;
@@ -192,7 +199,7 @@ public class ItemManager {
         }
 
         else if( listType == 'T' ){
-            tutoringQuery = AllProductquery.whereGreaterThanOrEqualTo("rating",min).whereLessThanOrEqualTo("rating", max);
+            tutoringQuery = AllTutoringquery.whereGreaterThanOrEqualTo("rating",min).whereLessThanOrEqualTo("rating", max);
 
             tutoringQuery.get().addOnCompleteListener(done -> {
                 if( done.isSuccessful() ) {
@@ -201,6 +208,7 @@ public class ItemManager {
                         Tutoring tutoring = document.toObject(Tutoring.class);
                         filteredList.add(tutoring);
                     }
+                    //callback YAZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
                 }
             });
         }
