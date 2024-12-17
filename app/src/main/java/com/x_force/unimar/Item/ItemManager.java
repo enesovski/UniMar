@@ -156,65 +156,93 @@ public class ItemManager {
                     }
                 }
             });
+        }
+        return filteredList;
+    }
 
+    public static List<Item> filterListByRating( char listType, double min, double max){
+
+        listType = Character.toUpperCase(listType);
+        List<Item> filteredList = new ArrayList<Item>();
+
+        if( listType == 'P' ){
+            productQuery = AllProductquery.whereGreaterThanOrEqualTo("rating",min).whereLessThanOrEqualTo("rating", max);;
+
+            productQuery.get().addOnCompleteListener(done -> {
+                if( done.isSuccessful() ) {
+                    for (QueryDocumentSnapshot document : done.getResult()) {
+                        Product product = document.toObject(Product.class);
+                        filteredList.add(product);
+                    }
+                    callback.onProductListLoaded(filteredList);
+                }
+            }).addOnFailureListener(done ->{
+                Log.w("Firestore", "Error getting documents: ", done.getCause());
+            });
+        }
+
+        else if( listType == 'T' ){
+            tutoringQuery = AllProductquery.whereGreaterThanOrEqualTo("rating",min).whereLessThanOrEqualTo("rating", max);
+
+            tutoringQuery.get().addOnCompleteListener(done -> {
+                if( done.isSuccessful() ) {
+                    for (QueryDocumentSnapshot document : done.getResult()) {
+
+                        Tutoring tutoring = document.toObject(Tutoring.class);
+                        filteredList.add(tutoring);
+                    }
+                }
+            });
         }
         return filteredList;
     }
 
 
-    private static void createCopy(List<Item> list) {
-        copyList = list;
+    public interface CategoryCallBack {
+        void onCallback(List<Item> resultList);
     }
 
-    public static List<Item> filterList(char listType, ArrayList<String> searchCategory ){
 
+    public static void filterList(char listType, ArrayList<String> searchCategory, CategoryCallBack callback) {
         listType = Character.toUpperCase(listType);
-        List<Item> searchedList = new ArrayList<Item>();
-        String searchString = "";
+        List<Item> searchedList = new ArrayList<>();
 
-        for( int i = 0 ; i < searchCategory.size() ; i++ ){
+        int[] completedQueries = {0};
 
-            searchString = searchCategory.get(i).toLowerCase();
-            Log.d("aranan kategori","kategori: " + searchString);
+        for (String searchString : searchCategory) {
+            Log.d("aranan kategori", "kategori: " + searchString);
 
-            if( listType == 'P' ){
-                productQuery = AllProductquery.whereArrayContains("category", searchString);
-
-                productQuery.get().addOnCompleteListener(done -> {
-                    if( done.isSuccessful() ) {
-                        Log.d("bocek","deneme");
-                        for (QueryDocumentSnapshot document : done.getResult()) {
-
-                            Product product = document.toObject(Product.class);
-                            Log.d("urun adı"," " + product.getName());
-                            searchedList.add(product);
-
-                        }
-                    }
-                });
-
+            Query query;
+            if (listType == 'P') {
+                query = db.collection("productListing").whereArrayContains("category", searchString);
+            } else if (listType == 'T') {
+                query = db.collection("tutorListing").whereArrayContains("category", searchString);
+            } else {
+                continue;
             }
 
-
-            else if( listType == 'T' ){
-                tutoringQuery = tutoringQuery.whereArrayContains("category", searchString);
-
-                tutoringQuery.get().addOnCompleteListener(done -> {
-                    if( done.isSuccessful() ) {
-                        for (QueryDocumentSnapshot document : done.getResult()) {
-
+            char finalListType = listType;
+            query.get().addOnCompleteListener(done -> {
+                if (done.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : done.getResult()) {
+                        if (finalListType == 'P') {
+                            Product product = document.toObject(Product.class);
+                            searchedList.add(product);
+                            Log.d("aranan kategori", "eklendi:");
+                        } else {
                             Tutoring tutoring = document.toObject(Tutoring.class);
                             searchedList.add(tutoring);
                         }
                     }
-                });
+                }
+                completedQueries[0]++;
 
-            }
+                if (completedQueries[0] == searchCategory.size()) {
+                    Log.d("callbackenes", ""+ searchedList.size());
+                    callback.onCallback(searchedList);
+                }
+            });
         }
-
-        Log.d("yeni boyut", "" + searchedList.size());
-        return searchedList;
-
     }
 
     public static List<Item> searchInTheList(char listType, String itemName ){
@@ -291,3 +319,4 @@ public class ItemManager {
         tutoringQuery = db.collection("tutorListing");
     }
 }
+
