@@ -2,7 +2,6 @@ package com.x_force.unimar.Item;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import com.x_force.unimar.R;
 import com.x_force.unimar.Views.ProductView;
-
 import java.util.List;
-
 //Listede gözükecek her bir item için nasıl görüneceğini
 public class ItemAdapter extends ArrayAdapter<Item> {
-
     List<Item> items;
     public ItemAdapter(Context context, List<Item> items){
         super(context,0,items);
@@ -33,7 +26,6 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     // Listedeki her item için ui'a göre bir element oluşturuyoruz.
     public View getView(int position, View convertView, ViewGroup parent) {
         Item item = items.get(position);
-
         if(convertView == null){
             convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.activity_productlisting, parent, false);
@@ -44,7 +36,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         TextView nameTextView = convertView.findViewById(R.id.item_name);
         TextView costTextView = convertView.findViewById(R.id.item_cost);
         TextView descTextView = convertView.findViewById(R.id.item_desc);
-
+        View gradientBar = convertView.findViewById(R.id.gradientBar);
 
         nameTextView.setText(item.getName());
         costTextView.setText(String.valueOf(item.getCost()));
@@ -54,13 +46,12 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         TextView filterButton = convertView.findViewById(R.id.filter_button);
         SearchView searchBar = convertView.findViewById(R.id.product_searchbar);
 
-
         addNewButton.setVisibility(View.GONE);
         viewButton.setVisibility(View.VISIBLE);
         searchBar.setVisibility(View.GONE);
         sortButton.setVisibility(View.GONE);
         filterButton.setVisibility(View.GONE);
-
+        gradientBar.setVisibility(View.GONE);
 
         viewButton.setOnClickListener(v -> {
             String categories = "";
