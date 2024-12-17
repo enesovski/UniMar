@@ -24,10 +24,10 @@ import com.x_force.unimar.Views.ProductView;
 import java.util.List;
 
 //Listede gözükecek her bir item için nasıl görüneceğini
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class ItemDeleteAdapter extends ArrayAdapter<Item> {
 
     List<Item> items;
-    public ItemAdapter(Context context, List<Item> items){
+    public ItemDeleteAdapter(Context context, List<Item> items){
         super(context,0,items);
         this.items = items;
     }
@@ -77,24 +77,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         card.setVisibility(View.VISIBLE);
 
         viewButton.setOnClickListener(v -> {
-            String categories = "";
-            for (int i = 0; item.getCategory() != null && i < item.getCategory().size(); i++) {
-                categories += item.getCategory().get(i) + ",";
-            }
-            if(!categories.equals("")){
-                categories = categories.substring(0, categories.length() - 1);
-            }
-            Intent intent = new Intent(getContext(), ProductView.class);
-            intent.putExtra("Name", item.getName());
-            intent.putExtra("Category", categories);
-            intent.putExtra("Description", item.getDesc());
-            intent.putExtra("Cost", item.getCost()+"");
-            intent.putExtra("UserId",item.getUserId());
-            intent.putExtra("UserName",item.getUserName());
-            if(item instanceof Product){
-                intent.putExtra("Image", ((Product) item).getImage());
-            }
-            getContext().startActivity(intent);
+            ItemManager.deleteFromList(item);
         });
 
         return convertView;

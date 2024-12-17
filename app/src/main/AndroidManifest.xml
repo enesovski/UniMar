@@ -74,6 +74,9 @@
         <activity
             android:name=".TutorCategorySelectionActivity"
             android:exported="true"/>
+        <activity
+            android:name=".ProductDeletingActivity"
+            android:exported="true"/>
 
     </application>
 
