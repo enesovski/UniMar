@@ -25,6 +25,7 @@ import com.x_force.unimar.chat.ChatRoom;
 import com.x_force.unimar.login.User;
 
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.ChatRoomViewHolder> {
@@ -60,14 +61,17 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
                         if(MessageSendByMe){
                             holder.last_message_sender.setText("You:"+ model.getLastMessage());
                         }else{
-                            holder.last_message_sender.setText(user.getEmail().substring(0,5)+":"+model.getLastMessage());
+                            holder.last_message_sender.setText(user.getName()+":"+model.getLastMessage());
                         }
                         holder.messageTime.setText(model.getLastMessage());
-                        holder.messageTime.setText(new SimpleDateFormat("HH:mm").format(model.getLastMessageSendTime().toDate()));
+                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                        sdf.setTimeZone(TimeZone.getDefault()); // Uses the device's default time zone
+                        String formattedTime = sdf.format(model.getLastMessageSendTime().toDate());
+                        holder.messageTime.setText(formattedTime);
                         holder.itemView.setOnClickListener(v -> {
                             Intent intent = new Intent(context, ChatActivity.class);
-                            intent.putExtra("name",user.getEmail());
-                            intent.putExtra("ıd",user.getUserId());
+                            intent.putExtra("name",user.getName());
+                            intent.putExtra("userId",user.getUserId());
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
                         });
@@ -87,14 +91,14 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
                             if(MessageSendByMe){
                                 holder.last_message_sender.setText("You:"+ model.getLastMessage());
                             }else{
-                                holder.last_message_sender.setText(user.getEmail().substring(0,5)+":"+model.getLastMessage());
+                                holder.last_message_sender.setText(user.getName()+":"+model.getLastMessage());
                             }
-                            holder.messageTime.setText(model.getLastMessage());
+                          //  holder.messageTime.setText(model.getLastMessage());
                             holder.messageTime.setText(new SimpleDateFormat("HH:MM").format(model.getLastMessageSendTime().toDate()));
                             holder.itemView.setOnClickListener(v -> {
                                 Intent intent = new Intent(context, ChatActivity.class);
-                                intent.putExtra("name", user.getEmail());
-                                intent.putExtra("ıd", user.getUserId());
+                                intent.putExtra("name", user.getName());
+                                intent.putExtra("userId", user.getUserId());
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(intent);
                             });

@@ -60,4 +60,5 @@ public class ChatRoom {
     public void setUserIds(ArrayList<String> userIds) {
         this.userIds = userIds;
     }
+
 }
