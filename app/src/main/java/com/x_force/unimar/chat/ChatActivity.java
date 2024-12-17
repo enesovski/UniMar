@@ -23,6 +23,8 @@ import com.google.firebase.firestore.SetOptions;
 import com.x_force.unimar.R;
 import com.x_force.unimar.chat.adapters.ChatViewAdapter;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -88,6 +90,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
         listenForNewMessages(chatRoomId, userId, db);
+        creatingChatRoom(chatRoomId);
     }
 
     private void sendMessage(String chatRoomId, String senderId, String receiverId, String content) {
@@ -168,5 +171,21 @@ public class ChatActivity extends AppCompatActivity {
     }
     private String createChatRoomId(String id1, String id2) {
         return id1.compareTo(id2) < 0 ? id1 + "_" + id2 : id2 + "_" + id1;
+    }
+
+    private void creatingChatRoom(String chatId){
+        FirebaseFirestore.getInstance().collection("chatrooms").document(chatId).get().addOnCompleteListener(task->{
+            if(task.isSuccessful()){
+                ChatRoom chatroom=task.getResult().toObject(ChatRoom.class);
+                if(chatroom==null){
+                    ArrayList<String> userIDs=new ArrayList<>();
+                    userIDs.add(currentUserId);
+                    userIDs.add(userId);
+                    chatroom=new ChatRoom(chatId,"", userIDs,Timestamp.now());
+                }
+                FirebaseFirestore.getInstance().collection("chatrooms").document(chatId).set(chatroom);
+            }
+        });
+
     }
 }
