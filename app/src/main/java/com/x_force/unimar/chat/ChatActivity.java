@@ -32,13 +32,15 @@ import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
     String currentUserId;
+    private ChatRoom chatroom;
+    String chatId;
     String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_view);
 
-       userId = getIntent().getStringExtra("userId");
+        userId = getIntent().getStringExtra("userId");
         String name = getIntent().getStringExtra("name");
 
         if (userId == null || name == null) {
@@ -63,11 +65,11 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
-        String chatRoomId = createChatRoomId(currentUserId, userId);
-        Log.d("ChatActivity", "Generated chatRoomId: " + chatRoomId);
+         chatId = createChatRoomId(currentUserId, userId);
+        Log.d("ChatActivity", "Generated chatRoomId: " + chatId);
 
         Query query = db.collection("chatrooms")
-                .document(chatRoomId)
+                .document(chatId)
                 .collection("chats")
                 .orderBy("timestamp", Query.Direction.ASCENDING);
 
@@ -85,12 +87,12 @@ public class ChatActivity extends AppCompatActivity {
         sendButton.setOnClickListener(v -> {
             String messageContent = messageEditText.getText().toString().trim();
             if (!messageContent.isEmpty()) {
-                sendMessage(chatRoomId, currentUserId, userId, messageContent);
+                sendMessage(chatId, currentUserId, userId, messageContent);
                 messageEditText.setText(""); // Clear the input field
             }
         });
-        listenForNewMessages(chatRoomId, userId, db);
-        creatingChatRoom(chatRoomId);
+        listenForNewMessages(chatId, userId, db);
+        creatingChatRoom(chatId);
     }
 
     private void sendMessage(String chatRoomId, String senderId, String receiverId, String content) {
@@ -104,8 +106,15 @@ public class ChatActivity extends AppCompatActivity {
                 .addOnSuccessListener(documentReference -> Log.d("ChatActivity", "Message sent successfully"))
                 .addOnFailureListener(e -> Log.e("ChatActivity", "Failed to send message", e));
 
-            // Update the document with the new field
-        Map<String, Object> data = new HashMap<>();
+
+        chatroom.setLastMessageSendTime(Timestamp.now());
+        chatroom.setLastSenderId(FirebaseAuth.getInstance().getUid());
+        chatroom.setLastMessage(message.getContent());
+        FirebaseFirestore.getInstance().collection("chatrooms").document(chatId).set(chatroom);
+
+
+        // Update the document with the new field
+       /* Map<String, Object> data = new HashMap<>();
         data.put("userIds", Arrays.asList(currentUserId, userId));
 
         // Use set() with SetOptions.merge() to add the array without overwriting
@@ -128,7 +137,8 @@ public class ChatActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     Log.w("Firestore", "Error adding array field", e);
-                });
+                });*/
+
 
     }
 
@@ -176,7 +186,7 @@ public class ChatActivity extends AppCompatActivity {
     private void creatingChatRoom(String chatId){
         FirebaseFirestore.getInstance().collection("chatrooms").document(chatId).get().addOnCompleteListener(task->{
             if(task.isSuccessful()){
-                ChatRoom chatroom=task.getResult().toObject(ChatRoom.class);
+                 chatroom=task.getResult().toObject(ChatRoom.class);
                 if(chatroom==null){
                     ArrayList<String> userIDs=new ArrayList<>();
                     userIDs.add(currentUserId);
