@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 public class Product extends Item{
 
-    public Product(String name, String desc, ArrayList<String> category, int cost) { // user + category de olması lazım
+    public Product(String name, String desc, ArrayList<String> category, int cost) { // user olması lazım
+        name = name.toUpperCase();
         this.setName(name);
         this.setDesc(desc);
         this.setCost(cost);
