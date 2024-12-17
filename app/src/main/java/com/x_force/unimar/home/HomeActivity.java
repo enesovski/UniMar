@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView profileImageView;
     private Button profileButton, chatButton;
 
-    private Button productButton, tutoringButton;
+    private ConstraintLayout productButton, tutoringButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,5 +112,13 @@ public class HomeActivity extends AppCompatActivity {
     private void openChatActivity() {
         Intent intent = new Intent(HomeActivity.this, SearchUserActivity.class);
         startActivity(intent);
+    }
+
+
+    public Bitmap decodeBase64toBitmap(String image) {
+        byte[] decodedBytes = android.util.Base64.decode(image, android.util.Base64.DEFAULT);
+        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+        return decodedBitmap;
     }
 }
