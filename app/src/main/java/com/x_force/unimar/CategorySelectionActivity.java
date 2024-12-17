@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.x_force.unimar.Item.Product;
+import com.x_force.unimar.home.HomeActivity;
 
 import java.util.ArrayList;
 
@@ -90,7 +91,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
                 String cost = getIntent().getStringExtra("cost");
                 String image = getIntent().getStringExtra("image");
                 int intCost = Integer.parseInt(cost);
-                Product temp = new Product(name, desc, category, intCost,image);
+                Product temp = new Product(name, desc, HomeActivity.name , category, intCost,image);
                 Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, ProductListingActivity.class);
                 startActivity(intent);

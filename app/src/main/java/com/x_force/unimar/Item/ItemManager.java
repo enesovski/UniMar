@@ -2,18 +2,26 @@ package com.x_force.unimar.Item;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.x_force.unimar.ProductListingActivity;
+import com.x_force.unimar.login.User;
+import com.x_force.unimar.profile.ProfileHandler;
 
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ItemManager {
+    static FirebaseAuth auth = ProductListingActivity.getAuth();
     static FirebaseFirestore db = ProductListingActivity.getDb();
     final static Query AllProductquery = db.collection("productListing");
     static Query productQuery = db.collection("productListing");
@@ -34,6 +42,8 @@ public class ItemManager {
     };
 
     public static void addToList(Item item) {
+         item.setUserId(Objects.requireNonNull(auth.getCurrentUser()).getUid());
+
         if (item instanceof Product) {
             db.collection("productListing").add(item).addOnSuccessListener(documentReference -> {
                 item.setDocId(documentReference.getId());
@@ -267,7 +277,6 @@ public class ItemManager {
         }
         Query initialQuery = productQuery;
         listType = Character.toUpperCase(listType);
-        //itemName = itemName.toLowerCase();  //bütün itemların ismi Item classında set edilirken otomatik lowercase oluyor, case karışıklığı engellemek için
         List<Item> searchedList = new ArrayList<Item>();
 
         if( listType == 'P' ) {
