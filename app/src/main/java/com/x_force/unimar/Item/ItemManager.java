@@ -202,6 +202,25 @@ public class ItemManager {
     }
 
     public static List<Item> searchInTheList(char listType, String itemName ){
+
+        if(itemName.equals(""))
+        {
+            Query query = productQuery;
+            List<Item> finalList = new ArrayList<Item>();
+
+            query.get().addOnCompleteListener(done -> {
+                if( done.isSuccessful() ) {
+                    for (QueryDocumentSnapshot document : done.getResult()) {
+                        Product product = document.toObject(Product.class);
+                        finalList.add(product);
+                    }
+                    Log.d("ArrayLength", finalList.size() + "");
+                    callback.onProductListLoaded(finalList);
+                }
+            });
+
+            return finalList;
+        }
         Query initialQuery = productQuery;
         listType = Character.toUpperCase(listType);
         //itemName = itemName.toLowerCase();  //bütün itemların ismi Item classında set edilirken otomatik lowercase oluyor, case karışıklığı engellemek için
@@ -239,7 +258,6 @@ public class ItemManager {
         }
 
         return searchedList;
-
     }
 
     public static Query getProductQuery() {
