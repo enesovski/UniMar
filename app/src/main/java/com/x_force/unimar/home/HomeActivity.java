@@ -81,10 +81,8 @@ public class HomeActivity extends AppCompatActivity {
                     welcomeTextView.setText("Welcome, " + name);
 
                     if (!profileImage.isEmpty()) {
-                        // Decode the Base64 string to a Bitmap
                         byte[] decodedBytes = android.util.Base64.decode(profileImage, android.util.Base64.DEFAULT);
                         Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-                        // Set the Bitmap to the ImageView
                         profileImageView.setImageBitmap(decodedBitmap);
                     }
                     else{

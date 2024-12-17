@@ -129,8 +129,10 @@ public class RegisterActivity extends AppCompatActivity {
         authHandler.registerUser(email, password, name, base64Image, university, department, new IAuthCallback() {
                 @Override
                 public void onSuccess(String message) {
-                    Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
-                    navigateToHome();
+                    Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
 
                 @Override

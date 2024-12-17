@@ -38,18 +38,23 @@ public class AuthHandler {
                         if (fuser != null) {
                             String userId = fuser.getUid();
 
-                            ProfileHandler.createUserProfile(userId, email, name, profileImage,
-                                    university, department, new ProfileHandler.ProfileResultCallback() {
-                                        @Override
-                                        public void onSuccess(Map<String, Object> profileData) {
-                                            callback.onSuccess("Registration successful!");
-                                        }
+                            // Send email verification
+                            fuser.sendEmailVerification()
+                                    .addOnSuccessListener(unused -> {
+                                        ProfileHandler.createUserProfile(userId, email, name, profileImage,
+                                                university, department, new ProfileHandler.ProfileResultCallback() {
+                                                    @Override
+                                                    public void onSuccess(Map<String, Object> profileData) {
+                                                        callback.onSuccess("Registration successful! Check your email to verify your account.");
+                                                    }
 
-                                        @Override
-                                        public void onFailure(String errorMessage) {
-                                            callback.onFailure("Profile creation failed: " + errorMessage);
-                                        }
-                                    });
+                                                    @Override
+                                                    public void onFailure(String errorMessage) {
+                                                        callback.onFailure("Profile creation failed: " + errorMessage);
+                                                    }
+                                                });
+                                    })
+                                    .addOnFailureListener(e -> callback.onFailure("Failed to send verification email: " + e.getMessage()));
                         } else {
                             callback.onFailure("User creation successful but user object is null.");
                         }
