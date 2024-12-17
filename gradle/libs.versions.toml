@@ -1,11 +1,13 @@
 [versions]
 agp = "8.7.3"
+cardview = "1.0.0"
 firebaseAuth = "33.5.1"
 firebaseBom = "33.5.1"
 firebaseCore = "21.3.0"
 firebaseCoreVersion = "21.4.0"
 firebaseFirestoreVersion = "25.1.1"
 firebaseUiFirestore = "8.0.2"
+glide = "4.16.0"
 googleFirebaseAuth = "22.1.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -20,13 +22,16 @@ firebaseMessaging = "24.1.0"
 firebaseFirestore = "25.1.1"
 
 [libraries]
+cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 firebase-auth-v2211 = { module = "com.google.firebase:firebase-auth", version.ref = "googleFirebaseAuth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-core = { module = "com.google.firebase:firebase-core", version.ref = "firebaseCore" }
 firebase-core-v2140 = { module = "com.google.firebase:firebase-core", version.ref = "firebaseCoreVersion" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-ui-firestore = { module = "com.firebaseui:firebase-ui-firestore", version.ref = "firebaseUiFirestore" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 google-firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestoreVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

@@ -19,18 +19,24 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.SetOptions;
 import com.x_force.unimar.R;
 import com.x_force.unimar.chat.adapters.ChatViewAdapter;
+
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
-
+    String currentUserId;
+    String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_view);
 
-        String userId = getIntent().getStringExtra("userId");
+       userId = getIntent().getStringExtra("userId");
         String name = getIntent().getStringExtra("name");
 
         if (userId == null || name == null) {
@@ -47,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        String currentUserId = auth.getUid();
+        currentUserId = auth.getUid();
 
         if (currentUserId == null) {
             Toast.makeText(this, "You are not logged in.", Toast.LENGTH_SHORT).show();
@@ -94,6 +100,33 @@ public class ChatActivity extends AppCompatActivity {
                 .add(message)
                 .addOnSuccessListener(documentReference -> Log.d("ChatActivity", "Message sent successfully"))
                 .addOnFailureListener(e -> Log.e("ChatActivity", "Failed to send message", e));
+
+            // Update the document with the new field
+        Map<String, Object> data = new HashMap<>();
+        data.put("userIds", Arrays.asList(currentUserId, userId));
+
+        // Use set() with SetOptions.merge() to add the array without overwriting
+        db.collection("chatrooms")
+                .document(chatRoomId)
+                .set(data, SetOptions.merge())
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("Firestore", "Array field added successfully!");
+                })
+                .addOnFailureListener(e -> {
+                    Log.w("Firestore", "Error adding array field", e);
+                });
+        Map<String, Object> data2 = new HashMap<>();
+        data.put("roomId", chatRoomId);
+        db.collection("chatrooms")
+                .document(chatRoomId)
+                .update(data2)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("Firestore", "Array field added successfully!");
+                })
+                .addOnFailureListener(e -> {
+                    Log.w("Firestore", "Error adding array field", e);
+                });
+
     }
 
     private void listenForNewMessages(String chatRoomId, String otherUserId, FirebaseFirestore db) {
