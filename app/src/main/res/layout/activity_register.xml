@@ -10,7 +10,7 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Sign up"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/white"
