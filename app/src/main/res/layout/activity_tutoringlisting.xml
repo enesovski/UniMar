@@ -84,7 +84,7 @@
         app:layout_constraintTop_toBottomOf="@id/product_searchbar" />
 
     <GridView
-        android:id="@+id/product_list"
+        android:id="@+id/tutoring_list"
         android:layout_width="412dp"
         android:layout_height="622dp"
         android:layout_marginStart="1dp"

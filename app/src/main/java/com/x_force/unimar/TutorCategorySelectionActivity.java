@@ -2,7 +2,6 @@ package com.x_force.unimar;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -20,8 +19,7 @@ import com.x_force.unimar.home.HomeActivity;
 
 import java.util.ArrayList;
 
-public class CategorySelectionActivity extends AppCompatActivity {
-    @SuppressLint("MissingInflatedId")
+public class TutorCategorySelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);

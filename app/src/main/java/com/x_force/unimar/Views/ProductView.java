@@ -65,6 +65,7 @@ public class ProductView extends AppCompatActivity {
         cost.setText(getIntent().getStringExtra("Cost"));
         category.setText(getIntent().getStringExtra("Category"));
         description.setText(getIntent().getStringExtra("Description"));
+        seller.setText(UserName);
         String bitmapString = getIntent().getStringExtra("Image");
 
         if(bitmapString != null){

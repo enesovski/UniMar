@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.x_force.unimar.ProductListingActivity;
 import com.x_force.unimar.R;
+import com.x_force.unimar.TutoringListingActivity;
 import com.x_force.unimar.chat.SearchUserActivity;
 import com.x_force.unimar.profile.ProfileActivity;
 import com.x_force.unimar.profile.ProfileHandler;
@@ -44,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        tutoringButton.setOnClickListener(e -> {Intent intent = new Intent(HomeActivity.this, ProductListingActivity.class);
+        tutoringButton.setOnClickListener(e -> {Intent intent = new Intent(HomeActivity.this, TutoringListingActivity.class);
             startActivity(intent);
         });
 
