@@ -18,17 +18,20 @@ public class Profile {
         setupData();
     }
 
-    private void setupData()
-    {
+    private void setupData() {
         db.collection("users").document(userId).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // Handle profile data here
+                        email = documentSnapshot.getString("email");
+                        name = documentSnapshot.getString("name");
+                        maxPoints = documentSnapshot.contains("maxPoints") ? documentSnapshot.getLong("maxPoints").intValue() : 0;
+                        totalPoints = documentSnapshot.contains("totalPoints") ? documentSnapshot.getLong("totalPoints").intValue() : 0;
+                        profileState = ProfileState.Normal; // Update state if necessary
                     } else {
                         System.out.println("Profile not found.");
                     }
-                });
-
+                })
+                .addOnFailureListener(e -> System.err.println("Error fetching profile: " + e.getMessage()));
     }
 
     public int maxPoints;
