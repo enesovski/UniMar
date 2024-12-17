@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ItemManager {
     static FirebaseFirestore db = ProductListingActivity.getDb();
+    final static Query AllProductquery = db.collection("productListing");
     static Query productQuery = db.collection("productListing");
     static Query tutoringQuery = db.collection("tutorListing");
     public static ItemAdapter adapter;
@@ -64,15 +65,15 @@ public class ItemManager {
     }
 
     public static List<Item> sortProductList(char c) { // eğer c 'A' karakteri ise artan fiyata göre sıralıyor. D--> azalan. İkisi de değilse sortlanmamış databaseyi yazdırıyor
+        Query intialQuery = productQuery;
         ArrayList<Item> items = new ArrayList<>();
         c = Character.toUpperCase(c);
         if (c == 'A') {
             productQuery = productQuery.orderBy("cost", Query.Direction.ASCENDING);
         } else if (c == 'D') {
             productQuery = productQuery.orderBy("cost", Query.Direction.DESCENDING);
-        } else {
-
         }
+
         productQuery.get().addOnCompleteListener(done -> {
             if (done.isSuccessful()) {
                 for (QueryDocumentSnapshot document : done.getResult()) {
@@ -80,13 +81,14 @@ public class ItemManager {
                     items.add(product);
                     Log.d("Firestore", document.getId() + " => " + document.getData());
                 }
+                Log.d("Sort", items.size() + " ");
                 callback.onProductListLoaded(items);
             } else {
                 Log.w("Firestore", "Error getting documents: ", done.getException());
             }
         });
 
-        refreshProductQuery();
+        productQuery = intialQuery;
 
         return items;
     }
@@ -119,32 +121,27 @@ public class ItemManager {
 
     public static List<Item> filterList( char listType, double min, double max){
 
-        Log.d("Burak", "Burak");
         listType = Character.toUpperCase(listType);
         List<Item> filteredList = new ArrayList<Item>();
 
-        refreshProductQuery();
-
         if( listType == 'P' ){
-            Log.d("Burak", String.valueOf(productQuery.count()));
-            productQuery = productQuery.whereGreaterThanOrEqualTo("cost",min).whereLessThanOrEqualTo("cost", max);;
-
+            productQuery = AllProductquery.whereGreaterThanOrEqualTo("cost",min).whereLessThanOrEqualTo("cost", max);;
 
             productQuery.get().addOnCompleteListener(done -> {
                 if( done.isSuccessful() ) {
                     for (QueryDocumentSnapshot document : done.getResult()) {
-
                         Product product = document.toObject(Product.class);
                         filteredList.add(product);
                     }
                     callback.onProductListLoaded(filteredList);
                 }
+            }).addOnFailureListener(done ->{
+                Log.w("Firestore", "Error getting documents: ", done.getCause());
             });
         }
 
         else if( listType == 'T' ){
-            tutoringQuery = tutoringQuery.whereGreaterThanOrEqualTo("cost",min);
-            tutoringQuery = tutoringQuery.whereLessThanOrEqualTo("cost", max);
+            tutoringQuery = AllProductquery.whereGreaterThanOrEqualTo("cost",min).whereLessThanOrEqualTo("cost", max);
 
             tutoringQuery.get().addOnCompleteListener(done -> {
                 if( done.isSuccessful() ) {
@@ -204,26 +201,27 @@ public class ItemManager {
         return searchedList;
     }
 
-    public static void filterList(){} //Satıcının user ID'sine göre ürün/tutoring filtreleyecek ama user class'ı yapılmamış
-
     public static List<Item> searchInTheList(char listType, String itemName ){
-
+        Query initialQuery = productQuery;
         listType = Character.toUpperCase(listType);
-        itemName = itemName.toLowerCase();  //bütün itemların ismi Item classında set edilirken otomatik lowercase oluyor, case karışıklığı engellemek için
+        //itemName = itemName.toLowerCase();  //bütün itemların ismi Item classında set edilirken otomatik lowercase oluyor, case karışıklığı engellemek için
         List<Item> searchedList = new ArrayList<Item>();
 
         if( listType == 'P' ) {
-            productQuery = productQuery.whereEqualTo("name", itemName);
+            productQuery = productQuery.whereGreaterThanOrEqualTo("name", itemName)
+                    .whereLessThanOrEqualTo("name",itemName + "\uf8ff");
 
             productQuery.get().addOnCompleteListener(done -> {
                 if( done.isSuccessful() ) {
                     for (QueryDocumentSnapshot document : done.getResult()) {
-
                         Product product = document.toObject(Product.class);
                         searchedList.add(product);
                     }
+                    Log.d("ArrayLength", searchedList.size() + "");
+                    callback.onProductListLoaded(searchedList);
                 }
             });
+            productQuery = initialQuery;
         }
 
         else if( listType == 'T' ) {

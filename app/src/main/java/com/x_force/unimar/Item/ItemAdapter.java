@@ -40,6 +40,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         }
 
         Button viewButton = convertView.findViewById(R.id.button_product_view);
+        Button addNewButton = convertView.findViewById(R.id.button_change_activity_add);
         TextView nameTextView = convertView.findViewById(R.id.item_name);
         TextView costTextView = convertView.findViewById(R.id.item_cost);
         TextView descTextView = convertView.findViewById(R.id.item_desc);
@@ -54,6 +55,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         SearchView searchBar = convertView.findViewById(R.id.product_searchbar);
 
 
+        addNewButton.setVisibility(View.GONE);
         viewButton.setVisibility(View.VISIBLE);
         searchBar.setVisibility(View.GONE);
         sortButton.setVisibility(View.GONE);
