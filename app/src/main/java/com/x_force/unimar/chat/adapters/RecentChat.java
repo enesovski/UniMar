@@ -66,7 +66,7 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
                         holder.messageTime.setText(new SimpleDateFormat("HH:mm").format(model.getLastMessageSendTime().toDate()));
                         holder.itemView.setOnClickListener(v -> {
                             Intent intent = new Intent(context, ChatActivity.class);
-                            intent.putExtra("email",user.getEmail());
+                            intent.putExtra("name",user.getEmail());
                             intent.putExtra("ıd",user.getUserId());
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
@@ -93,7 +93,7 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
                             holder.messageTime.setText(new SimpleDateFormat("HH:MM").format(model.getLastMessageSendTime().toDate()));
                             holder.itemView.setOnClickListener(v -> {
                                 Intent intent = new Intent(context, ChatActivity.class);
-                                intent.putExtra("email", user.getEmail());
+                                intent.putExtra("name", user.getEmail());
                                 intent.putExtra("ıd", user.getUserId());
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(intent);

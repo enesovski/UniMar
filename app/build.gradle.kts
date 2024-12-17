@@ -41,18 +41,28 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
     //Added by Enes to setup google firebase
-
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-
-    /*
-    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
     implementation("com.google.firebase:firebase-analytics")
-     */
+
+    implementation("com.google.firebase:firebase-auth")
+    implementation(libs.firebase.firestore)
+    implementation (libs.glide)
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+
+    implementation ("com.google.firebase:firebase-storage:21.0.1")
+    //Added by Yavuz to use recyclerView
+    implementation(libs.firebase.ui.firestore) // Check for the latest version
+    implementation(libs.play.services.auth)
+    implementation(libs.recyclerview)
+    implementation(libs.cardview)
+
+
 }
