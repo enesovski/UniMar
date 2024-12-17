@@ -3,15 +3,11 @@ package com.x_force.unimar.Item;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.x_force.unimar.ProductListingActivity;
-import com.x_force.unimar.login.User;
-import com.x_force.unimar.profile.ProfileHandler;
 
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +33,17 @@ public class ItemManager {
 
         @Override
         public void onProductListError(Exception e) {
+
+        }
+    };
+
+    static TutorListCallback callback2 = new TutorListCallback() {
+        public void onTutorListLoaded(List<Item> items) {
+            adapter.items = items;
+            adapter.notifyDataSetChanged();
+        }
+        @Override
+        public void onTutorListError(Exception e) {
 
         }
     };
@@ -126,7 +133,7 @@ public class ItemManager {
                     Log.d("Firestore", document.getId() + " => " + document.getData());
                 }
                 Log.d("Sort", items.size() + " ");
-                //callback.onProductListLoaded(items);  TUTORING CALLBACK'I YAZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+                callback2.onTutorListLoaded(items);
             } else {
                 Log.w("Firestore", "Error getting documents: ", done.getException());
             }
@@ -164,11 +171,10 @@ public class ItemManager {
             tutoringQuery.get().addOnCompleteListener(done -> {
                 if( done.isSuccessful() ) {
                     for (QueryDocumentSnapshot document : done.getResult()) {
-
                         Tutoring tutoring = document.toObject(Tutoring.class);
                         filteredList.add(tutoring);
-                        //callback YAZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
                     }
+                    callback2.onTutorListLoaded(filteredList);
                 }
             }).addOnFailureListener(done ->{
                 Log.w("Firestore", "Error getting documents: ", done.getCause());
@@ -264,30 +270,31 @@ public class ItemManager {
     }
 
     public static List<Item> searchInTheList(char listType, String itemName ){
-
-        if(itemName.equals(""))
-        {
-            Query query = productQuery;
-            List<Item> finalList = new ArrayList<Item>();
-
-            query.get().addOnCompleteListener(done -> {
-                if( done.isSuccessful() ) {
-                    for (QueryDocumentSnapshot document : done.getResult()) {
-                        Product product = document.toObject(Product.class);
-                        finalList.add(product);
-                    }
-                    Log.d("ArrayLength", finalList.size() + "");
-                    callback.onProductListLoaded(finalList);
-                }
-            });
-
-            return finalList;
-        }
-        Query initialQuery = productQuery;
+        Query initialProductQuery = productQuery;
+        Query initialTutorQuery = tutoringQuery;
         listType = Character.toUpperCase(listType);
         List<Item> searchedList = new ArrayList<Item>();
 
         if( listType == 'P' ) {
+            if(itemName.equals(""))
+            {
+                Query query = productQuery;
+                List<Item> finalList = new ArrayList<Item>();
+
+                query.get().addOnCompleteListener(done -> {
+                    if( done.isSuccessful() ) {
+                        for (QueryDocumentSnapshot document : done.getResult()) {
+                            Product product = document.toObject(Product.class);
+                            finalList.add(product);
+                        }
+                        Log.d("ArrayLength", finalList.size() + "");
+                        callback.onProductListLoaded(finalList);
+                    }
+                });
+
+                return finalList;
+            }
+
             productQuery = productQuery.whereGreaterThanOrEqualTo("name", itemName)
                     .whereLessThanOrEqualTo("name",itemName + "\uf8ff");
 
@@ -301,21 +308,43 @@ public class ItemManager {
                     callback.onProductListLoaded(searchedList);
                 }
             });
-            productQuery = initialQuery;
+            productQuery = initialProductQuery;
         }
 
         else if( listType == 'T' ) {
-            tutoringQuery = tutoringQuery.whereEqualTo("name", itemName);
+            if(itemName.equals(""))
+            {
+                Query query = tutoringQuery;
+                List<Item> finalList = new ArrayList<Item>();
+
+                query.get().addOnCompleteListener(done -> {
+                    if( done.isSuccessful() ) {
+                        for (QueryDocumentSnapshot document : done.getResult()) {
+                            Product product = document.toObject(Product.class);
+                            finalList.add(product);
+                        }
+                        Log.d("ArrayLength", finalList.size() + "");
+                        callback2.onTutorListLoaded(finalList);
+                    }
+                });
+
+                return finalList;
+            }
+
+            tutoringQuery = tutoringQuery.whereGreaterThanOrEqualTo("name", itemName)
+                    .whereLessThanOrEqualTo("name",itemName + "\uf8ff");
 
             tutoringQuery.get().addOnCompleteListener(done -> {
                 if( done.isSuccessful() ) {
                     for (QueryDocumentSnapshot document : done.getResult()) {
-
                         Tutoring tutoring = document.toObject(Tutoring.class);
                         searchedList.add(tutoring);
                     }
+                    callback2.onTutorListLoaded(searchedList);
                 }
             });
+
+            tutoringQuery = initialTutorQuery;
         }
 
         return searchedList;

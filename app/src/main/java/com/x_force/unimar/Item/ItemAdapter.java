@@ -57,8 +57,6 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             imageView.setImageBitmap(imageBitmap);
         }
 
-
-
         nameTextView.setText(item.getName());
         costTextView.setText(String.valueOf(item.getCost()));
         descTextView.setText(item.getDesc());
@@ -78,10 +76,12 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         viewButton.setOnClickListener(v -> {
             String categories = "";
-            for (int i = 0; i < item.getCategory().size(); i++) {
+            for (int i = 0; item.getCategory() != null && i < item.getCategory().size(); i++) {
                 categories += item.getCategory().get(i) + ",";
             }
-            categories = categories.substring(0, categories.length() - 1);
+            if(!categories.equals("")){
+                categories = categories.substring(0, categories.length() - 1);
+            }
             Intent intent = new Intent(getContext(), ProductView.class);
             intent.putExtra("Name", item.getName());
             intent.putExtra("Category", categories);

@@ -10,7 +10,6 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -26,19 +25,17 @@ import com.x_force.unimar.Item.ItemManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductListingActivity extends AppCompatActivity {
+public class TutoringListingActivity extends AppCompatActivity {
     static FirebaseFirestore db;
     static FirebaseAuth auth;
     GridView itemList;
     protected List<Item> items;
     public static ItemAdapter adapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_productlisting);
+        setContentView(R.layout.activity_tutoringlisting);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main2), (v, insets) -> {
@@ -51,13 +48,10 @@ public class ProductListingActivity extends AppCompatActivity {
         setButtonInteractions();
     }
 
-    //itemlist öğesini ne biçimde dolduracağımızı belirleyen ItemAdapteri initialize ediyoruz
-    //SETCONTENTVIEW activity_productlisting.xml de olması lazım yoksa nullpointerexception!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void showList(){
-
         itemList = findViewById(R.id.tutoring_list);
 
-        this.items = ItemManager.sortProductList('m');
+        this.items = ItemManager.sortTutorList('m');
 
         adapter = new ItemAdapter(this,items);
 
@@ -66,27 +60,12 @@ public class ProductListingActivity extends AppCompatActivity {
         itemList.setAdapter(adapter);
     }
 
-    //SETCONTENTVIEW activity_productlisting.xml de olması lazım yoksa nullpointerexception!!!!!!!!!!!!!!!!!!!!!!!!!
-    public void showSearchList(String s) {
-
-        itemList = findViewById(R.id.tutoring_list);
-
-        this.items = ItemManager.searchInTheList('P', s);
-
-        adapter = new ItemAdapter(this, items);
-
-        ItemManager.adapter = adapter;
-
-        itemList.setAdapter(adapter);
-    }
-
-    //SETCONTENTVIEW activity_productlisting.xml de olması lazım yoksa nullpointerexception!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void showFilteredList(float max){
         itemList = findViewById(R.id.tutoring_list);
 
-        this.items = ItemManager.filterList('P', 0, max);
+        this.items = ItemManager.filterList('T',0,max);
 
-        adapter = new ItemAdapter(this, items);
+        adapter = new ItemAdapter(this,items);
 
         ItemManager.adapter = adapter;
 
@@ -106,22 +85,22 @@ public class ProductListingActivity extends AppCompatActivity {
 
         itemList.setAdapter(adapter);
 
-//        ItemManager.filterList('P', categories, new ItemManager.CategoryCallBack() {
-//            @Override
-//            public void onCallback(List<Item> resultList) {
-//                items = resultList;
-//
-//                adapter = new ItemAdapter(ProductListingActivity.this, items);
-//                ItemManager.adapter = adapter;
-//                itemList.setAdapter(adapter);
-//
-//                Log.d("FilteredItems", "Filtered list size: " + items.size());
-//            }
-//        });
+        setButtonInteractions();
+    }
+
+    public void showSearchList(String s){
+        itemList = findViewById(R.id.tutoring_list);
+
+        this.items = ItemManager.searchInTheList('T', s);
+
+        adapter = new ItemAdapter(this,items);
+
+        ItemManager.adapter = adapter;
+
+        itemList.setAdapter(adapter);
     }
 
     public void setButtonInteractions(){
-
         Button GeneralSortButton = findViewById(R.id.sort_button);
         Button SortAscendingButton = findViewById(R.id.button_sort_ascending);
         Button SortDescendingButton = findViewById(R.id.button_sort_descending);
@@ -138,14 +117,14 @@ public class ProductListingActivity extends AppCompatActivity {
         });
 
         SortAscendingButton.setOnClickListener (v -> {
-            ItemManager.sortProductList('A');
+            ItemManager.sortTutorList('A');
             GeneralSortButton.setVisibility(ListView.VISIBLE);
             SortAscendingButton.setVisibility(ListView.GONE);
             SortDescendingButton.setVisibility(ListView.GONE);
         });
 
         SortDescendingButton.setOnClickListener (v -> {
-            ItemManager.sortProductList('D');
+            ItemManager.sortTutorList('D');
             GeneralSortButton.setVisibility(ListView.VISIBLE);
             SortAscendingButton.setVisibility(ListView.GONE);
             SortDescendingButton.setVisibility(ListView.GONE);
@@ -219,7 +198,7 @@ public class ProductListingActivity extends AppCompatActivity {
             doneButton.setOnClickListener(e -> {
 
                 FilterButton.setVisibility(View.GONE);
-                setContentView(R.layout.activity_productlisting);
+                setContentView(R.layout.activity_tutoringlisting);
                 float max = 0;
 
                 if(priceCheckbox.isChecked()){
@@ -292,7 +271,7 @@ public class ProductListingActivity extends AppCompatActivity {
             });
 
             cancelFilteringButton.setOnClickListener(e -> {
-                ItemManager.refreshProductQuery();
+                ItemManager.refreshTutorQuery();
                 setContentView(R.layout.activity_productlisting);
                 showList();
                 setButtonInteractions();
@@ -322,16 +301,4 @@ public class ProductListingActivity extends AppCompatActivity {
         });
 
     }
-    public static ItemAdapter getAdapter(){
-        return adapter;
-    }
-
-    public static FirebaseFirestore getDb(){
-        return db;
-    }
-
-    public static FirebaseAuth getAuth(){
-        return auth;
-    }
-
 }
