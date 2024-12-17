@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.x_force.unimar.ProductListingActivity;
 import com.x_force.unimar.R;
 import com.x_force.unimar.chat.SearchUserActivity;
 import com.x_force.unimar.profile.ProfileActivity;
@@ -25,10 +26,24 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView profileImageView;
     private Button profileButton, chatButton;
 
+    private Button productButton, tutoringButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        productButton = findViewById(R.id.customButton1);
+        tutoringButton = findViewById(R.id.customButton2);
+
+        productButton.setOnClickListener(e -> {Intent intent = new Intent(HomeActivity.this, ProductListingActivity.class);
+            startActivity(intent);
+        });
+
+        tutoringButton.setOnClickListener(e -> {Intent intent = new Intent(HomeActivity.this, ProductListingActivity.class);
+            startActivity(intent);
+        });
+
 
         // Initialize UI components
         welcomeTextView = findViewById(R.id.welcomeTextView);
