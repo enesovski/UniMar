@@ -54,7 +54,8 @@ public class ItemManager {
         if (item instanceof Product) {
             db.collection("productListing").add(item).addOnSuccessListener(documentReference -> {
                 item.setDocId(documentReference.getId());
-                Log.d("Firestore", "Document added with Id: " + item.getDocId()); // sysout
+                db.collection("productListing").document(item.getDocId()).update("docId",documentReference.getId());
+                Log.d("MERABABABABABA", "Document added with Id: " + item.getDocId()); // sysout
             }).addOnFailureListener(e -> {
                 Log.w("Firestore", "Error adding document!", e); //sysout
             });
