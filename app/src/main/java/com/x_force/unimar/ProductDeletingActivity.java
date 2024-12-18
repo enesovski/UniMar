@@ -124,7 +124,6 @@ public class ProductDeletingActivity extends AppCompatActivity {
         Button SortAscendingButton = findViewById(R.id.button_sort_ascending);
         Button SortDescendingButton = findViewById(R.id.button_sort_descending);
         Button FilterButton = findViewById(R.id.filter_button);
-        Button removeButton = findViewById(R.id.button_remove_product);
         SearchView productSearchBar = findViewById(R.id.product_searchbar);
 
         //filterbutton instance'ları
@@ -320,9 +319,6 @@ public class ProductDeletingActivity extends AppCompatActivity {
             finish();
         });
 
-//        removeButton.setOnClickListener(v ->{
-//            Intent intent = new Intent(this,)
-//        });
 
     }
 }
