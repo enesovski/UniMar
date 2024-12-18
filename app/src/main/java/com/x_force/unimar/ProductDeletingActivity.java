@@ -33,7 +33,7 @@ public class ProductDeletingActivity extends AppCompatActivity {
     static FirebaseAuth auth;
     GridView itemList;
     protected List<Item> items;
-    public static ItemAdapter adapter;
+    public static ItemDeleteAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,8 @@ public class ProductDeletingActivity extends AppCompatActivity {
 
         this.items = ItemManager.sortDeleteProductList('m');
 
-        adapter = new ItemAdapter(this,items);
+        adapter = new ItemDeleteAdapter(this,items);
+
 
         ItemManager.adapter = adapter;
 
@@ -72,7 +73,7 @@ public class ProductDeletingActivity extends AppCompatActivity {
 
         this.items = ItemManager.searchInTheList('P', s);
 
-        adapter = new ItemAdapter(this, items);
+        adapter = new ItemDeleteAdapter(this, items);
 
         ItemManager.adapter = adapter;
 
@@ -85,7 +86,7 @@ public class ProductDeletingActivity extends AppCompatActivity {
 
         this.items = ItemManager.filterList('P', 0, max);
 
-        adapter = new ItemAdapter(this, items);
+        adapter = new ItemDeleteAdapter(this, items);
 
         ItemManager.adapter = adapter;
 
@@ -99,7 +100,7 @@ public class ProductDeletingActivity extends AppCompatActivity {
 
         this.items = items;
 
-        adapter = new ItemAdapter(this, items);
+        adapter = new ItemDeleteAdapter(this, items);
 
         ItemManager.adapter = adapter;
 

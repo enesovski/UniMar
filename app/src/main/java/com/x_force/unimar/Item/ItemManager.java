@@ -23,10 +23,10 @@ public class ItemManager {
     final static Query AllTutoringquery = db.collection("tutorListing");
     static Query productQuery = db.collection("productListing");
     static Query tutoringQuery = db.collection("tutorListing");
-    public static ItemAdapter adapter;
+    public static ItemAdapterParent adapter;
     static ProductListCallback callback = new ProductListCallback() {
         public void onProductListLoaded(List<Item> items) {
-            adapter.items = items;
+            adapter.setItems(items);
             adapter.notifyDataSetChanged();
         }
 
@@ -38,7 +38,7 @@ public class ItemManager {
 
     static TutorListCallback callback2 = new TutorListCallback() {
         public void onTutorListLoaded(List<Item> items) {
-            adapter.items = items;
+            adapter.setItems(items);
             adapter.notifyDataSetChanged();
         }
         @Override
