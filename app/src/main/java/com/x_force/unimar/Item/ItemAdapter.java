@@ -1,5 +1,6 @@
 package com.x_force.unimar.Item;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,13 +19,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.x_force.unimar.ProductDeletingActivity;
+import com.x_force.unimar.ProductListingActivity;
 import com.x_force.unimar.R;
 import com.x_force.unimar.Views.ProductView;
 
 import java.util.List;
 
 //Listede gözükecek her bir item için nasıl görüneceğini
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class ItemAdapter extends ArrayAdapter<Item> implements ItemAdapterParent {
 
     List<Item> items;
     public ItemAdapter(Context context, List<Item> items){
@@ -32,16 +35,21 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         this.items = items;
     }
 
+    @SuppressLint("ResourceType")
     @NonNull
     @Override
     // Listedeki her item için ui'a göre bir element oluşturuyoruz.
     public View getView(int position, View convertView, ViewGroup parent) {
         Item item = items.get(position);
 
-        if(convertView == null){
-            convertView = LayoutInflater.from(getContext())
-                    .inflate(R.layout.activity_productlisting, parent, false);
-        }
+
+
+            if(convertView == null){
+                convertView = LayoutInflater.from(getContext())
+                        .inflate(R.layout.activity_productlisting, parent, false);
+            }
+
+
 
         Button removeButton = convertView.findViewById(R.id.button_remove_product);
         Button viewButton = convertView.findViewById(R.id.button_product_view);
@@ -99,6 +107,12 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         return convertView;
     }
+
+    @Override
+    public void setItems(List<Item> items) {
+        this.items=items;
+    }
+
     public static Bitmap decodeBase64toBitmap(String image) {
         byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
         Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);

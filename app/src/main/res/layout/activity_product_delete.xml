@@ -122,6 +122,18 @@
             android:visibility="visible">
 
             <!-- Added Product Image -->
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="52dp"
+                android:layout_height="46dp"
+                android:background="@color/red"
+                app:backgroundTint="@null"
+                app:backgroundTintMode="src_over"
+                app:icon="@android:drawable/ic_delete"
+                tools:layout_editor_absoluteX="139dp"
+                tools:layout_editor_absoluteY="8dp" />
+
             <ImageView
                 android:id="@+id/item_image"
                 android:layout_width="100dp"
@@ -177,16 +189,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/item_desc" />
 
-            <Button
-                android:id="@+id/button_delete"
-                android:layout_width="60dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="D"
-                app:layout_constraintStart_toEndOf="@+id/item_image"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -203,18 +205,5 @@
         app:backgroundTintMode="src_over"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button_remove_product"
-        android:layout_width="93dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="14dp"
-        android:text="Button"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_change_activity_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

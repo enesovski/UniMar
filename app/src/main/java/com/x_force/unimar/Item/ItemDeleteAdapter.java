@@ -18,13 +18,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.x_force.unimar.ProductDeletingActivity;
 import com.x_force.unimar.R;
 import com.x_force.unimar.Views.ProductView;
 
 import java.util.List;
 
 //Listede gözükecek her bir item için nasıl görüneceğini
-public class ItemDeleteAdapter extends ArrayAdapter<Item> {
+public class ItemDeleteAdapter extends ArrayAdapter<Item> implements ItemAdapterParent{
 
     List<Item> items;
     public ItemDeleteAdapter(Context context, List<Item> items){
@@ -40,10 +41,10 @@ public class ItemDeleteAdapter extends ArrayAdapter<Item> {
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext())
-                    .inflate(R.layout.activity_productlisting, parent, false);
+                    .inflate(R.layout.activity_product_delete, parent, false);
         }
 
-        Button removeButton = convertView.findViewById(R.id.button_remove_product);
+        Button deletebutton = convertView.findViewById(R.id.delete);
         Button viewButton = convertView.findViewById(R.id.button_product_view);
         Button addNewButton = convertView.findViewById(R.id.button_change_activity_add);
         TextView nameTextView = convertView.findViewById(R.id.item_name);
@@ -67,7 +68,6 @@ public class ItemDeleteAdapter extends ArrayAdapter<Item> {
         SearchView searchBar = convertView.findViewById(R.id.product_searchbar);
 
 
-        removeButton.setVisibility(View.GONE);
         addNewButton.setVisibility(View.GONE);
         viewButton.setVisibility(View.VISIBLE);
         searchBar.setVisibility(View.GONE);
@@ -76,12 +76,29 @@ public class ItemDeleteAdapter extends ArrayAdapter<Item> {
         gradientBar.setVisibility(View.GONE);
         card.setVisibility(View.VISIBLE);
 
+        if(deletebutton!=null)
+        {
+            deletebutton.setVisibility(View.VISIBLE);
+            deletebutton.setOnClickListener(e -> {
+
+                ItemManager.deleteFromList(item);
+                Intent intent = new Intent(getContext(), ProductDeletingActivity.class);
+                getContext().startActivity(intent);
+            });
+        }
+
         viewButton.setOnClickListener(v -> {
             ItemManager.deleteFromList(item);
         });
 
         return convertView;
     }
+
+    @Override
+    public void setItems(List<Item> items) {
+        this.items=items;
+    }
+
     public static Bitmap decodeBase64toBitmap(String image) {
         byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
         Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);

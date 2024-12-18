@@ -201,6 +201,9 @@
         android:layout_marginEnd="19dp"
         android:layout_marginBottom="14dp"
         android:text="Remove Products"
+        app:backgroundTint="@null"
+        app:backgroundTintMode="src_over"
+        android:background="@drawable/gradient_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_change_activity_add" />
