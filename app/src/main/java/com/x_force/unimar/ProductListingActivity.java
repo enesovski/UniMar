@@ -118,6 +118,7 @@ public class ProductListingActivity extends AppCompatActivity {
 //                Log.d("FilteredItems", "Filtered list size: " + items.size());
 //            }
 //        });
+        setButtonInteractions();
     }
 
     public void setButtonInteractions(){
