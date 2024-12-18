@@ -326,6 +326,8 @@ public class ItemManager {
                 return finalList;
             }
 
+            itemName = itemName.toUpperCase();
+
             productQuery = productQuery.whereGreaterThanOrEqualTo("name", itemName)
                     .whereLessThanOrEqualTo("name",itemName + "\uf8ff");
 
@@ -361,6 +363,8 @@ public class ItemManager {
 
                 return finalList;
             }
+
+            itemName = itemName.toUpperCase();
 
             tutoringQuery = tutoringQuery.whereGreaterThanOrEqualTo("name", itemName)
                     .whereLessThanOrEqualTo("name",itemName + "\uf8ff");
