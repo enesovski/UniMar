@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,24 +20,24 @@ import com.google.android.material.slider.Slider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.x_force.unimar.Item.Item;
-import com.x_force.unimar.Item.ItemAdapter;
+import com.x_force.unimar.Item.ItemDeleteAdapter;
 import com.x_force.unimar.Item.ItemManager;
-import com.x_force.unimar.Item.Tutoring;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TutoringListingActivity extends AppCompatActivity {
+public class TutoringDeleteActivity extends AppCompatActivity {
     static FirebaseFirestore db;
     static FirebaseAuth auth;
     GridView itemList;
     protected List<Item> items;
-    public static ItemAdapter adapter;
+    public static ItemDeleteAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tutoringlisting);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_product_delete);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main2), (v, insets) -> {
@@ -50,23 +51,39 @@ public class TutoringListingActivity extends AppCompatActivity {
     }
 
     public void showList(){
+
         itemList = findViewById(R.id.tutoring_list);
 
-        this.items = ItemManager.sortTutorList('m');
+        this.items = ItemManager.sortDeleteTutorList('m');
 
-        adapter = new ItemAdapter(this,items);
+        adapter = new ItemDeleteAdapter(this,items);
 
         ItemManager.adapter = adapter;
 
         itemList.setAdapter(adapter);
     }
 
+    //SETCONTENTVIEW activity_productlisting.xml de olması lazım yoksa nullpointerexception!!!!!!!!!!!!!!!!!!!!!!!!!
+    public void showSearchList(String s) {
+
+        itemList = findViewById(R.id.tutoring_list);
+
+        this.items = ItemManager.searchInTheList('T', s);
+
+        adapter = new ItemDeleteAdapter(this, items);
+
+        ItemManager.adapter = adapter;
+
+        itemList.setAdapter(adapter);
+    }
+
+    //SETCONTENTVIEW activity_productlisting.xml de olması lazım yoksa nullpointerexception!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void showFilteredList(float max){
         itemList = findViewById(R.id.tutoring_list);
 
-        this.items = ItemManager.filterList('T',0,max);
+        this.items = ItemManager.filterList('T', 0, max);
 
-        adapter = new ItemAdapter(this,items);
+        adapter = new ItemDeleteAdapter(this, items);
 
         ItemManager.adapter = adapter;
 
@@ -80,40 +97,35 @@ public class TutoringListingActivity extends AppCompatActivity {
 
         this.items = items;
 
-        adapter = new ItemAdapter(this, items);
+        adapter = new ItemDeleteAdapter(this, items);
 
         ItemManager.adapter = adapter;
 
         itemList.setAdapter(adapter);
 
-        setButtonInteractions();
+//        ItemManager.filterList('P', categories, new ItemManager.CategoryCallBack() {
+//            @Override
+//            public void onCallback(List<Item> resultList) {
+//                items = resultList;
+//
+//                adapter = new ItemAdapter(ProductListingActivity.this, items);
+//                ItemManager.adapter = adapter;
+//                itemList.setAdapter(adapter);
+//
+//                Log.d("FilteredItems", "Filtered list size: " + items.size());
+//            }
+//        });
     }
-
-    public void showSearchList(String s){
-        itemList = findViewById(R.id.tutoring_list);
-
-        this.items = ItemManager.searchInTheList('T', s);
-
-        adapter = new ItemAdapter(this,items);
-
-        ItemManager.adapter = adapter;
-
-        itemList.setAdapter(adapter);
-    }
-
     public void setButtonInteractions(){
+
         Button GeneralSortButton = findViewById(R.id.sort_button);
         Button SortAscendingButton = findViewById(R.id.button_sort_ascending);
         Button SortDescendingButton = findViewById(R.id.button_sort_descending);
         Button FilterButton = findViewById(R.id.filter_button);
-        Button TutoringDeleteButton = findViewById(R.id.button_tutoring_delete);
         SearchView productSearchBar = findViewById(R.id.product_searchbar);
-        Button addNewbutton = findViewById(R.id.button_change_activity_add);
 
-        TutoringDeleteButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, TutoringDeleteActivity.class);
-            startActivity(intent);
-        });
+        //filterbutton instance'ları
+        Button addNewbutton = findViewById(R.id.button_change_activity_add);
 
         GeneralSortButton.setOnClickListener (v -> {
             GeneralSortButton.setVisibility(ListView.GONE);
@@ -122,14 +134,14 @@ public class TutoringListingActivity extends AppCompatActivity {
         });
 
         SortAscendingButton.setOnClickListener (v -> {
-            ItemManager.sortTutorList('A');
+            ItemManager.sortProductList('A');
             GeneralSortButton.setVisibility(ListView.VISIBLE);
             SortAscendingButton.setVisibility(ListView.GONE);
             SortDescendingButton.setVisibility(ListView.GONE);
         });
 
         SortDescendingButton.setOnClickListener (v -> {
-            ItemManager.sortTutorList('D');
+            ItemManager.sortProductList('D');
             GeneralSortButton.setVisibility(ListView.VISIBLE);
             SortAscendingButton.setVisibility(ListView.GONE);
             SortDescendingButton.setVisibility(ListView.GONE);
@@ -203,7 +215,7 @@ public class TutoringListingActivity extends AppCompatActivity {
             doneButton.setOnClickListener(e -> {
 
                 FilterButton.setVisibility(View.GONE);
-                setContentView(R.layout.activity_tutoringlisting);
+                setContentView(R.layout.activity_productlisting);
                 float max = 0;
 
                 if(priceCheckbox.isChecked()){
@@ -276,7 +288,7 @@ public class TutoringListingActivity extends AppCompatActivity {
             });
 
             cancelFilteringButton.setOnClickListener(e -> {
-                ItemManager.refreshTutorQuery();
+                ItemManager.refreshProductQuery();
                 setContentView(R.layout.activity_productlisting);
                 showList();
                 setButtonInteractions();
@@ -300,10 +312,11 @@ public class TutoringListingActivity extends AppCompatActivity {
         });
 
         addNewbutton.setOnClickListener(v ->{
-            Intent intent = new Intent(this, TutorAddActivity.class);
+            Intent intent = new Intent(this, ItemAddActivity.class);
             startActivity(intent);
             finish();
         });
+
 
     }
 }
