@@ -24,6 +24,8 @@ public class ChatRoom {
         this.lastMessageSendTime = lastMessageSendTime;
     }
 
+    public ChatRoom(){}
+
     public Timestamp getLastMessageSendTime() {
         return lastMessageSendTime;
     }
