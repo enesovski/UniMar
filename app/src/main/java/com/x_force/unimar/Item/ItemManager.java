@@ -62,6 +62,7 @@ public class ItemManager {
         } else if (item instanceof Tutoring) {
             db.collection("tutorListing").add(item).addOnSuccessListener(documentReference -> {
                 item.setDocId(documentReference.getId());
+                db.collection("tutorListing").document(item.getDocId()).update("docId",documentReference.getId());
                 Log.d("Firestore", "Document added with Id: " + item.getDocId());
             }).addOnFailureListener(e -> {
                 Log.w("Firestore", "Error adding document!", e);// sysout
@@ -142,6 +143,37 @@ public class ItemManager {
         });
 
         productQuery = intialQuery;
+
+        return items;
+    }
+
+    public static List<Item> sortDeleteTutorList(char c) { // eğer c 'A' karakteri ise artan fiyata göre sıralıyor. D--> azalan. İkisi de değilse sortlanmamış databaseyi yazdırıyor
+        Query intialQuery = tutoringQuery;
+        ArrayList<Item> items = new ArrayList<>();
+        c = Character.toUpperCase(c);
+        if (c == 'A') {
+            tutoringQuery = tutoringQuery.orderBy("cost", Query.Direction.ASCENDING);
+        } else if (c == 'D') {
+            tutoringQuery = tutoringQuery.orderBy("cost", Query.Direction.DESCENDING);
+        }
+
+        tutoringQuery.get().addOnCompleteListener(done -> {
+            if (done.isSuccessful()) {
+                for (QueryDocumentSnapshot document : done.getResult()) {
+                    Product product = document.toObject(Product.class);
+                    if(product.getUserId() != null && product.getUserId().equals(auth.getUid())){
+                        items.add(product);
+                    }
+                    Log.d("Firestore", document.getId() + " => " + document.getData());
+                }
+                Log.d("Sort", items.size() + " ");
+                callback2.onTutorListLoaded(items);
+            } else {
+                Log.w("Firestore", "Error getting documents: ", done.getException());
+            }
+        });
+
+        tutoringQuery = intialQuery;
 
         return items;
     }
