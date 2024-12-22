@@ -1,11 +1,46 @@
 ## Enes Ceran Log
 
-## Week 8
-I installed android studio, setup UniMar project files, initialized a Google Firebase project for database.
-I created API key for Firebase.
-I implemented AuthHandler and User system to project. I connected authentication to Firebase.
+### Week 8
+Project Setup:
+- I installed android studio, setup UniMar project files, initialized a Google Firebase project for database.
+- I created API key for Firebase.
+Implementation:
+- I created Login branch
+- I implemented AuthHandler and User system to project. 
+- I connected authentication to Firebase.
+
 Worked 3.5 hours in this week.
 
-## Week 9
-I implemented verification email for verifying registration.
+### Week 9
+Implementation
+- I implemented verification email for verifying registration.
+- I started implementing profile system.
 
+Worked 2.5 hours in this week.
+
+### Week 10
+- I finished register and login system without their ui.
+-Worked 2 hours in this week.
+
+### Week 13
+- I implemented profile system and connected it to database and authentication.
+  - Added rating, user id to profile system.
+- I implemented forgot password system to login.
+- I made all of ui of mobile app including:
+  - Login Page
+  - Register Page
+  - Home Page
+  - Search user in chat Page
+  - Messaging Page
+  - Product Listing Page
+  - Add Product Page
+  - Product View Page
+  - Filtering Page
+  - Tutor Listing Page
+  - Add Tutoring Page
+  - Tutoring View Page
+
+- I implemented filtering by category and fixed some errors in filtering (ItemManager class).
+- I fixed some bug fixes in chat system (ChatViewAdapter and ChatActivity classes)
+
+Worked 42 hours in this week.
