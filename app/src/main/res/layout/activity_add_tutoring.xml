@@ -32,7 +32,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/gradientBar" />
 
-    <!-- Add Picture Section -->
     <LinearLayout
         android:id="@+id/add_picture_container"
         android:layout_width="406dp"
@@ -44,7 +43,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header"/>
 
-    <!-- Separator Line -->
     <View
         android:id="@+id/separator_line"
         android:layout_width="match_parent"

@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class TutorAddActivity extends AppCompatActivity {
-
     private ActivityResultLauncher<Intent> imagePickerLauncher;
 
 //    private Uri productImage;

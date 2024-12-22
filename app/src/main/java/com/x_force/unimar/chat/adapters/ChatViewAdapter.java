@@ -2,26 +2,20 @@ package com.x_force.unimar.chat.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.x_force.unimar.R;
-import com.x_force.unimar.chat.ChatActivity;
 import com.x_force.unimar.chat.Message;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -33,6 +27,7 @@ public class ChatViewAdapter extends FirestoreRecyclerAdapter<Message, ChatViewA
         this.context = context;
     }
 
+    // SuppressLint("SetTextI18n") string işlemleri için lazımmış
     @SuppressLint("SetTextI18n")
     @Override
     protected void onBindViewHolder(@NonNull MessageHolder holder, int position, @NonNull Message model) {

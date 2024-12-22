@@ -2,7 +2,6 @@ package com.x_force.unimar.chat;
 
 import androidx.annotation.NonNull;
 import com.google.firebase.Timestamp;
-
 public class Message {
     private String content;
     private String senderId;

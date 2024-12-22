@@ -6,7 +6,6 @@ public class User {
     private String userId;
     private String email;
     private String name;
-
     private int totalRating;
 
     private double Rating;
@@ -14,7 +13,6 @@ public class User {
 
     private String porfileImage;
     private String university;
-
 
     private Profile profile;
 

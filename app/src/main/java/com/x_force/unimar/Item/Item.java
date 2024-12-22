@@ -1,9 +1,5 @@
 package com.x_force.unimar.Item;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.x_force.unimar.login.User;
-
 import java.util.ArrayList;
 
 public class Item {
@@ -50,7 +46,6 @@ public class Item {
 
     public void setDesc(String desc) {
         this.desc = desc;
-        //db.collection("tutorListing").document(this.getDocId()).update("desc",desc);
     }
 
     public String getName() {
@@ -59,7 +54,6 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
-        //db.collection("tutorListing").document(this.getDocId()).update("name",name);
     }
 
     public int getCost() {
@@ -68,7 +62,6 @@ public class Item {
 
     public void setCost(int cost) {
         this.cost = cost;
-        //db.collection("tutorListing").document(this.getDocId()).update("cost",cost);
     }
 
     public ArrayList<String> getCategory() {
@@ -77,7 +70,6 @@ public class Item {
 
     public void setCategory(ArrayList<String> category) {
         this.category = category;
-        //db.collection("productListing").document(this.getDocId()).update("category",category);
     }
 
 }

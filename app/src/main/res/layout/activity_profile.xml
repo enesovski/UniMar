@@ -165,6 +165,7 @@
         app:layout_constraintTop_toBottomOf="@id/profileRatingTextView"
         android:layout_marginStart="16dp" />
 
+    <!-- SwitchCompat warningi veriyor önemsiz -->
     <Switch
         android:id="@+id/notificationSwitch"
         android:layout_width="wrap_content"
@@ -176,7 +177,6 @@
         app:layout_constraintTop_toBottomOf="@id/settingsHeader"
         android:layout_marginStart="16dp" />
 
-    <!-- Horizontal Line -->
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -187,7 +187,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-    <!-- Edit Profile Button at Bottom -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/editProfileButton"
         android:layout_width="match_parent"

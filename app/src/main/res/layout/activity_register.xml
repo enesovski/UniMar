@@ -5,7 +5,6 @@
     android:background="@drawable/gradient_background"
     android:padding="16dp">
 
-    <!-- Title -->
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
@@ -19,7 +18,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp" />
 
-    <!-- Profile Section -->
     <androidx.cardview.widget.CardView
         android:id="@+id/profileSection"
         android:layout_width="match_parent"
@@ -38,7 +36,6 @@
             android:padding="16dp"
             android:gravity="center">
 
-            <!-- Profile Image -->
             <ImageView
                 android:id="@+id/profileImageView"
                 android:layout_width="100dp"
@@ -48,7 +45,6 @@
                 android:contentDescription="Profile Image"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Upload Picture Button -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/selectProfileImageButton"
                 android:layout_width="166dp"
@@ -70,7 +66,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Input Fields Section -->
     <androidx.cardview.widget.CardView
         android:id="@+id/inputFieldsSection"
         android:layout_width="match_parent"
@@ -88,7 +83,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Name Field -->
             <EditText
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
@@ -99,7 +93,6 @@
                 android:padding="16dp"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Email Field -->
             <EditText
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
@@ -110,7 +103,6 @@
                 android:padding="16dp"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Password Field -->
             <EditText
                 android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
@@ -121,7 +113,6 @@
                 android:padding="16dp"
                 android:layout_marginBottom="12dp" />
 
-            <!-- University Spinner -->
             <Spinner
                 android:id="@+id/universitySpinner"
                 android:layout_width="match_parent"
@@ -131,7 +122,6 @@
                 android:padding="16dp"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Department Spinner -->
             <Spinner
                 android:id="@+id/departmentSpinner"
                 android:layout_width="match_parent"
@@ -143,7 +133,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Register Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerButton"
         android:layout_width="match_parent"

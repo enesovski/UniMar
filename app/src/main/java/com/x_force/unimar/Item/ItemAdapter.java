@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
-import com.x_force.unimar.ProductDeletingActivity;
-import com.x_force.unimar.ProductListingActivity;
 import com.x_force.unimar.R;
 import com.x_force.unimar.Views.ProductView;
 
@@ -30,8 +28,9 @@ import java.util.List;
 public class ItemAdapter extends ArrayAdapter<Item> implements ItemAdapterParent {
 
     List<Item> items;
-    public ItemAdapter(Context context, List<Item> items){
-        super(context,0,items);
+
+    public ItemAdapter(Context context, List<Item> items) {
+        super(context, 0, items);
         this.items = items;
     }
 
@@ -42,13 +41,10 @@ public class ItemAdapter extends ArrayAdapter<Item> implements ItemAdapterParent
     public View getView(int position, View convertView, ViewGroup parent) {
         Item item = items.get(position);
 
-
-
-            if(convertView == null){
-                convertView = LayoutInflater.from(getContext())
-                        .inflate(R.layout.activity_productlisting, parent, false);
-            }
-
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext())
+                    .inflate(R.layout.activity_productlisting, parent, false);
+        }
 
 
         Button removeButton = convertView.findViewById(R.id.button_remove_product);
@@ -61,8 +57,8 @@ public class ItemAdapter extends ArrayAdapter<Item> implements ItemAdapterParent
         CardView card = convertView.findViewById(R.id.card);
         ImageView imageView = convertView.findViewById(R.id.item_image);
 
-        if(item.getClass().equals(Product.class) && ((Product) item).getImage() != null){
-            Bitmap imageBitmap= decodeBase64toBitmap(((Product) item).getImage());
+        if (item.getClass().equals(Product.class) && ((Product) item).getImage() != null) {
+            Bitmap imageBitmap = decodeBase64toBitmap(((Product) item).getImage());
             imageView.setImageBitmap(imageBitmap);
         }
 
@@ -89,17 +85,17 @@ public class ItemAdapter extends ArrayAdapter<Item> implements ItemAdapterParent
             for (int i = 0; item.getCategory() != null && i < item.getCategory().size(); i++) {
                 categories += item.getCategory().get(i) + ",";
             }
-            if(!categories.equals("")){
+            if (!categories.equals("")) {
                 categories = categories.substring(0, categories.length() - 1);
             }
             Intent intent = new Intent(getContext(), ProductView.class);
             intent.putExtra("Name", item.getName());
             intent.putExtra("Category", categories);
             intent.putExtra("Description", item.getDesc());
-            intent.putExtra("Cost", item.getCost()+"");
-            intent.putExtra("UserId",item.getUserId());
-            intent.putExtra("UserName",item.getUserName());
-            if(item instanceof Product){
+            intent.putExtra("Cost", item.getCost() + "");
+            intent.putExtra("UserId", item.getUserId());
+            intent.putExtra("UserName", item.getUserName());
+            if (item instanceof Product) {
                 intent.putExtra("Image", ((Product) item).getImage());
             }
             getContext().startActivity(intent);
@@ -110,7 +106,7 @@ public class ItemAdapter extends ArrayAdapter<Item> implements ItemAdapterParent
 
     @Override
     public void setItems(List<Item> items) {
-        this.items=items;
+        this.items = items;
     }
 
     public static Bitmap decodeBase64toBitmap(String image) {

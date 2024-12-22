@@ -9,6 +9,6 @@ public interface ItemAdapterParent {
 
     public View getView(int position, View convertView, ViewGroup parent);
     public void setItems(List<Item> items);
-    public void  notifyDataSetChanged();
+    public void notifyDataSetChanged();
 
 }

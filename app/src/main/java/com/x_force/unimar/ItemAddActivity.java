@@ -6,11 +6,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
@@ -29,7 +28,6 @@ public class ItemAddActivity extends AppCompatActivity {
     private Uri productImage;
     private String image;
     ImageView addPhotoView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +60,6 @@ public class ItemAddActivity extends AppCompatActivity {
 
         setButtonInteractions();
     }
-
     public void setButtonInteractions(){
         Button chooseCategoryButton = findViewById(R.id.button_select_category);
         Button uploadPhotoButton = findViewById(R.id.button_upload_picture);
@@ -89,10 +86,10 @@ public class ItemAddActivity extends AppCompatActivity {
                 finish();
             } else {
                 Toast.makeText(this, "All fields should be filled", Toast.LENGTH_SHORT).show();
+                Log.d("Enes", "tüm alanlar dolu değil.");
             }
         });
     }
-
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");

@@ -1,22 +1,18 @@
 package com.x_force.unimar;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import com.x_force.unimar.Item.Product;
 import com.x_force.unimar.home.HomeActivity;
-
 import java.util.ArrayList;
 
 public class ProductCategorySelectionActivity extends AppCompatActivity {
