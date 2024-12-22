@@ -79,7 +79,6 @@ public class RegisterActivity extends AppCompatActivity {
         intent.setType("image/*");
         imagePickerLauncher.launch(intent);
     }
-
     private void handleRegistration() {
         String name = nameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
@@ -103,9 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                  base64Image = convertImageToBase64(profileImageUri);
                  registerUser(email, password, name, base64Image, university, department);
             } catch (Exception e) {
-                Log.e(TAG, "Error converting image to Base64: " + e.getMessage());
                 Toast.makeText(this, "Error processing image.", Toast.LENGTH_SHORT).show();
-
 
             }
 
@@ -115,12 +112,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    //Image path olarak kaydediliyor
     private String convertImageToBase64(Uri imageUri) throws Exception {
         InputStream inputStream = getContentResolver().openInputStream(imageUri);
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream); // Compress to 50%
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
@@ -140,10 +138,5 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
         });
-    }
-    private void navigateToHome() {
-        Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

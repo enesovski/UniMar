@@ -7,13 +7,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.x_force.unimar.ProductListingActivity;
-
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class ItemManager {
@@ -277,18 +272,16 @@ public class ItemManager {
                         Tutoring tutoring = document.toObject(Tutoring.class);
                         filteredList.add(tutoring);
                     }
-                    //callback YAZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+                    //callback yaz
                 }
             });
         }
         return filteredList;
     }
 
-
     public interface CategoryCallBack {
         void onCallback(List<Item> resultList);
     }
-
 
     public static void filterList(char listType, ArrayList<String> searchCategory, CategoryCallBack callback) {
         listType = Character.toUpperCase(listType);
@@ -299,6 +292,7 @@ public class ItemManager {
         for (String searchString : searchCategory) {
             Log.d("aranan kategori", "kategori: " + searchString);
 
+            //Query hashmap gibi ama daha efektif bizim için
             Query query;
             if (listType == 'P') {
                 query = db.collection("productListing").whereArrayContains("category", searchString);

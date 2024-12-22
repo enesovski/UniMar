@@ -1,4 +1,5 @@
 package com.x_force.unimar.chat;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -9,33 +10,31 @@ import android.widget.ImageButton;
 import android.Manifest;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.SetOptions;
 import com.x_force.unimar.R;
 import com.x_force.unimar.chat.adapters.ChatViewAdapter;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
     String currentUserId;
     private ChatRoom chatroom;
     String chatId;
     String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +49,9 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
-        ImageButton backButton=findViewById(R.id.backButton);
-        backButton.setOnClickListener(v->{
-            Intent intent=new Intent(this,SearchUserActivity.class);
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SearchUserActivity.class);
             startActivity(intent);
             finish();
         });
@@ -73,7 +72,7 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
-         chatId = createChatRoomId(currentUserId, userId);
+        chatId = createChatRoomId(currentUserId, userId);
         Log.d("ChatActivity", "Generated chatRoomId: " + chatId);
 
         Query query = db.collection("chatrooms")
@@ -93,12 +92,13 @@ public class ChatActivity extends AppCompatActivity {
         EditText messageEditText = findViewById(R.id.messageEditText);
 
 
-
         sendButton.setOnClickListener(v -> {
             String messageContent = messageEditText.getText().toString().trim();
             if (!messageContent.isEmpty()) {
                 sendMessage(chatId, currentUserId, userId, messageContent);
-                messageEditText.setText(""); // Clear the input field
+
+                //text fieldi temizle
+                messageEditText.setText("");
             }
         });
         listenForNewMessages(chatId, userId, db);
@@ -121,34 +121,6 @@ public class ChatActivity extends AppCompatActivity {
         chatroom.setLastSenderId(FirebaseAuth.getInstance().getUid());
         chatroom.setLastMessage(message.getContent());
         FirebaseFirestore.getInstance().collection("chatrooms").document(chatId).set(chatroom);
-
-
-        // Update the document with the new field
-       /* Map<String, Object> data = new HashMap<>();
-        data.put("userIds", Arrays.asList(currentUserId, userId));
-
-        // Use set() with SetOptions.merge() to add the array without overwriting
-        db.collection("chatrooms")
-                .document(chatRoomId)
-                .set(data, SetOptions.merge())
-                .addOnSuccessListener(aVoid -> {
-                    Log.d("Firestore", "Array field added successfully!");
-                })
-                .addOnFailureListener(e -> {
-                    Log.w("Firestore", "Error adding array field", e);
-                });
-        Map<String, Object> data2 = new HashMap<>();
-        data.put("roomId", chatRoomId);
-        db.collection("chatrooms")
-                .document(chatRoomId)
-                .update(data2)
-                .addOnSuccessListener(aVoid -> {
-                    Log.d("Firestore", "Array field added successfully!");
-                })
-                .addOnFailureListener(e -> {
-                    Log.w("Firestore", "Error adding array field", e);
-                });*/
-
 
     }
 
@@ -189,19 +161,20 @@ public class ChatActivity extends AppCompatActivity {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(1, builder.build());
     }
+
     private String createChatRoomId(String id1, String id2) {
         return id1.compareTo(id2) < 0 ? id1 + "_" + id2 : id2 + "_" + id1;
     }
 
-    private void creatingChatRoom(String chatId){
-        FirebaseFirestore.getInstance().collection("chatrooms").document(chatId).get().addOnCompleteListener(task->{
-            if(task.isSuccessful()){
-                 chatroom=task.getResult().toObject(ChatRoom.class);
-                if(chatroom==null){
-                    ArrayList<String> userIDs=new ArrayList<>();
+    private void creatingChatRoom(String chatId) {
+        FirebaseFirestore.getInstance().collection("chatrooms").document(chatId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                chatroom = task.getResult().toObject(ChatRoom.class);
+                if (chatroom == null) {
+                    ArrayList<String> userIDs = new ArrayList<>();
                     userIDs.add(currentUserId);
                     userIDs.add(userId);
-                    chatroom=new ChatRoom(chatId,"", userIDs,Timestamp.now());
+                    chatroom = new ChatRoom(chatId, "", userIDs, Timestamp.now());
                 }
                 FirebaseFirestore.getInstance().collection("chatrooms").document(chatId).set(chatroom);
             }

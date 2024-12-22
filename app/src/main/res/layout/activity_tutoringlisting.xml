@@ -121,14 +121,13 @@
             android:padding="8dp"
             android:visibility="visible">
 
-            <!-- Added Product Image -->
             <ImageView
                 android:id="@+id/item_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_product_placeholder"
+                android:src="@drawable/ic_tutor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

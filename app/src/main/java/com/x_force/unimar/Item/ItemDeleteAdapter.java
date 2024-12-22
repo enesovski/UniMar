@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,10 +16,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-
 import com.x_force.unimar.ProductDeletingActivity;
 import com.x_force.unimar.R;
-import com.x_force.unimar.Views.ProductView;
 
 import java.util.List;
 

@@ -3,7 +3,6 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <!-- Sender Message -->
     <LinearLayout
         android:id="@+id/sender_layout"
         android:layout_width="wrap_content"
@@ -34,7 +33,6 @@
             android:fontFamily="sans-serif-light" />
     </LinearLayout>
 
-    <!-- Receiver Message -->
     <LinearLayout
         android:id="@+id/reciever_layout"
         android:layout_width="wrap_content"

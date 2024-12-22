@@ -8,11 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.x_force.unimar.ProductListingActivity;
@@ -21,7 +18,6 @@ import com.x_force.unimar.TutoringListingActivity;
 import com.x_force.unimar.chat.SearchUserActivity;
 import com.x_force.unimar.profile.ProfileActivity;
 import com.x_force.unimar.profile.ProfileHandler;
-
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
@@ -49,17 +45,12 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
-        // Initialize UI components
         welcomeTextView = findViewById(R.id.welcomeTextView);
         profileImageView = findViewById(R.id.profileImageView);
         profileButton = findViewById(R.id.profileButton);
         chatButton = findViewById(R.id.chatButton);
 
-        // Fetch and display profile information
         fetchAndDisplayProfileData();
-
-        // Set button click listeners
         profileButton.setOnClickListener(v -> openProfileActivity());
         chatButton.setOnClickListener(v -> openChatActivity());
     }
@@ -74,11 +65,8 @@ public class HomeActivity extends AppCompatActivity {
             ProfileHandler.getUserProfile(userId, new ProfileHandler.ProfileResultCallback() {
                 @Override
                 public void onSuccess(Map<String, Object> profileData) {
-                    // Extract user profile details with fallback values
                     name = profileData.getOrDefault("name", "User").toString();
                     String profileImage = profileData.getOrDefault("profileImage", "").toString();
-
-                    // Update UI components
                     welcomeTextView.setText("Welcome, " + name);
 
                     if (!profileImage.isEmpty()) {
@@ -93,14 +81,12 @@ public class HomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(String errorMessage) {
-                    // Display error message if profile fetch fails
                     Toast.makeText(HomeActivity.this, "Failed to load profile: " + errorMessage, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
-            // If no user is logged in
             Toast.makeText(this, "No user is logged in.", Toast.LENGTH_SHORT).show();
-            finish(); // Close the activity
+            finish();
         }
     }
 
@@ -114,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    //Image database'e kaydetmek için stringe çevirip path olarak kaydediyoruz
     public Bitmap decodeBase64toBitmap(String image) {
         byte[] decodedBytes = android.util.Base64.decode(image, android.util.Base64.DEFAULT);
         Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);

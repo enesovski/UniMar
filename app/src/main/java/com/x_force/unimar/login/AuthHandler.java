@@ -38,7 +38,7 @@ public class AuthHandler {
                         if (fuser != null) {
                             String userId = fuser.getUid();
 
-                            // Send email verification
+                            // Email verification
                             fuser.sendEmailVerification()
                                     .addOnSuccessListener(unused -> {
                                         ProfileHandler.createUserProfile(userId, email, name, profileImage,
@@ -64,7 +64,7 @@ public class AuthHandler {
                     }
                 });
     }
-
+    
     public void resetPassword(String email, IAuthCallback callback) {
         mAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(task -> {

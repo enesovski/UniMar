@@ -6,7 +6,6 @@
     android:background="@drawable/gradient_background"
     tools:context=".chat.SearchUserActivity">
 
-    <!-- Gradient Header -->
     <View
         android:id="@+id/topGradient"
         android:layout_width="401dp"
@@ -16,7 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Header Text -->
     <TextView
         android:id="@+id/headerText"
         android:layout_width="wrap_content"
@@ -30,10 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="16dp" />
-
-    <!-- Search Bar -->
-
-    <!-- RecyclerView for Search Results -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchBarContainer"

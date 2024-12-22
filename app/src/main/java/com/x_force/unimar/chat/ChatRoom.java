@@ -7,17 +7,12 @@ public class ChatRoom {
 
     Timestamp lastMessageSendTime;
     String roomId,lastSenderId;
-
     ArrayList<String> userIds;
-
     String lastMessage;
-
-    public ChatRoom() {};
 
     public String getLastMessage() {
         return lastMessage;
     }
-
     public void setLastMessage(String lastMessage) {
         this.lastMessage = lastMessage;
     }
