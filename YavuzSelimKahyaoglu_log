@@ -1,53 +1,92 @@
-## Enes Ceran Log
+Yavuz Selim
+22303174
 
-### Week 8
-Project Setup:
-- I installed android studio, setup UniMar project files, initialized a Google Firebase project for database.
-- I created API key for Firebase.
-Implementation:
-- I created Login branch
-- I implemented AuthHandler and User system to project. 
-- I connected authentication to Firebase.
+Week 1
 
-Worked 3.5 hours in this week.
+Project team was determined.
 
-### Week 9
-Implementation
-- I implemented verification email for verifying registration.
-- I started implementing profile system.
+Week 2
 
-Worked 2.5 hours in this week.
+Project ideas were discussed, and ideas were evaluated.
 
-### Week 10
-- I finished register and login system without their ui.
--Worked 2 hours in this week.
+Week 3
 
-### Week 13
-Implementation:
-- I implemented profile system and connected it to database and authentication.
-  - Added rating, user id to profile system.
+Determined project idea and discussed with TA Android Studio is downloaded.
 
-- I implemented filtering by category and fixed some errors in filtering (ItemManager class).
-- I fixed some bug fixes in chat system (ChatViewAdapter and ChatActivity classes)
-- I implemented item deleting from database and did its ui.
-- I merged branches and solved conflicts
+Week 4
 
-- I implemented forgot password system to login.
+The requirement stage is prepared.
 
-UI Design:
-- I made all of ui of mobile app including:
-  - Login Page
-  - Register Page
-  - Home Page
-  - Search user in chat Page
-  - Messaging Page
-  - Product Listing Page
-  - Add Product Page
-  - Product View Page
-  - Filtering Page
-  - Tutor Listing Page
-  - Add Tutoring Page
-  - Tutoring View Page
+Week 5
+
+requirements stage was ended and
+we prepared report v1 and presentation
+
+Week 6
+
+Requirements stage report v1 submitted.
+Requirements stage presentation was prepared.
+
+Week 7
+
+We began to create UI design for our application and UI design report V1
+
+Week 8
+
+We continue to prepare UI design report and prepared presentation TA.
+
+Week 9
+
+Requirement Report v2, UI Design Report v1 and UI Design Stage presentation submitted.
+
+Week 10
+
+I began to learn Android Studio Code for developing android application and firebase for database.
+
+Week 11
+
+We prepared detail design report and formed classes and their methods.
+We have consulted to TA for implementation of projects.
+We distributed task for the application.
+
+Week 12
+
+Detailed design stage report v1 submitted.
+UI design stage report v2 submitted.
+ I learned to implementing chat in Android Studio with my fellow Yavuz Selim.
+I commited first to github and started to implement chatRooms,Chat Activity.
+ 
+
+Week 13
+
+Continued to implement chat application.
+I have implemented searching users from firesstore database and showing recent chats.
+We completed ChatActivity class implementation and we succed to establish real time messaging between users.
+
+Week 14
+
+We merged the branches and configure our classes to work compatible each other.
+We fixed errors.
+We prepared demo for presenting our application to TA’s and our friends.
+Personal Logs added to the project.
+Final project code added.
+Project demo video added.
+Project successfully finished.
+Detail design V2 is submitted.
 
 
-Worked 42 hours in this week.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
