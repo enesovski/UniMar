@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.x_force.unimar.chat.Message;
 
 
 public class NotificationService extends FirebaseMessagingService {

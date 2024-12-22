@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,7 +24,6 @@ import com.x_force.unimar.R;
 import com.x_force.unimar.chat.ChatActivity;
 import com.x_force.unimar.chat.ChatRoom;
 import com.x_force.unimar.login.User;
-
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -38,6 +35,7 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
         this.context = context;
     }
 
+    //String işlemleri için SuppressLint
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
     protected void onBindViewHolder(@NonNull ChatRoomViewHolder holder, int position, @NonNull ChatRoom model) {
@@ -137,17 +135,13 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
         TextView messageText;
         TextView messageTime;
         TextView last_message_sender;
-
         RatingBar ratingBar;
 
         String otherUserId;
 
-
         public void setUserId(String userId){
             this.otherUserId=userId;
         }
-
-        Button evalButton;
         public ChatRoomViewHolder(@NonNull View itemView) {
             super(itemView);
             last_message_sender=itemView.findViewById(R.id.last_message_sender);
@@ -169,18 +163,11 @@ public class RecentChat extends FirestoreRecyclerAdapter<ChatRoom, RecentChat.Ch
                                 user.incrementTotalRating();
                                 userRef.update("rating",rating);
                                 userRef.update("totalRating",user.getTotalRating());
-
-
                             }
-
                         }
                     });
-
                 }
             });
-
-
-
 
         }
     }

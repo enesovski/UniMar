@@ -1,6 +1,5 @@
 package com.x_force.unimar;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,21 +9,17 @@ import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import com.google.android.material.slider.Slider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.x_force.unimar.Item.Item;
-import com.x_force.unimar.Item.ItemAdapter;
 import com.x_force.unimar.Item.ItemDeleteAdapter;
 import com.x_force.unimar.Item.ItemManager;
-
 import java.util.ArrayList;
 import java.util.List;
 

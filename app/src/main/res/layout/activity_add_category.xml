@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".AddCategoryActivity">
 
-    <!-- Top Gradient Bar -->
     <View
         android:id="@+id/gradientBar"
         android:layout_width="match_parent"
@@ -16,7 +15,6 @@
         android:background="@drawable/gradient_background"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Header Text -->
     <TextView
         android:id="@+id/header"
         android:layout_width="wrap_content"
@@ -31,7 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Separator line below header -->
     <View
         android:id="@+id/header_separator_line"
         android:layout_width="match_parent"
@@ -41,8 +38,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Guidelines for spacing -->
-    <!-- Vertical guideline to create two columns -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_center"
         android:layout_width="wrap_content"
@@ -50,7 +45,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <!-- Checkboxes Left Column -->
     <CheckBox
         android:id="@+id/checkBox_math"
         android:layout_width="wrap_content"
@@ -107,7 +101,6 @@
         app:layout_constraintStart_toStartOf="@id/checkBox_mbg"
         android:layout_marginTop="16dp" />
 
-    <!-- Checkboxes Right Column -->
     <CheckBox
         android:id="@+id/checkBox_cs"
         android:layout_width="wrap_content"
@@ -155,7 +148,6 @@
         app:layout_constraintStart_toStartOf="@id/checkBox_me"
         android:layout_marginTop="16dp" />
 
-    <!-- Add Product Button -->
     <Button
         android:id="@+id/button_add_product"
         android:layout_width="wrap_content"

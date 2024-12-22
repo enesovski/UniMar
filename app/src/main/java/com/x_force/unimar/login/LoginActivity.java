@@ -80,8 +80,10 @@ public class LoginActivity extends AppCompatActivity implements IAuthCallback {
             startActivity(intent);
             finish();
         } else {
+
+            //Eğer verificationdan önce girmeye çalışırsa girmesini engelle
             Toast.makeText(this, "Please verify your email before logging in.", Toast.LENGTH_LONG).show();
-            FirebaseAuth.getInstance().signOut(); // Prevent login
+            FirebaseAuth.getInstance().signOut();
         }
     }
     @Override

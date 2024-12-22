@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".chat.ChatActivity">
 
-    <!-- Gradient Header -->
     <View
         android:id="@+id/topGradient"
         android:layout_width="417dp"
@@ -16,7 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Header -->
     <TextView
         android:id="@+id/chatTitle"
         android:layout_width="wrap_content"
@@ -30,9 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Back Button -->
-
-    <!-- RecyclerView for Chat Messages -->
     <ImageButton
         android:id="@+id/backButton"
         android:layout_width="31dp"
@@ -58,7 +53,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Message Input Layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/messageInputLayout"
         android:layout_width="match_parent"
@@ -84,7 +78,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Send Button -->
         <ImageButton
             android:id="@+id/sendButton"
             android:layout_width="32dp"

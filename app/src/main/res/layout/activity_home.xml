@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <!-- Gradient Bar at the Top -->
     <View
         android:id="@+id/gradientBar"
         android:layout_width="match_parent"
@@ -14,7 +13,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Profile Picture -->
     <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="80dp"
@@ -28,9 +26,6 @@
         app:layout_constraintEnd_toStartOf="@id/welcomeTextView"
         android:layout_marginEnd="16dp" />
 
-    <!-- Welcome Text -->
-
-    <!-- Go to Profile Button -->
     <TextView
         android:id="@+id/welcomeTextView"
         android:layout_width="wrap_content"
@@ -46,10 +41,6 @@
         app:layout_constraintStart_toEndOf="@id/profileImageView"
         app:layout_constraintTop_toTopOf="@id/gradientBar"
         app:layout_constraintVertical_bias="0.52" />
-
-    <!-- Example Button: Profile -->
-
-    <!-- Custom Button 1 -->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/profileButton"
@@ -107,7 +98,7 @@
             android:id="@+id/customButton1Image"
             android:layout_width="304dp"
             android:layout_height="182dp"
-            android:contentDescription="Custom Button 1 Icon"
+            android:contentDescription="Product icon"
             android:src="@drawable/ic_product_background"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +117,6 @@
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Custom Button 2 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/customButton2"
         android:layout_width="341dp"
@@ -143,7 +133,7 @@
             android:id="@+id/customButton2Image"
             android:layout_width="317dp"
             android:layout_height="163dp"
-            android:contentDescription="Custom Button 2 Icon"
+            android:contentDescription="Tutoring icon"
             android:src="@drawable/ic_tutoring_background"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"

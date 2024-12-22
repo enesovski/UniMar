@@ -7,7 +7,6 @@ public class ChatFragment extends Fragment {
 
     RecentChat adapter;
 
-
     @Override
     public void onStart() {
         super.onStart();

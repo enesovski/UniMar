@@ -47,7 +47,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Login Form Container -->
     <LinearLayout
         android:id="@+id/formContainer"
         android:layout_width="match_parent"
@@ -61,7 +60,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Email Input -->
         <EditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
@@ -72,7 +70,6 @@
             android:background="@drawable/rounded_edittext"
             android:layout_marginBottom="12dp" />
 
-        <!-- Password Input -->
         <EditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
@@ -83,7 +80,6 @@
             android:background="@drawable/rounded_edittext"
             android:layout_marginBottom="12dp" />
 
-        <!-- Forgot Password -->
         <TextView
             android:id="@+id/forgotPasswordText"
             android:layout_width="wrap_content"
@@ -94,7 +90,6 @@
             android:layout_marginBottom="12dp"
             android:gravity="end" />
 
-        <!-- Login Button -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginButton"
             android:layout_width="match_parent"

@@ -32,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/gradientBar" />
 
-    <!-- Add Picture Section -->
+    <!-- Resim ekleme kısmı -->
     <LinearLayout
         android:id="@+id/add_picture_container"
         android:layout_width="406dp"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
 
-        <!-- Placeholder for adding a picture -->
+        <!-- Placeholder -->
         <ImageView
             android:id="@+id/add_picture_icon"
             android:layout_width="169dp"
@@ -52,7 +52,6 @@
             android:contentDescription="add a picture"
             android:src="@drawable/ic_add_photo" />
 
-        <!-- Upload Picture Button -->
         <Button
             android:id="@+id/button_upload_picture"
             android:layout_width="wrap_content"
@@ -64,7 +63,6 @@
             android:text="Upload Picture" />
     </LinearLayout>
 
-    <!-- Separator Line -->
     <View
         android:id="@+id/separator_line"
         android:layout_width="match_parent"

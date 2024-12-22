@@ -121,7 +121,6 @@
             android:padding="8dp"
             android:visibility="visible">
 
-            <!-- Added Product Image -->
             <ImageView
                 android:id="@+id/item_image"
                 android:layout_width="100dp"
@@ -206,6 +205,6 @@
         android:background="@drawable/gradient_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_change_activity_add" />
+            app:layout_constraintStart_toEndOf="@+id/button_change_activity_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
