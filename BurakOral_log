@@ -1,53 +1,35 @@
-## Enes Ceran Log
+## Burak Oral Log
 
-### Week 8
+### Week 11
 Project Setup:
-- I installed android studio, setup UniMar project files, initialized a Google Firebase project for database.
-- I created API key for Firebase.
+- I installed android studio, setup UniMar project files, registered Firebase as an admin.
 Implementation:
-- I created Login branch
-- I implemented AuthHandler and User system to project. 
+- I created the product sorting system according to their price with Deniz.
+- I created product filtering system according to their price with Deniz.
 - I connected authentication to Firebase.
+
+Worked 3 hours in this week.
+
+### Week 12
+- I tried to learn the Android Studio platform.
+- I tried to learn how to cope with asynchrony.
 
 Worked 3.5 hours in this week.
 
-### Week 9
-Implementation
-- I implemented verification email for verifying registration.
-- I started implementing profile system.
-
-Worked 2.5 hours in this week.
-
-### Week 10
-- I finished register and login system without their ui.
--Worked 2 hours in this week.
-
 ### Week 13
-Implementation:
-- I implemented profile system and connected it to database and authentication.
-  - Added rating, user id to profile system.
+- I did not have enough time, I studied for the MATH132 exam.
+- I made some minor fixes in filter and search methods in general.
 
-- I implemented filtering by category and fixed some errors in filtering (ItemManager class).
-- I fixed some bug fixes in chat system (ChatViewAdapter and ChatActivity classes)
-- I implemented item deleting from database and did its ui.
-- I merged branches and solved conflicts
+Worked 1.5 hours in this week.
 
-- I implemented forgot password system to login.
+### Week 14
+- This week, I worked with Deniz for item classes and their functionality.
+- I worked on productView xml files and had difficulty iin it.
+- I made some minor changes in product filtering function which filters products according to their prices.
+- I worked on product searchBar and its method.
+- I worked on category filtering function and had problems with asynchrony.
+- I created xml files for tutoring section
 
-UI Design:
-- I made all of ui of mobile app including:
-  - Login Page
-  - Register Page
-  - Home Page
-  - Search user in chat Page
-  - Messaging Page
-  - Product Listing Page
-  - Add Product Page
-  - Product View Page
-  - Filtering Page
-  - Tutor Listing Page
-  - Add Tutoring Page
-  - Tutoring View Page
+Worked 35 hours in this week.
 
-
-Worked 42 hours in this week.
+I worked 43 hours in total for this project.
