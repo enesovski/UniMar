@@ -1,0 +1,11 @@
+## Enes Ceran Log
+
+## Week 8
+I installed android studio, setup UniMar project files, initialized a Google Firebase project for database.
+I created API key for Firebase.
+I implemented AuthHandler and User system to project. I connected authentication to Firebase.
+Worked 3.5 hours in this week.
+
+## Week 9
+I implemented verification email for verifying registration.
+
