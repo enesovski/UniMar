@@ -2,4 +2,4 @@
 
 ## Personal Logs
 
-- [Enes Ceran](logs/personal_log_1.txt)
+- [Enes Ceran](EnesCeran_log.txt)
