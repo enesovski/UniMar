@@ -23,9 +23,18 @@ Worked 2.5 hours in this week.
 -Worked 2 hours in this week.
 
 ### Week 13
+Implementation:
 - I implemented profile system and connected it to database and authentication.
   - Added rating, user id to profile system.
+
+- I implemented filtering by category and fixed some errors in filtering (ItemManager class).
+- I fixed some bug fixes in chat system (ChatViewAdapter and ChatActivity classes)
+- I implemented item deleting from database and did its ui.
+- I merged branches and solved conflicts
+
 - I implemented forgot password system to login.
+
+UI Design:
 - I made all of ui of mobile app including:
   - Login Page
   - Register Page
@@ -40,7 +49,5 @@ Worked 2.5 hours in this week.
   - Add Tutoring Page
   - Tutoring View Page
 
-- I implemented filtering by category and fixed some errors in filtering (ItemManager class).
-- I fixed some bug fixes in chat system (ChatViewAdapter and ChatActivity classes)
 
 Worked 42 hours in this week.
