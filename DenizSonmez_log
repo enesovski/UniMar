@@ -18,34 +18,26 @@ Implementation
 Worked 3 hours in this week.
 
 ### Week 12
-- 
+- I watched videos and researched about how receiving data causes asynchrony in main thread
+Implementation:
+- After obtaining some information about the asynchrony, i tried to handle the asynchrony.
+
+Worked 4 hours in this week
 
 ### Week 14
+This week I worked with Burak for Item classes, item functionalities, adapters and layout files.
+Had very hard time dealing with null pointer exceptions.
+
 Implementation:
-- I implemented profile system and connected it to database and authentication.
-  - Added rating, user id to profile system.
+-Implemented various Activities and their layout files.
+-Implemented the butttons and set their action listeners.
+-Implemented adapter classes to display items properly in the ui.
+-Updated item clas instance variables to hold useful data. (Such as UserName and UserId)
+-Implemented callback for the asynchrony problem, which fixed the problem.
+-Implemented Item add and Item delete.
+-Implemented Search Bar.
+-Implemented new methods for search, sort and filtering.
+-Updated the old methods to work properly.
+-Merged tutorListing branch with the other branches.
 
-- I implemented filtering by category and fixed some errors in filtering (ItemManager class).
-- I fixed some bug fixes in chat system (ChatViewAdapter and ChatActivity classes)
-- I implemented item deleting from database and did its ui.
-- I merged branches and solved conflicts
-
-- I implemented forgot password system to login.
-
-UI Design:
-- I made all of ui of mobile app including:
-  - Login Page
-  - Register Page
-  - Home Page
-  - Search user in chat Page
-  - Messaging Page
-  - Product Listing Page
-  - Add Product Page
-  - Product View Page
-  - Filtering Page
-  - Tutor Listing Page
-  - Add Tutoring Page
-  - Tutoring View Page
-
-
-Worked 42 hours in this week.
+Worked 40 hours in this week.
